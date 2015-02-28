@@ -1,0 +1,13 @@
+cmake_minimum_required (VERSION 2.8)
+project (Graphfab)
+
+install(FILES testbigmodel.xml twocompsys-ex.xml DESTINATION testcases)
+install(FILES BorisEJB.xml DESTINATION testcases)
+install(FILES EquilibRaw.xml DESTINATION testcases)
+install(FILES example2.xml DESTINATION testcases)
+install(FILES EquilibRaw_wlayout.xml DESTINATION testcases)
+install(FILES EquilibRaw_wlayout-DrawNetwork-vs2010.xml DESTINATION testcases)
+install(FILES ConservedCycles.xml DESTINATION testcases)
+install(FILES GlycolysisOriginal.xml DESTINATION testcases)
+install(FILES ant_power_law_sbml.xml DESTINATION testcases)
+install(FILES bounding_box.xml DESTINATION testcases)
