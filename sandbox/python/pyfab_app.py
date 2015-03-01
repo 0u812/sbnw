@@ -38,6 +38,11 @@ if not inspyder:
 else:
   enable_matplotlib2tikz = False
 
+try:
+  import matplotlib2tikz
+except ImportError:
+  enable_matplotlib2tikz = False
+
 def is_pyqt4():
   return inspyder
 
@@ -333,7 +338,7 @@ class Autolayout(MainWindowBaseClass):
         self.filemenu.addSeparator()
         self.filemenu.addAction(self.savePNGAct)
         self.filemenu.addAction(self.saveSVGAct)
-        if not inspyder:
+        if not inspyder and enable_matplotlib2tikz:
           self.filemenu.addAction(self.saveTikZAct)
         self.filemenu.addAction(self.saveTikZIntAct)
         self.filemenu.addSeparator()
