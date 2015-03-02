@@ -186,7 +186,7 @@ if not inspyder:
 else:
   from pyfab_cfg import get_default_options, make_color_rgba
 
-#import pyfab_qt_render
+import pyfab_qt_render
 #if enable_matplotlib2tikz:
   #import pyfab_matplotlib_render
 
