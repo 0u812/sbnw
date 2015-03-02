@@ -177,14 +177,14 @@ elif is_pyqt4():
 class PyfabRenderer:
   pass
 
-##os.chdir(localpath)
+#os.chdir(localpath)
 
-##import pyfab_cfg
+#import pyfab_cfg
 
-#if not inspyder:
-  #from pyfab_cfg import PyfabConfigStandalone as ConfigCls, get_default_options, make_color_rgba
-#else:
-  #from pyfab_cfg import get_default_options, make_color_rgba
+if not inspyder:
+  from pyfab_cfg import PyfabConfigStandalone as ConfigCls, get_default_options, make_color_rgba
+else:
+  from pyfab_cfg import get_default_options, make_color_rgba
 
 #import pyfab_qt_render
 #if enable_matplotlib2tikz:
