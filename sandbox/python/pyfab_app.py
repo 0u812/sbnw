@@ -11,7 +11,10 @@ newpath = os.path.abspath(os.path.join(localpath, '..', '..', 'bin'))
 #os.chdir(newpath)
 #print('not changing dir')
 
+print('pre import graphfab')
 import graphfab
+
+print('post import graphfab')
 
 import sys
 if sys.version_info[0] < 3:
@@ -83,6 +86,8 @@ import random
 import math
 import platform
 
+print('imported platform')
+
 if is_pyqt5():
   import PyQt5
   from PyQt5 import QtCore, QtGui, QtWidgets
@@ -103,6 +108,8 @@ if __name__ == '__main__':
     optparser.add_option('-o', '--open', action='store', type='string', dest='openfile')
     optparser.parse_args()
     defaultfile = optparser.values.openfile
+
+print('after option parser')
 
 def intervalContains(a, b, x):
     if a <= x <= b:
@@ -128,6 +135,8 @@ def fixNode(node):
 def fixNodes(network):
     for node in network.nodes:
         fixNode(node)
+
+print('is pyqt5?')
 
 if is_pyqt5():
   MainWindowBaseClass = QtWidgets.QMainWindow
@@ -176,6 +185,8 @@ elif is_pyqt4():
 
 class PyfabRenderer:
   pass
+
+print('after is pyqt5')
 
 #os.chdir(localpath)
 
@@ -1870,11 +1881,14 @@ class PrefDialog(QDialog):
       super(PrefDialog, self).reject()
 
 def start():
+  print('create QApplication')
   if not inspyder:
-    app = QtWidgets.QApplication(sys.argv)
+    #app = QtWidgets.QApplication(sys.argv)
+    app = QtWidgets.QApplication([])
   else:
     app = qapplication()
-  app.setAttribute(Qt.AA_UseHighDpiPixmaps)
+  #app.setAttribute(Qt.AA_UseHighDpiPixmaps)
+  print('post create QApplication')
 
   layoutapp = Autolayout()
 

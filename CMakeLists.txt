@@ -3,7 +3,7 @@ project (Graphfab)
 
 set(GRAPHFAB_MAJOR_VER  1)
 set(GRAPHFAB_MINOR_VER  2)
-set(GRAPHFAB_PATCHLEVEL 3)
+set(GRAPHFAB_PATCHLEVEL 4)
 
 #User Configuration
 if(${WIN32})
@@ -50,6 +50,7 @@ if(PYTHONLIBS_FOUND)
   unset(PYTHON_LIBRARY_DEBUG CACHE)
 else()
   set(ENABLE_PYTHON2_BINDINGS OFF CACHE BOOL "Enable Python 2 bindings")
+  set(PYTHON2_LIBRARY "${PYTHON_LIBRARY}" CACHE STRING "NOTFOUND")
 endif()
 
 #Dependencies
