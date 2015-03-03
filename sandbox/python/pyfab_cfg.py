@@ -236,8 +236,11 @@ class PyfabConfigStandalone(PyfabConfig):
 
   def write(self, f):
     #print('writing config to {}'.format(f))
-    with open(f, 'w') as f:
-      f.write(self.serialize())
+    try:
+      with open(f, 'w') as f:
+        f.write(self.serialize())
+    except IOError:
+      print('Unable to write to file {}'.format(f))
 
   def read(self, f):
     with open(f, 'r') as f:
