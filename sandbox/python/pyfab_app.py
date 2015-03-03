@@ -5,7 +5,7 @@ print('pyfab start')
 import os
 #print('this file: {}'.format(__file__))
 localpath = os.path.dirname(os.path.realpath(__file__))
-#print('local path: {}'.format(localpath))
+print('local path: {}'.format(localpath))
 newpath = os.path.abspath(os.path.join(localpath, '..', '..', 'bin'))
 #print('newpath: {}'.format(newpath))
 #os.chdir(newpath)
@@ -435,7 +435,9 @@ class Autolayout(MainWindowBaseClass):
         return 'pyfab'
 
     def getIconPath(self, p):
-        return str(os.path.join(localpath, '..', '..', 'icons', p))
+	result = str(os.path.join(localpath, '..', '..', 'icons', p))
+	print('icon path: {}'.format(result))
+        return result
 
     def center(self, offset=(0,0)):
         screen = QDesktopWidget().screenGeometry()
