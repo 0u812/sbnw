@@ -223,7 +223,7 @@ class PyfabConfigStandalone(PyfabConfig):
       #print('  * parent.state.node_effect: {}'.format(parent.state.node_effect))
       #print('  state: {}'.format(self.state.get_table()))
     if parent is None:
-      self.cfgfilepath = join(expanduser('~'), '.config', 'pyfab')
+      self.cfgfilepath = join(expanduser('~'), '.pyfab')
       print(self.cfgfilepath)
       try:
         #print('reading config file {}'.format(self.cfgfilepath))
