@@ -36,8 +36,8 @@ def get_default_options():
       'active_config_section': 'render_effect', # values: render_effect, draw_style, sbml_options
       # rendering effects
       'node_effect': 'advanced', # values: advanced, basic
-      'node_color1': make_color_rgba(0.1, 0.4, 0.9, 1.),
-      'node_color2': make_color_rgba(0.8, 0.9, 0.95, 1.),
+      'node_color1': make_color_rgba(0.8, 0.9, 0.95, 1.),
+      'node_color2': make_color_rgba(0.1, 0.4, 0.9, 1.),
       'node_outline_color': make_color_rgba(0., 0., 0., 1.),
       'edge_color': make_color_rgba(0., 0., 0., 1.), # deprecated
       'substrate_edge_color': make_color_rgba(0., 0., 0., 1.),
