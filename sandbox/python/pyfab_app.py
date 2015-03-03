@@ -1874,6 +1874,7 @@ def start():
     app = QtWidgets.QApplication(sys.argv)
   else:
     app = qapplication()
+  app.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
   layoutapp = Autolayout()
 
