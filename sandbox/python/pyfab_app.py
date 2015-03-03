@@ -280,9 +280,9 @@ class Autolayout(MainWindowBaseClass):
 
         # Tools
         self.toolActionGroup = QActionGroup(self)
-        self.selectToolAct = QAction(QtGui.QIcon(self.getIconPath('32x32/edit-select.png')), '&Select Tool', self.toolActionGroup)
+        self.selectToolAct = QAction(QtGui.QIcon(self.getIconPath('32x32/select.png')), '&Select Tool', self.toolActionGroup)
         self.selectToolAct.setCheckable(True)
-        self.createNodeToolAct = QAction(QtGui.QIcon(self.getIconPath('32x32/draw-line-2.png')), '&Create Node Tool', self.toolActionGroup)
+        self.createNodeToolAct = QAction(QtGui.QIcon(self.getIconPath('32x32/draw-freehand.png')), '&Create Node Tool', self.toolActionGroup)
         self.createNodeToolAct.setCheckable(True)
         self.linkToolAct = QAction(QtGui.QIcon(self.getIconPath('32x32/insert-link-2.png')), '&Create Node Tool', self.toolActionGroup)
         self.linkToolAct.setCheckable(True)
