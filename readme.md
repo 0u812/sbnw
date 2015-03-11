@@ -1,7 +1,7 @@
-SBNW: A Network Viewer for SBML
+# SBNW: A Network Viewer for SBML
 
-# Introduction
+## Introduction
 SBNW is a network viewer which supports autolayout of models. Uses libSBML for reading/writing models.
 
-# Documentation
+## Documentation
 Online documentation is available at http://0u812.github.io/sbnw/docs
