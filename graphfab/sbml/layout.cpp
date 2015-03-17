@@ -374,7 +374,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
     AN(doc, "No SBML document");
     AT(doc->isPkgEnabled("layout"), "Layout package not enabled");
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    std::cout << "doc->isPkgEnabled(\"layout\") = " << doc->isPkgEnabled("layout") << std::endl;
+//     std::cout << "doc->isPkgEnabled(\"layout\") = " << doc->isPkgEnabled("layout") << std::endl;
     #endif
     
     // get the model
@@ -1692,11 +1692,11 @@ void gf_canvSetHeight(gf_canvas* c, unsigned long height) {
 
 int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo* l) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    std::cout << "gf_writeSBMLwithLayout started\n" << std::endl;
+//     std::cout << "gf_writeSBMLwithLayout started\n" << std::endl;
     #endif
     SBMLDocument* doc = populateSBMLdoc(m,l);
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    std::cout << "populateSBMLdoc finished\n" << std::endl;
+//     std::cout << "populateSBMLdoc finished\n" << std::endl;
     #endif
     SBMLWriter writer;
     writer.setProgramName("Graphfab");

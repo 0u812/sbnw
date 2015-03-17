@@ -50,6 +50,8 @@ try:
 except ImportError:
   enable_matplotlib2tikz = False
 
+enable_matplotlib2tikz = False
+
 def is_pyqt4():
   return inspyder
 

@@ -20,7 +20,7 @@
 #define STRINGIFY(x) #x
 #define EXPAND_AND_STRINGIFY(x) STRINGIFY(x)
 
-static PyObject *GraphfabError;
+static PyObject *SBNWError;
 
 static char* gfPyString_getString(PyObject* uni) {
     char* str = NULL;
@@ -130,7 +130,7 @@ static int gfp_Point_init(gfp_Point *self, PyObject *args, PyObject *kwds) {
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "dd", kwlist,
         &x, &y)) {
-        PyErr_SetString(GraphfabError, "Invalid argument(s)");
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
         return 1;
     }
     p.x = x;
@@ -164,7 +164,7 @@ static PyObject* gfp_Point_SeqGetItem(gfp_Point *p, Py_ssize_t i) {
         return PyFloat_FromDouble(p->y);
     else {
 //         return PyFloat_FromDouble(-1);
-//         PyErr_SetString(GraphfabError, "Index out of range");
+//         PyErr_SetString(SBNWError, "Index out of range");
         return NULL;
     }
 }
@@ -179,7 +179,7 @@ int gfp_Point_SeqSetItem(gfp_Point *p, Py_ssize_t i, PyObject *v) {
         p->y = PyFloat_AsDouble(v);
         return PyErr_Occurred() ? -1 : 0;
     } else {
-        PyErr_SetString(GraphfabError, "Index out of range");
+        PyErr_SetString(SBNWError, "Index out of range");
         return -1;
     }
 }
@@ -251,7 +251,7 @@ static PyTypeObject gfp_PointType = {
 
 static int gfp_Point_Check(PyObject* p) {
     if(Py_TYPE(p) != (PyTypeObject*)&gfp_PointType) {
-        PyErr_SetString(GraphfabError, "Not a point object");
+        PyErr_SetString(SBNWError, "Not a point object");
         return 0;
     } else
         return 1;
@@ -318,7 +318,7 @@ PyObject* gfp_Transform_Call(gfp_Transform *self, PyObject *args, PyObject *kw) 
     PyObject* o = NULL;
     
     if(!PyArg_ParseTuple(args, "o", o)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments");
+        PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
     }
     
@@ -336,7 +336,7 @@ static PyMemberDef gfp_Transform_members[] = {
 
 PyObject* gfp_Transform_dump(gfp_Transform *self) {
     if(!gfp_Transform_Check((PyObject*)self)) {
-        PyErr_SetString(GraphfabError, "Not a transform");
+        PyErr_SetString(SBNWError, "Not a transform");
         return NULL;
     }
     gf_dump_transform(self->tf);
@@ -444,7 +444,7 @@ static PyTypeObject gfp_TransformType = {
 
 static int gfp_Transform_Check(PyObject* p) {
     if(Py_TYPE(p) != (PyTypeObject*)&gfp_TransformType) {
-        PyErr_SetString(GraphfabError, "Not a transform object");
+        PyErr_SetString(SBNWError, "Not a transform object");
         return 0;
     } else
         return 1;
@@ -884,7 +884,7 @@ static PyObject* gfp_Node_new(PyTypeObject *type, PyObject *args, PyObject *kwds
         self->dead = NULL;
         self->custom = NULL;
     } else {
-        PyErr_SetString(GraphfabError, "Failed to construct node");
+        PyErr_SetString(SBNWError, "Failed to construct node");
         return NULL;
     }
 
@@ -1099,7 +1099,7 @@ static PyObject* gfp_Rxn_has(gfp_Rxn *self, PyObject *args, PyObject *kwds) {
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "|O!", kwlist,
         &gfp_NodeType, &node
     )) {
-        PyErr_SetString(GraphfabError, "Invalid argument(s)");
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
         return NULL;
     }
 
@@ -1331,7 +1331,7 @@ static PyObject* gfp_NetworkRandomizeLayout(gfp_Network *self, PyObject *args, P
     #endif
     
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist, &gfp_CanvasType, &canvas)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments");
+        PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
     }
     AN(canvas, "No canvas");
@@ -1366,7 +1366,7 @@ static PyObject* gfp_NetworkAutolayout(gfp_Network *self, PyObject *args, PyObje
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "|O!" GF_PYREALFMT "ii" GF_PYREALFMT "Oiii", kwlist, 
         &gfp_CanvasType, &canvas, &opt.k, &opt.boundary, &opt.mag, &opt.grav, &bary, &opt.autobary, &opt.enable_comps, &opt.prerandomize
     )) {
-        PyErr_SetString(GraphfabError, "Invalid argument(s)");
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
         return NULL;
     }
     // unpack bary point object
@@ -1456,7 +1456,7 @@ static PyObject* gfp_NetworkNewNode(gfp_Network *self, PyObject *args, PyObject 
     // parse args
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "s|sO!", kwlist, 
         &name, &id, &gfp_CompartmentType, &comp)) {
-        PyErr_SetString(GraphfabError, "Invalid argument(s)");
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
         return NULL;
     }
     
@@ -1481,7 +1481,7 @@ static PyObject* gfp_NetworkNewNode(gfp_Network *self, PyObject *args, PyObject 
         Py_XDECREF(o);
     }
     
-    PyErr_SetString(GraphfabError, "Failed to create node");
+    PyErr_SetString(SBNWError, "Failed to create node");
     return NULL;
 }
 
@@ -1520,14 +1520,14 @@ static PyObject* gfp_NetworkRemoveNode(gfp_Network *self, PyObject *args, PyObje
     
     // parse args
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist, &gfp_NodeType, &node)) {
-        PyErr_SetString(GraphfabError, "Invalid argument(s)");
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
         return NULL;
     }
     
     printf("Trying to remove node...\n");
     
     if(gf_nw_removeNode(&self->n, &node->n)) {
-        PyErr_SetString(GraphfabError, "Unable to remove node (may not be member of network)");
+        PyErr_SetString(SBNWError, "Unable to remove node (may not be member of network)");
         return NULL;
     }
     
@@ -1546,7 +1546,7 @@ static PyObject* gfp_NetworkRemoveNode(gfp_Network *self, PyObject *args, PyObje
         
         Py_RETURN_NONE;
     } else {
-        PyErr_SetString(GraphfabError, "Unable to create new consistent state after removing node");
+        PyErr_SetString(SBNWError, "Unable to create new consistent state after removing node");
         return NULL;
     }
 }
@@ -1560,14 +1560,14 @@ static PyObject* gfp_NetworkAliasNode(gfp_Network *self, PyObject *args, PyObjec
 
     // parse args
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist, &gfp_NodeType, &node)) {
-        PyErr_SetString(GraphfabError, "Invalid argument(s)");
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
         return NULL;
     }
 
     printf("Trying to alias node...\n");
 
     if(gf_node_alias(&node->n, &self->n)) {
-        PyErr_SetString(GraphfabError, "Unable to alias node (may not be member of network)");
+        PyErr_SetString(SBNWError, "Unable to alias node (may not be member of network)");
         return NULL;
     }
 
@@ -1725,7 +1725,7 @@ PyObject* gfp_Cubicintersec_GetPoints(gfp_Cubicintersec *self, PyObject *args, P
     PyObject* result;
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!O!O!O!O!O!", kwlist, &gfp_PointType, &p0, &gfp_PointType, &p1, &gfp_PointType, &p2, &gfp_PointType, &p3, &gfp_PointType, &l0, &gfp_PointType, &l1)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments");
+        PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
     }
 
@@ -1818,7 +1818,7 @@ static PyTypeObject gfp_CubicintersecType = {
 
 // static int gfp_Cubicintersec_Check(PyObject* p) {
 //     if(Py_TYPE(p) != (PyTypeObject*)&gfp_CubicintersecType) {
-//         PyErr_SetString(GraphfabError, "Not a cubicintersec object");
+//         PyErr_SetString(SBNWError, "Not a cubicintersec object");
 //         return 0;
 //     } else
 //         return 1;
@@ -1897,7 +1897,7 @@ PyObject* gfp_Layout_FitToWindow(gfp_Layout *self, PyObject *args, PyObject *kwd
     
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "dddd", kwlist, &left, &top, &right, &bottom)) {
 //     if(!PyArg_ParseTuple(args, "o", &left, &top, &right, &bottom)) {
-//         PyErr_SetString(GraphfabError, "Invalid args");
+//         PyErr_SetString(SBNWError, "Invalid args");
 //         printf("%f %f %f %f\n", left, top, right, bottom);
         return NULL;
     }
@@ -2005,7 +2005,7 @@ static PyTypeObject gfp_LayoutType = {
 
 static int gfp_Layout_Check(PyObject* p) {
     if(Py_TYPE(p) != (PyTypeObject*)&gfp_LayoutType) {
-        PyErr_SetString(GraphfabError, "Not a layout object");
+        PyErr_SetString(SBNWError, "Not a layout object");
         return 0;
     } else
         return 1;
@@ -2021,7 +2021,7 @@ typedef struct {
 
 // "Useful" function (Exported)
 static PyObject *
-gfp_graphfab_system(PyObject *self, PyObject *args)
+gfp_sbnw_system(PyObject *self, PyObject *args)
 {
     const char *command;
     int sts;
@@ -2030,7 +2030,7 @@ gfp_graphfab_system(PyObject *self, PyObject *args)
         return NULL;
     sts = system(command);
     if (sts < 0) {
-        PyErr_SetString(GraphfabError, "System command failed");
+        PyErr_SetString(SBNWError, "System command failed");
         return NULL;
     }
     return PyLong_FromLong(sts);
@@ -2073,7 +2073,7 @@ static int gfp_SBMLModel_init(gfp_SBMLModel *self, PyObject *args, PyObject *kwd
     #endif
     
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &sbml)) {
-        PyErr_SetString(GraphfabError, "Invalid SBML");
+        PyErr_SetString(SBNWError, "Invalid SBML");
         return -1;
     }
     if(!sbml)
@@ -2102,7 +2102,7 @@ static int gfp_SBMLModel_init(gfp_SBMLModel *self, PyObject *args, PyObject *kwd
     }
     
     if(!self->m) {
-        PyErr_SetString(GraphfabError, "Failed to open file (check spelling)");
+        PyErr_SetString(SBNWError, "Failed to open file (check spelling)");
         return -1;
     } else
         return 0;
@@ -2114,11 +2114,11 @@ PyObject* gfp_SBMLModel_save(gfp_SBMLModel *self, PyObject *args, PyObject *kwds
     int error;
     
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("gfp_SBMLModel_save started\n");
+//     printf("gfp_SBMLModel_save started\n");
     #endif
     
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &outfile)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments to sbnw.model.save; expected filepath string");
+        PyErr_SetString(SBNWError, "Invalid arguments to sbnw.model.save; expected filepath string");
         return NULL;
     }
     
@@ -2128,7 +2128,7 @@ PyObject* gfp_SBMLModel_save(gfp_SBMLModel *self, PyObject *args, PyObject *kwds
         error = gf_writeSBML(outfile, self->m);
     
     if(error) {
-        PyErr_Format(GraphfabError, "Unable to write file; write access may be disabled");
+        PyErr_Format(SBNWError, "Unable to write file; write access may be disabled");
         return NULL;
     }
     
@@ -2145,19 +2145,19 @@ PyObject* gfp_SBMLModel_renderTikZ_file(gfp_SBMLModel *self, PyObject *args, PyO
     #endif
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &outfile)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments to sbnw.model.save; expected filepath string");
+        PyErr_SetString(SBNWError, "Invalid arguments to sbnw.model.save; expected filepath string");
         return NULL;
     }
 
     if(self->layout)
         error = gf_renderTikZFile(self->layout->l, outfile);
     else {
-        PyErr_Format(GraphfabError, "No layout information");
+        PyErr_Format(SBNWError, "No layout information");
         return NULL;
     }
 
     if(error) {
-        PyErr_Format(GraphfabError, "Unable to write file; write access may be disabled");
+        PyErr_Format(SBNWError, "Unable to write file; write access may be disabled");
         return NULL;
     }
 
@@ -2175,7 +2175,7 @@ PyObject* gfp_SBMLModel_getsbml(gfp_SBMLModel *self, PyObject *args, PyObject *k
         free((void*)sbml);
         return result;
     } else {
-        PyErr_Format(GraphfabError, "Cannot get SBML - no layout information");
+        PyErr_Format(SBNWError, "Cannot get SBML - no layout information");
         return NULL;
     }
 }
@@ -2341,7 +2341,7 @@ gfp_paramcubic(PyObject* self, PyObject *args, PyObject *kwds) {
     gf_curveCP cp;
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!O!O!O!d", kwlist, &gfp_PointType, &p0, &gfp_PointType, &p1, &gfp_PointType, &p2, &gfp_PointType, &p3, &t)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments");
+        PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
     }
 
@@ -2374,7 +2374,7 @@ gfp_arrowpoly(PyObject* self, PyObject *args, PyObject *kwds) {
     PyObject* arrow;
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "i", kwlist, &style)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments");
+        PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
     }
 
@@ -2398,7 +2398,7 @@ gfp_arrowpolyfilled(PyObject* self, PyObject *args, PyObject *kwds) {
     int filled;
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "i", kwlist, &style)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments");
+        PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
     }
 
@@ -2419,7 +2419,7 @@ gfp_arrow_get_style(PyObject* self, PyObject *args, PyObject *kwds) {
     const char* str;
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &str)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments");
+        PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
     }
 
@@ -2434,7 +2434,7 @@ gfp_arrow_set_style(PyObject* self, PyObject *args, PyObject *kwds) {
     const char* str;
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "si", kwlist, &str, &style)) {
-        PyErr_SetString(GraphfabError, "Invalid arguments");
+        PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
     }
 
@@ -2444,8 +2444,8 @@ gfp_arrow_set_style(PyObject* self, PyObject *args, PyObject *kwds) {
 }
 
 // Module method table
-static PyMethodDef GraphfabMethods[] = {
-    {"system",  gfp_graphfab_system, METH_VARARGS,
+static PyMethodDef SBNWMethods[] = {
+    {"system",  gfp_sbnw_system, METH_VARARGS,
      "Execute a shell command."},
     {"loadsbml",  (PyCFunction)gfp_loadsbml, METH_VARARGS | METH_KEYWORDS,
      "Pass either a filepath or raw SBML to load a model\n\n"
@@ -2453,7 +2453,7 @@ static PyMethodDef GraphfabMethods[] = {
      ":param sbml: Either a filepath or raw SBML content to load\n"
      ":type sbml: str\n"
      ":returns: :class:`sbnw.sbmlmodel` -- The SBML moodel\n"
-     ":raises: GraphfabError\n"
+     ":raises: SBNWError\n"
     },
     {"paramcubic",  (PyCFunction)gfp_paramcubic, METH_VARARGS | METH_KEYWORDS,
      "Evaluate a parametric cubic Bezier\n\n"
@@ -2488,13 +2488,13 @@ static PyMethodDef GraphfabMethods[] = {
 
 #if PYTHON_API_VER == 3
     // Module def
-    static struct PyModuleDef graphfabmodule = {
+    static struct PyModuleDef sbnwmodule = {
     PyModuleDef_HEAD_INIT,
-    "graphfab",   /* name of module */
+    "sbnw",   /* name of module */
     "SBML autolayout", /* module documentation, may be NULL */
     -1,       /* size of per-interpreter state of the module,
                     or -1 if the module keeps state in global variables. */
-    GraphfabMethods
+    SBNWMethods
     };
 #endif
     
@@ -2512,9 +2512,9 @@ static PyMethodDef GraphfabMethods[] = {
 // Module init
 PyMODINIT_FUNC
 #if PYTHON_API_VER == 3
-PyInit_graphfab(void)
+PyInit_sbnw(void)
 #else
-initgraphfab(void)
+initsbnw(void)
 #endif
 {
     PyObject *m;
@@ -2561,16 +2561,16 @@ initgraphfab(void)
         MODINIT_ABORT
 
 #if PYTHON_API_VER == 3
-    m = PyModule_Create(&graphfabmodule);
+    m = PyModule_Create(&sbnwmodule);
 #else
-    m = Py_InitModule("graphfab", GraphfabMethods);
+    m = Py_InitModule("sbnw", SBNWMethods);
 #endif
     if (m == NULL)
         MODINIT_ABORT
 
-    GraphfabError = PyErr_NewException("sbnw.error", NULL, NULL);
-    Py_INCREF(GraphfabError);
-    PyModule_AddObject(m, "error", GraphfabError);
+    SBNWError = PyErr_NewException("sbnw.error", NULL, NULL);
+    Py_INCREF(SBNWError);
+    PyModule_AddObject(m, "error", SBNWError);
     
     
     // point
