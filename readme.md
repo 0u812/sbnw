@@ -15,7 +15,7 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
 ## How to compile the library
 
  * Install the latest version of <a href="http://sourceforge.net/projects/sbml/files/libsbml/">libSBML</a> (tested with 5.6, 5.8, 5.10, 5.11)
- * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">source code</a> via git
+ * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">master branch</a> via git
  * Download and run <a href="http://www.cmake.org/">CMake</a> (compatible with major version 2 or 3)
  * Using CMake, set the `LIBSBML_DIR` variable to point to the directory where libSBML is installed/downloaded
  * Configure & generate via CMake, choosing a generator that matches the required configuration (32-bit x86 is recommended on Windows; on Linux the default generator is sufficient)
