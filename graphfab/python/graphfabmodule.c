@@ -229,7 +229,7 @@ static PyTypeObject gfp_PointType = {
     0,                         /* tp_setattro */
     0,                         /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT,        /* tp_flags */
-    "Point doc",             /* tp_doc */
+    "A set of coordinates in 2D space",             /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
     0,                         /* tp_richcompare */
@@ -422,7 +422,7 @@ static PyTypeObject gfp_TransformType = {
     0,                         /* tp_setattro */
     0,                         /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT,        /* tp_flags */
-    "Transform doc",             /* tp_doc */
+    "A 2D affine transformation used for pan/zoom",             /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
     0,                         /* tp_richcompare */
@@ -560,7 +560,7 @@ static PyTypeObject gfp_CompartmentType = {
     (setattrofunc)gfp_Compartment_SetAttro,                         /* tp_setattro */
     0,                         /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT,        /* tp_flags */
-    "Compartment doc",             /* tp_doc */
+    "An SBML compartment which may contain species/reactions etc.",             /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
     0,                         /* tp_richcompare */
@@ -834,7 +834,7 @@ static PyTypeObject gfp_RxnType = {
     0,                         /* tp_setattro */
     0,                         /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT,        /* tp_flags */
-    "Reaction doc",            /* tp_doc */
+    "A SBML reaction with substrate/product/modifier curves",            /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
     0,                         /* tp_richcompare */
@@ -1203,7 +1203,7 @@ static PyTypeObject gfp_CanvasType = {
     (setattrofunc)gfp_Canvas_SetAttr,        /* tp_setattro */
     0,                         /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT,        /* tp_flags */
-    "Canvas",                  /* tp_doc */
+    "The canvas (2D rectangle) on which the layout is applied",                  /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
     0,                         /* tp_richcompare */
@@ -1645,7 +1645,7 @@ static PyTypeObject gfp_NetworkType = {
     (setattrofunc)gfp_Network_SetAttr,       /* tp_setattro */
     0,                         /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT,        /* tp_flags */
-    "Network doc",             /* tp_doc */
+    "Represents a model of the network including species and reactions",             /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
     0,                         /* tp_richcompare */
