@@ -106,6 +106,8 @@ class PyfabConfigSpyder(PyfabConfig):
 
 class PyfabPlugin(pyfab_app.Autolayout, SpyderPluginMixin, PyfabConfigSpyder):
   CONF_SECTION = 'pyfab_plugin'
+  #LOCATION = Qt.RightDockWidgetArea #useless
+  #ALLOWED_AREAS = Qt::RightDockWidgetArea #useless
   def __init__(self, parent=None):
 
     self.configCls = PyfabConfigStandalone
@@ -119,6 +121,8 @@ class PyfabPlugin(pyfab_app.Autolayout, SpyderPluginMixin, PyfabConfigSpyder):
 
     # Initialize plugin
     self.initialize_plugin()
+
+    self.raise_() #useless
 
   def getIconPath(self, p):
     result = str(os.path.join(localpath, 'pyfab-assets', 'icons', p))
