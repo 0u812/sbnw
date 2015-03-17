@@ -1,0 +1,5 @@
+Do a make install. Add the graphfab module to your python path:
+
+export PYTHONPATH=~/home/devel/install/sbnw/python2/site-packages:$PYTHONPATH
+
+Then mkdir build/sbnw-sphinx.

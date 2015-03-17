@@ -3,6 +3,10 @@
 ## Introduction
 SBNW is a network viewer which supports autolayout of models. Uses libSBML for reading/writing models.
 
+## Download
+
+The latest releases can be downloaded at https://github.com/0u812/sbnw/releases.
+
 ## SBNW: An Automatic Layout Tool for SBML
 
 Online C API documentation (via Doxygen) can be found at http://0u812.github.io/sbnw/docs. Python documentation can be found at http://0u812.github.io/sbnw/sphinx.
