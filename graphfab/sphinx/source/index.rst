@@ -1,6 +1,6 @@
 .. SBNW: a layout engine for SBML
 
-SBNW Documentation
+libSBNW Documentation
 ====================================
 
 Contents:
