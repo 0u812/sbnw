@@ -24,7 +24,7 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
  * Shift-B will build all targets
  * If the build is successful, right click on the INSTALL target and select build. LibGraphfab will be installed to the location stored in CMAKE_INSTALL_PREFIX (ensure your user has write access)
 
-## Using the Library
+## Using the Library (C API)
 
 The C API is exposed via graphfab/autolayoutc_api.h.  There's an example in sandbox/basic that demonstrates all the functionality you need to get the layout working.  The relevant lines are:
 
