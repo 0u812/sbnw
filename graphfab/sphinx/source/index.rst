@@ -1,6 +1,6 @@
-.. Graphfab: a layout engine for SBML
+.. SBNW: a layout engine for SBML
 
-Graphfab Documentation
+SBNW Documentation
 ====================================
 
 Contents:
@@ -11,7 +11,7 @@ Contents:
 .. automodule:: graphfab
     :members:
 
-This here's the doc
+SBNW Usage Example
 
 .. py:function:: enumerate(sequence[, start=0])
 
@@ -20,7 +20,7 @@ This here's the doc
    
    Load the model
    
-   >>> model = graphfab.loadsbml('/home/wisp/stuff/SauroLab/develop/graphfab-snake/testcases/twocompsys-ex.xml')
+   >>> model = graphfab.loadsbml('/path/to/sbnw/testcases/twocompsys-ex.xml')
    >>> layout = model.layout
    
    Access the API to obtain the network parameters

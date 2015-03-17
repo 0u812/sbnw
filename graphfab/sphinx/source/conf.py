@@ -42,8 +42,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'graphfab'
-copyright = '2013, JK Medley'
+project = 'sbnw'
+copyright = '2013-2015, JK Medley'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -166,7 +166,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'graphfabdoc'
+htmlhelp_basename = 'sbnwdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -215,7 +215,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'graphfab', 'graphfab Documentation',
+    ('index', 'sbnw', 'SBNW Documentation',
      ['JK Medley'], 1)
 ]
 
@@ -229,8 +229,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'graphfab', 'graphfab Documentation',
-   'JK Medley', 'graphfab', 'One line description of project.',
+  ('index', 'sbnw', 'SBNW Documentation',
+   'JK Medley', 'sbnw', 'One line description of project.',
    'Miscellaneous'),
 ]
 
