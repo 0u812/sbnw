@@ -9,7 +9,7 @@ The latest releases can be downloaded at https://github.com/0u812/sbnw/releases.
 
 ## Test Cases
 
-The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) used with this tool are available for download from the releases page as well.
+The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) used to develop this tool are available for download from the releases page as well.
 
 ## SBNW: An Automatic Layout Tool for SBML
 
