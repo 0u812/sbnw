@@ -1,0 +1,594 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SBNW Documentation &mdash; sbnw 4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="sbnw 4 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="#">sbnw 4 documentation</a></div>
+        <div class="rel">
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sbnw-documentation">
+<h1>SBNW Documentation<a class="headerlink" href="#sbnw-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<span class="target" id="module-graphfab"></span><dl class="function">
+<dt id="graphfab.arrowpoly">
+<tt class="descclassname">graphfab.</tt><tt class="descname">arrowpoly</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.arrowpoly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the vertices for an arrow polygon</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>style</strong> (<em>int</em>) &#8211; The index of the arrowhead style</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="graphfab.arrowpoly_filled">
+<tt class="descclassname">graphfab.</tt><tt class="descname">arrowpoly_filled</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.arrowpoly_filled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the poly should be filled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>style</strong> (<em>int</em>) &#8211; The index of the arrowhead style</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.canvas">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">canvas</tt><a class="headerlink" href="#graphfab.canvas" title="Permalink to this definition">¶</a></dt>
+<dd><p>The canvas (2D rectangle) on which the layout is applied</p>
+<dl class="attribute">
+<dt id="graphfab.canvas.height">
+<tt class="descname">height</tt><a class="headerlink" href="#graphfab.canvas.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>height</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.canvas.width">
+<tt class="descname">width</tt><a class="headerlink" href="#graphfab.canvas.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>width</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.compartment">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">compartment</tt><a class="headerlink" href="#graphfab.compartment" title="Permalink to this definition">¶</a></dt>
+<dd><p>An SBML compartment which may contain species/reactions etc.</p>
+<dl class="attribute">
+<dt id="graphfab.compartment.height">
+<tt class="descname">height</tt><a class="headerlink" href="#graphfab.compartment.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>height</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.compartment.max">
+<tt class="descname">max</tt><a class="headerlink" href="#graphfab.compartment.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>max</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.compartment.min">
+<tt class="descname">min</tt><a class="headerlink" href="#graphfab.compartment.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>min</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.compartment.numelt">
+<tt class="descname">numelt</tt><a class="headerlink" href="#graphfab.compartment.numelt" title="Permalink to this definition">¶</a></dt>
+<dd><p>numelt</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.compartment.width">
+<tt class="descname">width</tt><a class="headerlink" href="#graphfab.compartment.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>width</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.cubicintersec">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">cubicintersec</tt><a class="headerlink" href="#graphfab.cubicintersec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cubic Bezier intersection.</p>
+<dl class="method">
+<dt id="graphfab.cubicintersec.getpoints">
+<tt class="descname">getpoints</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.cubicintersec.getpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the intersection points</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="graphfab.get_arrow_style">
+<tt class="descclassname">graphfab.</tt><tt class="descname">get_arrow_style</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.get_arrow_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the arrow style for a role</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>role</strong> (<em>str</em>) &#8211; The role</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.layout">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">layout</tt><a class="headerlink" href="#graphfab.layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>The layout information for an SBML model. When the SBML model does not provide layout information, an initial configuration can be generated by calling <a class="reference internal" href="#graphfab.network.randomize" title="graphfab.network.randomize"><tt class="xref py py-meth docutils literal"><span class="pre">graphfab.network.randomize()</span></tt></a>.</p>
+<dl class="attribute">
+<dt id="graphfab.layout.canvas">
+<tt class="descname">canvas</tt><a class="headerlink" href="#graphfab.layout.canvas" title="Permalink to this definition">¶</a></dt>
+<dd><p>canvas name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.layout.fitwindow">
+<tt class="descname">fitwindow</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.layout.fitwindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>fitwindow doc</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.layout.network">
+<tt class="descname">network</tt><a class="headerlink" href="#graphfab.layout.network" title="Permalink to this definition">¶</a></dt>
+<dd><p>network name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.layout.tf_fitwindow">
+<tt class="descname">tf_fitwindow</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.layout.tf_fitwindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just returns the transformation, does not apply</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="graphfab.loadsbml">
+<tt class="descclassname">graphfab.</tt><tt class="descname">loadsbml</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.loadsbml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pass either a filepath or raw SBML to load a model</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">graphfab</span><span class="o">.</span><span class="n">loadsbml</span><span class="p">(</span><span class="s">&#39;path/to/file/sbmlmodel.xml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sbml</strong> (<em>str</em>) &#8211; Either a filepath or raw SBML content to load</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#graphfab.sbmlmodel" title="graphfab.sbmlmodel"><tt class="xref py py-class docutils literal"><span class="pre">graphfab.sbmlmodel</span></tt></a> &#8211; The SBML moodel</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">GraphfabError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="graphfab.narrow_styles">
+<tt class="descclassname">graphfab.</tt><tt class="descname">narrow_styles</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.narrow_styles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of arrow styles</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.network">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">network</tt><a class="headerlink" href="#graphfab.network" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a model of the network including species and reactions</p>
+<dl class="method">
+<dt id="graphfab.network.aliasnode">
+<tt class="descname">aliasnode</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.network.aliasnode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias a node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.network.autolayout">
+<tt class="descname">autolayout</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.network.autolayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the FR algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.network.compartments">
+<tt class="descname">compartments</tt><a class="headerlink" href="#graphfab.network.compartments" title="Permalink to this definition">¶</a></dt>
+<dd><p>compartments</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.network.haslayout">
+<tt class="descname">haslayout</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.network.haslayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine whether the SBML model included layout information or not</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.network.newnode">
+<tt class="descname">newnode</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.network.newnode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a node to the network</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.network.nodes">
+<tt class="descname">nodes</tt><a class="headerlink" href="#graphfab.network.nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>nodes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.network.randomize">
+<tt class="descname">randomize</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.network.randomize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomize the layout</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.network.rebuildcurves">
+<tt class="descname">rebuildcurves</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.network.rebuildcurves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebuild the curves for changed node positions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.network.recenterjunct">
+<tt class="descname">recenterjunct</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.network.recenterjunct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recenter reaction junctions for changed node positions (you do not have to also call rebuildcurves)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.network.removenode">
+<tt class="descname">removenode</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.network.removenode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a node from the network</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.network.rxns">
+<tt class="descname">rxns</tt><a class="headerlink" href="#graphfab.network.rxns" title="Permalink to this definition">¶</a></dt>
+<dd><p>rxns</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.node">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">node</tt><a class="headerlink" href="#graphfab.node" title="Permalink to this definition">¶</a></dt>
+<dd><p>A node in the layout engine represents a (chemical) species in the SBML model. The nodes will be given initial coordinates if layout information is present in the original SBML model.</p>
+<dl class="attribute">
+<dt id="graphfab.node.centroid">
+<tt class="descname">centroid</tt><a class="headerlink" href="#graphfab.node.centroid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Node centroid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.node.custom">
+<tt class="descname">custom</tt><a class="headerlink" href="#graphfab.node.custom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom user data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.node.height">
+<tt class="descname">height</tt><a class="headerlink" href="#graphfab.node.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Node height</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.node.isaliased">
+<tt class="descname">isaliased</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.node.isaliased" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the node is aliased</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.node.islocked">
+<tt class="descname">islocked</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.node.islocked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the node is locked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.node.lock">
+<tt class="descname">lock</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.node.lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lock the node</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.node.name">
+<tt class="descname">name</tt><a class="headerlink" href="#graphfab.node.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Node name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.node.unlock">
+<tt class="descname">unlock</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.node.unlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unlock the node</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.node.width">
+<tt class="descname">width</tt><a class="headerlink" href="#graphfab.node.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Node width</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="graphfab.paramcubic">
+<tt class="descclassname">graphfab.</tt><tt class="descname">paramcubic</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.paramcubic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a parametric cubic Bezier</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.point">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">point</tt><a class="headerlink" href="#graphfab.point" title="Permalink to this definition">¶</a></dt>
+<dd><p>A set of coordinates in 2D space</p>
+<dl class="attribute">
+<dt id="graphfab.point.x">
+<tt class="descname">x</tt><a class="headerlink" href="#graphfab.point.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>x</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.point.y">
+<tt class="descname">y</tt><a class="headerlink" href="#graphfab.point.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>y</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.reaction">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">reaction</tt><a class="headerlink" href="#graphfab.reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>A SBML reaction with substrate/product/modifier curves</p>
+<dl class="attribute">
+<dt id="graphfab.reaction.centroid">
+<tt class="descname">centroid</tt><a class="headerlink" href="#graphfab.reaction.centroid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reaction centroid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.reaction.curves">
+<tt class="descname">curves</tt><a class="headerlink" href="#graphfab.reaction.curves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the curves for the reaction. This attribute is <strong>READ ONLY</strong>. If you want to change the reaction species, you must create a new reaction and delete the old one</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.reaction.custom">
+<tt class="descname">custom</tt><a class="headerlink" href="#graphfab.reaction.custom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom user data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.reaction.has">
+<tt class="descname">has</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.reaction.has" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if a node is in this reaction</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.reaction.recalccps">
+<tt class="descname">recalccps</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.reaction.recalccps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recalculate the curve cps, don&#8217;t recenter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.reaction.recenter">
+<tt class="descname">recenter</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.reaction.recenter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recalculate the reaction centroid</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.sbmlmodel">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">sbmlmodel</tt><a class="headerlink" href="#graphfab.sbmlmodel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model which may be serialized using the SBML XML format</p>
+<dl class="method">
+<dt id="graphfab.sbmlmodel.getsbml">
+<tt class="descname">getsbml</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.sbmlmodel.getsbml" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.sbmlmodel.layout">
+<tt class="descname">layout</tt><a class="headerlink" href="#graphfab.sbmlmodel.layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Layout structure for this model. Since not all models have associated layout information, it is loaded on-demand when the attribute is requested.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.sbmlmodel.level">
+<tt class="descname">level</tt><a class="headerlink" href="#graphfab.sbmlmodel.level" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SBML level for the model (integer)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.sbmlmodel.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.sbmlmodel.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="graphfab.sbmlmodel.savetikz">
+<tt class="descname">savetikz</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.sbmlmodel.savetikz" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.sbmlmodel.version">
+<tt class="descname">version</tt><a class="headerlink" href="#graphfab.sbmlmodel.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SBML version for the model (integer)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="graphfab.set_arrow_style">
+<tt class="descclassname">graphfab.</tt><tt class="descname">set_arrow_style</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.set_arrow_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the arrow style for a role</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>role</strong> (<em>str</em>) &#8211; The role</li>
+<li><strong>style</strong> (<em>int</em>) &#8211; The style to assign</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="graphfab.system">
+<tt class="descclassname">graphfab.</tt><tt class="descname">system</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a shell command.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="graphfab.transform">
+<em class="property">class </em><tt class="descclassname">graphfab.</tt><tt class="descname">transform</tt><a class="headerlink" href="#graphfab.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 2D affine transformation used for pan/zoom</p>
+<dl class="attribute">
+<dt id="graphfab.transform.disp">
+<tt class="descname">disp</tt><a class="headerlink" href="#graphfab.transform.disp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the displacement of the transform</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphfab.transform.dump">
+<tt class="descname">dump</tt><big>(</big><big>)</big><a class="headerlink" href="#graphfab.transform.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>dump doc</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.transform.postdisp">
+<tt class="descname">postdisp</tt><a class="headerlink" href="#graphfab.transform.postdisp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the displacement of the transform (after transform applied</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphfab.transform.scale">
+<tt class="descname">scale</tt><a class="headerlink" href="#graphfab.transform.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the scale for the transform.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>SBNW Usage Example</p>
+<blockquote>
+<div><p>Load the model</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">graphfab</span><span class="o">.</span><span class="n">loadsbml</span><span class="p">(</span><span class="s">&#39;/path/to/sbnw/testcases/twocompsys-ex.xml&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">layout</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layout</span>
+</pre></div>
+</div>
+<p>Access the API to obtain the network parameters</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">network</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">canvas</span>
+</pre></div>
+</div>
+<p>Randomize the initial configuration and run the FR algorithm</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">network</span><span class="o">.</span><span class="n">randomize</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span><span class="o">.</span><span class="n">autolayout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Shrink or enlarge a network so that it fits within a window</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">layout</span><span class="o">.</span><span class="n">fitwindow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul class="simple">
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+            <br/>
+            <a href="_sources/index.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2013-2015, JK Medley.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>
