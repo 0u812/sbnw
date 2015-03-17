@@ -5,7 +5,7 @@ SBNW is a network viewer which supports autolayout of models. Uses libSBML for r
 
 ## Download
 
-The latest releases can be downloaded at https://github.com/0u812/sbnw/releases.
+The latest release can be downloaded at https://github.com/0u812/sbnw/releases.
 
 ## Test Cases
 
