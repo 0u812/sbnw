@@ -7,6 +7,10 @@ SBNW is a network viewer which supports autolayout of models. Uses libSBML for r
 
 The latest releases can be downloaded at https://github.com/0u812/sbnw/releases.
 
+## Test Cases
+
+The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) used with this tool are available for download from the releases page as well.
+
 ## SBNW: An Automatic Layout Tool for SBML
 
 Online C API documentation (via Doxygen) can be found at http://0u812.github.io/sbnw/docs. Python documentation can be found at http://0u812.github.io/sbnw/sphinx.
@@ -23,6 +27,20 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
  * (This step was previously used to instruct the user to set the MSVC runtime library. It is now set automatically through CMake. This placeholder serves as a reminder in case this solution breaks at some point)
  * Shift-B will build all targets
  * If the build is successful, right click on the INSTALL target and select build. SBNW will be installed to the location stored in CMAKE_INSTALL_PREFIX (ensure your user has write access)
+
+## Using the Tellurium Plugin
+
+The network viewer is available as a plugin in Tellurium. Simply switch to the network viewer tab, open a model from the [test cases](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) (e.g. BorisEJB.xml), and enter the following code:
+
+```
+import nwed
+# Get the current model
+sbmlstr = nwed.getsbml()
+# Print the SBML
+print(sbmlstr)
+# Rount-trip the model SBML
+nwed.setsbml(sbmlstr)
+```
 
 ## Using the Library (C API)
 
