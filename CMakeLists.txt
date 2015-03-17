@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 2.8)
-project (Graphfab)
+project (SBNW)
 
 set(GRAPHFAB_MAJOR_VER  1)
 set(GRAPHFAB_MINOR_VER  2)
-set(GRAPHFAB_PATCHLEVEL 4)
+set(GRAPHFAB_PATCHLEVEL 5)
 
 #User Configuration
 if(${WIN32})

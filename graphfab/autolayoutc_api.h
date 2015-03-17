@@ -46,20 +46,20 @@
 #endif
 
 
-///*! \mainpage Graphfab Library
+///*! \mainpage libSBNW
 // *
 // * \section intro_sec Introduction
 // *
-// * Graphfab is a SBML compliant layout generation program.
+// * libSBNW is a SBML compliant layout generation program.
 // *
 //
 // Example:
 //
 // \code
 //
-//		 #include "autolayoutc_api.h"
+//       #include "autolayoutc_api.h"
 //
-//		 //...
+//       //...
 //
 //       // type to store layout info
 //       gf_layoutInfo* l;
@@ -104,7 +104,7 @@
 //
 // * \section install_sec Installation
 // *
-// * Installation documentation is provided in the main google code page.
+// * Installation documentation is provided at https://github.com/0u812/sbnw.
 
 
 // \defgroup C_API All C Methods
