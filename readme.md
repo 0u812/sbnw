@@ -11,7 +11,7 @@ The latest release can be downloaded at https://github.com/0u812/sbnw/releases.
 
 The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) used to develop this tool are available for download from the releases page as well.
 
-## SBNW: An Automatic Layout Tool for SBML
+## Online Documentation
 
 Online C API documentation (via Doxygen) can be found at http://0u812.github.io/sbnw/docs. Python documentation can be found at http://0u812.github.io/sbnw/sphinx.
 
