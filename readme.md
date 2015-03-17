@@ -18,7 +18,7 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
  * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">source code</a> via git
  * Download and run <a href="http://www.cmake.org/">CMake</a> (compatible with major version 2 or 3)
  * Using CMake, set the `LIBSBML_DIR` variable to point to the directory where libSBML is installed/downloaded
- * Configure & generate via CMake (see <a href="http://code.google.com/p/roadrunnerlib/wiki/BuildingRoadRunner">here</a> for an example), choosing a generator that matches the required configuration (32-bit x86 is recommended on Windows; on Linux the default generator is sufficient)
+ * Configure & generate via CMake, choosing a generator that matches the required configuration (32-bit x86 is recommended on Windows; on Linux the default generator is sufficient)
  * Open the generated .sln in Visual Studio, and change the configuration to "Release" (the easy step)
  * (This step was previously used to instruct the user to set the MSVC runtime library. It is now set automatically through CMake. This placeholder serves as a reminder in case this solution breaks at some point)
  * Shift-B will build all targets
