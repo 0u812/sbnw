@@ -86,6 +86,7 @@ API Documentation
 
    sbmlmodel.save
    sbmlmodel.getsbml
+   sbmlmodel.savetikz
 
 Indices and tables
 ==================
