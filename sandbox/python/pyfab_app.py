@@ -346,7 +346,7 @@ class Autolayout(MainWindowBaseClass):
           menu.setNativeMenuBar(True)
 
         self.filemenu = menu.addMenu('&File')
-        self.filemenu.addAction(self.newAct)
+        #self.filemenu.addAction(self.newAct)
         self.filemenu.addAction(self.openAct)
         self.filemenu.addAction(self.saveAct)
         self.filemenu.addAction(self.saveasAct)
