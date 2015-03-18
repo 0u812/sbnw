@@ -18,16 +18,18 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
 
 ## How to compile the library
 
- * Install the latest version of <a href="http://sourceforge.net/projects/sbml/files/libsbml/">libSBML</a> (tested with 5.6, 5.8, 5.10, 5.11)
- * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">master branch</a> to Documents\sbnw via git
- * Download and instsall <a href="http://www.cmake.org/">CMake</a> (compatible with major version 2 or 3)
- * Open CMake and select Documents\sbnw as the source directory
- * Select Documents\sbnw-build (or your own choice) as the build directory
- * Click configure & generate via CMake, choosing a generator that matches the required configuration (32-bit x86 is recommended on Windows; on Linux the default generator is sufficient)
- * Using CMake, set the `LIBSBML_DIR` variable to point to the directory where libSBML is installed/downloaded
- * On Windows, open the generated .sln in Visual Studio, and change the configuration to "Release"; on Linux/Mac simply run make -j4 install from the build directory
+ * Install the latest version of <a href="http://sourceforge.net/projects/sbml/files/libsbml/">libSBML</a> (tested with 5.6, 5.8, 5.10, 5.11).
+ * *NOTE*: If you install a pre-built binary of libSBML then you must compile SBNW with the same version of Visual Studio as used to build libSBML (2010 at the time of writing).
+ * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">master branch</a> to Documents\sbnw via git.
+ * Download and instsall <a href="http://www.cmake.org/">CMake</a> (compatible with major version 2 or 3).
+ * Open CMake and select Documents\sbnw as the source directory.
+ * Select Documents\sbnw-build (or your own choice) as the build directory.
+ * Click configure & generate via CMake, choosing a generator that matches the required configuration (32-bit x86 is recommended on Windows; on Linux the default generator is sufficient).
+ * Using CMake, set the `LIBSBML_DIR` variable to point to the directory where libSBML is installed/downloaded.
+ * *NOTE*: In order to statically link to libSBML, specify `SBNW_LINK_TO_STATIC_LIBSBML=ON`. Otherwise, the libSBML DLLs must be in the PATH to run any compiled code.
+ * On Windows, open the generated .sln in Visual Studio, and change the configuration to "Release"; on Linux/Mac simply run make -j4 install from the build directory.
  * (This step was previously used to instruct the user to set the MSVC runtime library. It is now set automatically through CMake. This placeholder serves as a reminder in case this solution breaks at some point)
- * If the build is successful, right click on the INSTALL target and select build. SBNW will be installed to the location stored in CMAKE_INSTALL_PREFIX (ensure your user has write access)
+ * If the build is successful, right click on the INSTALL target and select build. SBNW will be installed to the location stored in CMAKE_INSTALL_PREFIX (ensure your user has write access).
 
 ## Using the Tellurium Plugin
 
