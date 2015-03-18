@@ -60,12 +60,20 @@ API Documentation
 .. autosummary::
    :toctree: generated/
 
+.. rubric:: Functions
+.. autosummary::
+   :toctree: generated/
+
    loadsbml
    arrowpoly
    arrowpoly_filled
    narrow_styles
    get_arrow_style
    set_arrow_style
+
+.. rubric:: Classes
+.. autosummary::
+   :toctree: generated/
 
    sbmlmodel
    point
