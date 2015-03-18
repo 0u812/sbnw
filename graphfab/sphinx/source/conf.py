@@ -22,6 +22,8 @@ sys.path.insert(0, '@CMAKE_BINARY_DIR@/graphfab/build/lib.linux-x86_64-3.3')
 
 # -- General configuration -----------------------------------------------------
 
+autosummary_generate = True
+
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
 

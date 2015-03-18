@@ -53,15 +53,23 @@ Example 2: Add layout information to an SBML model
 
    >>> model.save('/path/to/output.xml')
 
-.. toctree::
-   :maxdepth: 2
+API Documentation
 
-.. currentmodule:: sphinx
+.. currentmodule:: sbnw
 
 .. autosummary::
+   :nosignatures:
+   :toctree: generated/
 
-   environment.BuildEnvironment
-   util.relative_uri
+   loadsbml
+   point
+   network
+   layout
+   canvas
+   node
+   compartment
+   reaction
+   transform
 
 Indices and tables
 ==================
