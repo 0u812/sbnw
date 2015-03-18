@@ -57,8 +57,6 @@ API Documentation
 
 .. currentmodule:: sbnw
 
-.. rubric:: Classes
-
 .. autosummary::
    :toctree: generated/
 
@@ -78,14 +76,6 @@ API Documentation
    compartment
    reaction
    transform
-
-.. rubric:: sbmlmodel Members
-
-.. autosummary::
-   :toctree: generated/
-
-   sbmlmodel.save
-   sbmlmodel.getsbml
 
 Indices and tables
 ==================
