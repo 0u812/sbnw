@@ -147,6 +147,5 @@ var searchData=
   ['gfp_5frxn',['gfp_Rxn',['../structgfp__Rxn.html',1,'']]],
   ['gfp_5fsbmlmodel',['gfp_SBMLModel',['../structgfp__SBMLModel.html',1,'']]],
   ['gfp_5ftransform',['gfp_Transform',['../structgfp__Transform.html',1,'']]],
-  ['grav',['grav',['../struct____fr__options.html#a1289bf60b8b6ba6bef01c3fbc4977fd3',1,'__fr_options']]],
-  ['graphfab_20library',['Graphfab Library',['../index.html',1,'']]]
+  ['grav',['grav',['../struct____fr__options.html#a1289bf60b8b6ba6bef01c3fbc4977fd3',1,'__fr_options']]]
 ];
