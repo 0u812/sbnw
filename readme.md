@@ -23,7 +23,7 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
  * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">master branch</a> to Documents\sbnw via git.
  * Download and instsall <a href="http://www.cmake.org/">CMake</a> (compatible with major version 2 or 3).
  * Open CMake and select Documents\sbnw as the source directory.
- * Select Documents\sbnw-build (or your own choice) as the build directory.
+ * Select Documents\sbnw-build (or choose a directory at will) as the build directory.
  * Click configure & generate via CMake, choosing a generator that matches the required configuration (32-bit x86 is recommended on Windows; on Linux the default generator is sufficient).
  * Using CMake, set the `LIBSBML_DIR` variable to point to the directory where libSBML is installed/downloaded. Click configure & generate again.
  * **NOTE**: In order to statically link to libSBML, specify `SBNW_LINK_TO_STATIC_LIBSBML=ON`. Otherwise, the libSBML DLLs must be in the PATH to run any compiled code.
