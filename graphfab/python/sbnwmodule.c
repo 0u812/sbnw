@@ -2250,13 +2250,15 @@ static PyGetSetDef gfp_SBMLModel_getseters[] = {
 
 static PyMethodDef gfp_SBMLModel_methods[] = {
     {"save", (PyCFunction)gfp_SBMLModel_save, METH_VARARGS | METH_KEYWORDS,
-     "save"
+     "Save an SBML model to the filesystem\n\n"
+     ":param str path: The path to write the file to\n"
     },
     {"getsbml", (PyCFunction)gfp_SBMLModel_getsbml, METH_NOARGS,
-     "getsbml"
+     "Get the raw SBML/XML for the current model\n\n"
     },
     {"savetikz", (PyCFunction)gfp_SBMLModel_renderTikZ_file, METH_VARARGS | METH_KEYWORDS,
-     "savetikz"
+     "Render the current model to TikZ\n\n"
+     ":param str path: The path to write the output file to\n"
     },
     {NULL}  /* Sentinel */
 };

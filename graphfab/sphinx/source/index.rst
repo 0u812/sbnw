@@ -57,10 +57,18 @@ API Documentation
 
 .. currentmodule:: sbnw
 
+.. rubric:: Classes
+
 .. autosummary::
    :toctree: generated/
 
    loadsbml
+   arrowpoly
+   arrowpoly_filled
+   narrow_styles
+   get_arrow_style
+   set_arrow_style
+
    sbmlmodel
    point
    network
@@ -70,6 +78,14 @@ API Documentation
    compartment
    reaction
    transform
+
+.. rubric:: sbmlmodel Members
+
+.. autosummary::
+   :toctree: generated/
+
+   sbmlmodel.save
+   sbmlmodel.getsbml
 
 Indices and tables
 ==================
