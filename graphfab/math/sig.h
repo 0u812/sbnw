@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_MATH_SIG_H_
-#define __GRAPHFAB_MATH_SIG_H_
+#ifndef __SBNW_MATH_SIG_H_
+#define __SBNW_MATH_SIG_H_
 
 //== INCLUDES ========================================================================
 

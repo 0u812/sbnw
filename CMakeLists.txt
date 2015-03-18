@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 2.8)
 project (SBNW)
 
-set(GRAPHFAB_MAJOR_VER  1)
-set(GRAPHFAB_MINOR_VER  2)
-set(GRAPHFAB_PATCHLEVEL 5)
+set(SBNW_MAJOR_VER  1)
+set(SBNW_MINOR_VER  2)
+set(SBNW_PATCHLEVEL 5)
 
 #User Configuration
 if(${WIN32})
@@ -12,7 +12,7 @@ else()
     include( "UserConfigLinux.txt" )
 endif()
 
-set(GRAPHFAB_SPYDER_DIST ON CACHE BOOL "Install Spyder plugin files")
+set(SBNW_SPYDER_DIST ON CACHE BOOL "Install Spyder plugin files")
 
 set(BUILD_STATIC_LIB ON CACHE BOOL "Build the static version of the library")
 
@@ -60,10 +60,10 @@ if(LINK_WITH_LIBSBML)
 endif()
 #Image Magick
 if(LINK_WITH_MAGICK)
-    set(GRAPHFAB_USE_MAGICK 1)
+    set(SBNW_USE_MAGICK 1)
     include_directories(${MAGICK_INCLUDE})
 else()
-    set(GRAPHFAB_USE_MAGICK 0)
+    set(SBNW_USE_MAGICK 0)
 endif()
 
 if(ENABLE_FULL_RPATH) #http://www.cmake.org/Wiki/CMake_RPATH_handling

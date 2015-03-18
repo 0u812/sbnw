@@ -37,7 +37,7 @@
 #include "graphfab/layout/fr.h"
 #include "graphfab/draw/tikz.h"
 
-#if GRAPHFAB_USE_MAGICK
+#if SBNW_USE_MAGICK
 #include "graphfab/draw/magick.h"
 #endif
 
@@ -228,7 +228,7 @@ int main(int argc, char* argv[]) {
         gf_network nw = gf_getNetwork(l);
         if(!gf_nw_isLayoutSpecified(&nw))
           gf_randomizeLayout(l);
-        #if GRAPHFAB_USE_MAGICK
+        #if SBNW_USE_MAGICK
           gf_MagickRenderToFile(l, "/tmp/tmpfs/random.png", NULL);
         #endif
 
@@ -253,7 +253,7 @@ int main(int argc, char* argv[]) {
           fprintf(stderr, "Run layout\n");
           gf_doLayoutAlgorithm(opt, l);
         }
-        #if GRAPHFAB_USE_MAGICK
+        #if SBNW_USE_MAGICK
             gf_MagickRenderToFile(l, "/tmp/tmpfs/plot.png", NULL);
         #endif
         const char* tikzraw = gf_renderTikZ(l);

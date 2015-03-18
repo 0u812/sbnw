@@ -36,7 +36,7 @@
 #include "graphfab/sbml/layout.h"
 #include "graphfab/layout/fr.h"
 
-#if GRAPHFAB_USE_MAGICK
+#if SBNW_USE_MAGICK
 #include "graphfab/draw/magick.h"
 #endif
 
@@ -224,7 +224,7 @@ int main(int argc, char* argv[]) {
 //         srand((unsigned)time(NULL));
         //randomize node positions
         gf_randomizeLayout(l);
-        #if GRAPHFAB_USE_MAGICK
+        #if SBNW_USE_MAGICK
           gf_MagickRenderToFile(l, "/tmp/tmpfs/random.png", NULL);
         #endif
 
@@ -247,7 +247,7 @@ int main(int argc, char* argv[]) {
         gf_getLayoutOptDefaults(&opt);
         fprintf(stderr, "Run layout\n");
         gf_doLayoutAlgorithm(opt, l);
-        #if GRAPHFAB_USE_MAGICK
+        #if SBNW_USE_MAGICK
             gf_MagickRenderToFile(l, "/tmp/tmpfs/plot.png", NULL);
         #endif
         //save layout information to new SBML file

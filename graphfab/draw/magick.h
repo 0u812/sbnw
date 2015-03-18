@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_DRAW_MAGICK_H_
-#define __GRAPHFAB_DRAW_MAGICK_H_
+#ifndef __SBNW_DRAW_MAGICK_H_
+#define __SBNW_DRAW_MAGICK_H_
 
 //== INCLUDES ========================================================================
 

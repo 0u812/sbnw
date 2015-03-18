@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_UTIL_STRING_H_
-#define __GRAPHFAB_UTIL_STRING_H_
+#ifndef __SBNW_UTIL_STRING_H_
+#define __SBNW_UTIL_STRING_H_
 
 //== INCLUDES ========================================================================
 

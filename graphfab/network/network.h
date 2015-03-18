@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_NETWORK_H_
-#define __GRAPHFAB_NETWORK_H_
+#ifndef __SBNW_NETWORK_H_
+#define __SBNW_NETWORK_H_
 
 //== INCLUDES ========================================================================
 
@@ -475,7 +475,7 @@ namespace Graphfab {
 
             int getSubgraphIndex() const {
                 if (isub_ < 0)
-                    GRAPHFAB_THROW(InvalidParameterException, "No subgraph index set", "Network::getSubgraphIndex");
+                    SBNW_THROW(InvalidParameterException, "No subgraph index set", "Network::getSubgraphIndex");
                 return isub_;
             }
 

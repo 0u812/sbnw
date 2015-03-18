@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_DIAG_ERROR_H_
-#define __GRAPHFAB_DIAG_ERROR_H_
+#ifndef __SBNW_DIAG_ERROR_H_
+#define __SBNW_DIAG_ERROR_H_
 
 //== INCLUDES ========================================================================
 

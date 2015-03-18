@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_MATH_ROUND_H_
-#define __GRAPHFAB_MATH_ROUND_H_
+#ifndef __SBNW_MATH_ROUND_H_
+#define __SBNW_MATH_ROUND_H_
 
 //== INCLUDES ========================================================================
 

@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_RAND_UNIF_H_
-#define __GRAPHFAB_RAND_UNIF_H_
+#ifndef __SBNW_RAND_UNIF_H_
+#define __SBNW_RAND_UNIF_H_
 
 //== INCLUDES ========================================================================
 

@@ -37,7 +37,7 @@
 #include "graphfab/math/dist.h"
 #include "graphfab/math/transform.h"
 
-#if GRAPHFAB_USE_MAGICK
+#if SBNW_USE_MAGICK
 #include "graphfab/draw/magick.h"
 #endif
 
@@ -324,7 +324,7 @@ namespace Graphfab {
 //             std::cout << "Network mean: " << net.pmean() << "\n";
 //             std::cout << "Network variance: " << net.pvariance() << "\n";
             
-            #if GRAPHFAB_USE_MAGICK && 0
+            #if SBNW_USE_MAGICK && 0
             if(!(z % 10)) {
                 net.rebuildCurves();
                 std::stringstream ss;

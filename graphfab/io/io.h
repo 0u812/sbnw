@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_IO_H_
-#define __GRAPHFAB_IO_H_
+#ifndef __SBNW_IO_H_
+#define __SBNW_IO_H_
 
 //== INCLUDES ========================================================================
 

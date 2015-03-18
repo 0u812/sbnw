@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_AUTOLAYOUT_H_
-#define __GRAPHFAB_AUTOLAYOUT_H_
+#ifndef __SBNW_AUTOLAYOUT_H_
+#define __SBNW_AUTOLAYOUT_H_
 
 //== INCLUDES ========================================================================
 

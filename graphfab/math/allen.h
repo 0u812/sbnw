@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_ALLEN_H_
-#define __GRAPHFAB_ALLEN_H_
+#ifndef __SBNW_ALLEN_H_
+#define __SBNW_ALLEN_H_
 
 //== INCLUDES ========================================================================
 

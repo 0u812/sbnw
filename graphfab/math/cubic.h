@@ -38,8 +38,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __GRAPHFAB_CUBIC_H_
-#define __GRAPHFAB_CUBIC_H_
+#ifndef __SBNW_CUBIC_H_
+#define __SBNW_CUBIC_H_
 
 //== INCLUDES ========================================================================
 

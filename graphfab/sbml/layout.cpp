@@ -1753,7 +1753,7 @@ void gf_randomizeLayout2(gf_network* n, gf_canvas* c) {
 // and rename to more succinct function - is anyone going to want to get the version
 // for anything other than the CURRENT library?
 const char* gf_getCurrentLibraryVersion() {
-    return GF_EXPAND_AND_QUOTE(GRAPHFAB_MAJOR_VER) "." GF_EXPAND_AND_QUOTE(GRAPHFAB_MINOR_VER) "." GF_EXPAND_AND_QUOTE(GRAPHFAB_PATCHLEVEL);
+    return GF_EXPAND_AND_QUOTE(SBNW_MAJOR_VER) "." GF_EXPAND_AND_QUOTE(SBNW_MINOR_VER) "." GF_EXPAND_AND_QUOTE(SBNW_PATCHLEVEL);
 }
 
 void gf_free(void* x) {
