@@ -1883,14 +1883,14 @@ class PrefDialog(QDialog):
       super(PrefDialog, self).reject()
 
 def start():
-  print('create QApplication')
+  #print('create QApplication')
   if not inspyder:
     #app = QtWidgets.QApplication(sys.argv)
     app = QtWidgets.QApplication([])
   else:
     app = qapplication()
   #app.setAttribute(Qt.AA_UseHighDpiPixmaps)
-  print('post create QApplication')
+  #print('post create QApplication')
 
   layoutapp = Autolayout()
 
