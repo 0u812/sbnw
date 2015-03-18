@@ -11,10 +11,10 @@ newpath = os.path.abspath(os.path.join(localpath, '..', '..', 'bin'))
 #os.chdir(newpath)
 #print('not changing dir')
 
-print('pre import graphfab')
-import graphfab
+print('pre import sbnw')
+import sbnw
 
-print('post import graphfab')
+print('post import sbnw')
 
 import sys
 if sys.version_info[0] < 3:
@@ -583,7 +583,7 @@ class Autolayout(MainWindowBaseClass):
 
     def readsbml(self, sbml, filepath='<buffer>'):
         try:
-            self.model = graphfab.loadsbml(sbml)
+            self.model = sbnw.loadsbml(sbml)
         except:
             title = 'Failed to Open File'
             errorstr = 'Failed to read SBML '
@@ -660,7 +660,7 @@ class Autolayout(MainWindowBaseClass):
       self.config.updateArrowStyles()
 
     def openhomepageEvent(self, event):
-        QtGui.QDesktopServices.openUrl(QtCore.QUrl('http://code.google.com/p/graphfab/'))
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl('http://code.google.com/p/sbnw/'))
 
 if not inspyder:
   FrameBaseClass = QtWidgets.QFrame
@@ -896,7 +896,7 @@ class LayoutFrame(FrameBaseClass):
           # closed poly
           #path.lineTo(QPoint(arrowhead[0]))
 
-        if graphfab.arrowpoly_filled(graphfab.get_arrow_style(curve[4])):
+        if sbnw.arrowpoly_filled(sbnw.get_arrow_style(curve[4])):
           painter.fillPath(path, brush)
 
         painter.strokePath(path, pen)
@@ -1157,7 +1157,7 @@ def makeArrowImage(style):
   pixmap = QPixmap(256, 256)
   pixmap.fill(Qt.transparent)
 
-  arrowhead = graphfab.arrowpoly(style)
+  arrowhead = sbnw.arrowpoly(style)
 
   if len(arrowhead) > 0:
     tf = QtGui.QTransform()
@@ -1176,7 +1176,7 @@ def makeArrowImage(style):
 
     painter.strokePath(path, pen)
 
-    if graphfab.arrowpoly_filled(style):
+    if sbnw.arrowpoly_filled(style):
       brush = QBrush(Qt.black)
       painter.fillPath(path, brush)
 
@@ -1205,7 +1205,7 @@ class DrawStyleCfgPage(QWidget):
     self.mainlayout = QVBoxLayout()
     self.setLayout(self.mainlayout)
 
-    self.nstyles = graphfab.narrow_styles()
+    self.nstyles = sbnw.narrow_styles()
 
     # icons
     self.icon_width = self.icon_height = 25
@@ -1302,7 +1302,7 @@ class DrawStyleCfgPage(QWidget):
       print('set style for {} to {}'.format(role, style))
       button.setIcon(self.icons[style])
       setattr(self.config.state, translateRoleToConfigArrowOpt(role), style)
-      #graphfab.set_arrow_style(role, style)
+      #sbnw.set_arrow_style(role, style)
     return setc
 
   def makeArrowMenu(self, role, button):
