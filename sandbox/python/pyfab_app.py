@@ -634,18 +634,18 @@ class Autolayout(MainWindowBaseClass):
       return config
 
     def pushconfig(self, config):
-      print('pushconfig')
+      #print('pushconfig')
       if not hasattr(self, 'configs') or self.configs is None:
-        print('reset configs')
+        #print('reset configs')
         self.configs = []
       self.configs.append(self.config)
       self.config = config
-      print('pushconfig len(self.configs) {}'.format(len(self.configs)))
+      #print('pushconfig len(self.configs) {}'.format(len(self.configs)))
       self.config.updateArrowStyles()
       assert( len(self.configs) > 0 )
 
     def popconfig(self):
-      print('popconfig len(self.configs) {}'.format(len(self.configs)))
+      #print('popconfig len(self.configs) {}'.format(len(self.configs)))
       self.config = self.configs.pop()
       self.config.updateArrowStyles()
 
