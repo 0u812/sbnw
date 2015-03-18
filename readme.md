@@ -42,7 +42,7 @@ import nwed
 sbmlstr = nwed.getsbml()
 # Print the SBML
 print(sbmlstr)
-# Load the SBML into the network viewer
+# Load the SBML back into the network viewer
 nwed.setsbml(sbmlstr)
 ```
 
