@@ -58,10 +58,15 @@ API Documentation
 .. currentmodule:: sbnw
 
 .. autosummary::
-   :nosignatures:
    :toctree: generated/
 
    loadsbml
+   arrowpoly
+   arrowpoly_filled
+   narrow_styles
+   get_arrow_style
+   set_arrow_style
+
    sbmlmodel
    point
    network
