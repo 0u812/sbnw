@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>sbnw.point &mdash; sbnw 4 documentation</title>
+    <title>sbnw.sbmlmodel &mdash; sbnw 4 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="sbnw 4 documentation" href="../index.html" />
-    <link rel="next" title="sbnw.network" href="sbnw.network.html" />
-    <link rel="prev" title="sbnw.sbmlmodel" href="sbnw.sbmlmodel.html" /> 
+    <link rel="next" title="sbnw.point" href="sbnw.point.html" />
+    <link rel="prev" title="sbnw.loadsbml" href="sbnw.loadsbml.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,10 +35,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="sbnw.network.html" title="sbnw.network"
+          <a href="sbnw.point.html" title="sbnw.point"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="sbnw.sbmlmodel.html" title="sbnw.sbmlmodel"
+          <a href="sbnw.loadsbml.html" title="sbnw.loadsbml"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">sbnw 4 documentation</a> &raquo;</li> 
       </ul>
@@ -49,18 +49,36 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="sbnw-point">
-<h1>sbnw.point<a class="headerlink" href="#sbnw-point" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="sbnw-sbmlmodel">
+<h1>sbnw.sbmlmodel<a class="headerlink" href="#sbnw-sbmlmodel" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="sbnw.point">
-<em class="property">class </em><tt class="descclassname">sbnw.</tt><tt class="descname">point</tt><a class="headerlink" href="#sbnw.point" title="Permalink to this definition">¶</a></dt>
-<dd><p>A set of coordinates in 2D space</p>
+<dt id="sbnw.sbmlmodel">
+<em class="property">class </em><tt class="descclassname">sbnw.</tt><tt class="descname">sbmlmodel</tt><a class="headerlink" href="#sbnw.sbmlmodel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model which may be serialized using the SBML XML format</p>
 <dl class="method">
-<dt id="sbnw.point.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#sbnw.point.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="sbnw.sbmlmodel.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#sbnw.sbmlmodel.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
 </dd></dl>
 
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">getsbml</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">save</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">savetikz</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Attributes</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -68,11 +86,14 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">x</span></tt></td>
-<td>x</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">layout</span></tt></td>
+<td>Layout structure for this model.</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">y</span></tt></td>
-<td>y</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">level</span></tt></td>
+<td>The SBML level for the model (integer)</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">version</span></tt></td>
+<td>The SBML version for the model (integer)</td>
 </tr>
 </tbody>
 </table>
@@ -87,14 +108,14 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="sbnw.sbmlmodel.html"
-                        title="previous chapter">sbnw.sbmlmodel</a></p>
+  <p class="topless"><a href="sbnw.loadsbml.html"
+                        title="previous chapter">sbnw.loadsbml</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="sbnw.network.html"
-                        title="next chapter">sbnw.network</a></p>
+  <p class="topless"><a href="sbnw.point.html"
+                        title="next chapter">sbnw.point</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/generated/sbnw.point.txt"
+    <li><a href="../_sources/generated/sbnw.sbmlmodel.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -121,10 +142,10 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="sbnw.network.html" title="sbnw.network"
+          <a href="sbnw.point.html" title="sbnw.point"
              >next</a> |</li>
         <li class="right" >
-          <a href="sbnw.sbmlmodel.html" title="sbnw.sbmlmodel"
+          <a href="sbnw.loadsbml.html" title="sbnw.loadsbml"
              >previous</a> |</li>
         <li><a href="../index.html">sbnw 4 documentation</a> &raquo;</li> 
       </ul>
