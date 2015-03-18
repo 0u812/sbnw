@@ -1876,7 +1876,7 @@ class PrefDialog(QDialog):
       self.accept()
 
     def reject(self):
-      print('reject')
+      #print('reject')
       self.parent().popconfig()
       #self.close()
       self.parent().update()
