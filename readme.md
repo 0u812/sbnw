@@ -46,6 +46,8 @@ print(sbmlstr)
 nwed.setsbml(sbmlstr)
 ```
 
+![Usage example](http://0u812.github.io/sbnw/hosted/img/usage_ex.png)
+
 ## Using the Library (C API)
 
 The C API is exposed via graphfab/autolayoutc_api.h.  There is an example in sandbox/basic that demonstrates all the functionality needed to get the layout working:
