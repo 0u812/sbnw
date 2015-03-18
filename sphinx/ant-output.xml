@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by Graphfab on 2015-03-17 14:16 with libSBML version 5.11.0. -->
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:layout="http://www.sbml.org/sbml/level3/version1/layout/version1" level="3" version="1" layout:required="false">
+  <model>
+    <listOfCompartments>
+      <compartment sboTerm="SBO:0000410" id="graphfab_default_compartment" size="1" constant="false"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="S1" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="S2" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfReactions>
+      <reaction id="_J0" reversible="false" fast="false">
+        <listOfProducts>
+          <speciesReference species="S1" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J1" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="S1" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S2" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J2" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="S2" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+    <layout:listOfLayouts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:layout="http://www.sbml.org/sbml/level3/version1/layout/version1">
+      <layout:layout layout:id="Graphfab_Layout">
+        <layout:dimensions layout:width="1024" layout:height="1024"/>
+        <layout:listOfSpeciesGlyphs>
+          <layout:speciesGlyph layout:id="S1_Glyph" layout:species="S1">
+            <layout:boundingBox>
+              <layout:position layout:x="-56" layout:y="748"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="S2_Glyph" layout:species="S2">
+            <layout:boundingBox>
+              <layout:position layout:x="65" layout:y="965"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+        </layout:listOfSpeciesGlyphs>
+        <layout:listOfReactionGlyphs>
+          <layout:reactionGlyph layout:id="_J0_Glyph" layout:reaction="_J0">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="_J0_SpeciesRef1" layout:speciesReference="S1" layout:speciesGlyph="S1_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="-81.0655622706257" layout:y="677.679448844374"/>
+                      <layout:end layout:x="-40.5218584797286" layout:y="737.323211803071"/>
+                      <layout:basePoint1 layout:x="-56.0655622706257" layout:y="677.679448844374"/>
+                      <layout:basePoint2 layout:x="-51.7653934699526" layout:y="720.782869577966"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="_J1_Glyph" layout:reaction="_J1">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="_J1_SpeciesRef1" layout:speciesReference="S1" layout:speciesGlyph="S1_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="-26.1705615064828" layout:y="775.756513223729"/>
+                      <layout:end layout:x="24.01836036185" layout:y="866.565373711833"/>
+                      <layout:basePoint1 layout:x="-16.4960894553395" layout:y="793.260929538809"/>
+                      <layout:basePoint2 layout:x="11.8639231607994" layout:y="844.718871558725"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="_J1_SpeciesRef2" layout:speciesReference="S2" layout:speciesGlyph="S2_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="24.01836036185" layout:y="866.565373711833"/>
+                      <layout:end layout:x="73.2068990574826" layout:y="956.223543804311"/>
+                      <layout:basePoint1 layout:x="36.1727975629005" layout:y="888.41187586494"/>
+                      <layout:basePoint2 layout:x="63.5870662235585" layout:y="938.68904021147"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="_J2_Glyph" layout:reaction="_J2">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="_J2_SpeciesRef1" layout:speciesReference="S2" layout:speciesGlyph="S2_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="94.7924801840811" layout:y="993.776795183049"/>
+                      <layout:end layout:x="128.528675441897" layout:y="1055.41059142765"/>
+                      <layout:basePoint1 layout:x="104.395346437821" layout:y="1011.32059635933"/>
+                      <layout:basePoint2 layout:x="116.484600869487" layout:y="1033.503052367"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+        </layout:listOfReactionGlyphs>
+        <layout:listOfTextGlyphs>
+          <layout:textGlyph layout:id="tS1_Glyph" layout:text="S1" layout:graphicalObject="S1_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="-56" layout:y="748"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tS2_Glyph" layout:text="S2" layout:graphicalObject="S2_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="65" layout:y="965"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+        </layout:listOfTextGlyphs>
+      </layout:layout>
+    </layout:listOfLayouts>
+  </model>
+</sbml>
