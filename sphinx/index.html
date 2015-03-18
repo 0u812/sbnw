@@ -52,12 +52,12 @@
 <blockquote>
 <div><p>Load the model</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">sbnw</span><span class="o">.</span><span class="n">loadsbml</span><span class="p">(</span><span class="s">&#39;/path/to/sbnw/testcases/twocompsys-ex.xml&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">layout</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layout</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">canvas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">layout</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layout</span> <span class="c"># Holds layout information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">canvas</span> <span class="c"># 2D bounding box for layout</span>
 </pre></div>
 </div>
 <p>Access the network from the layout</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">network</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">network</span> <span class="c"># Represents reaction network</span>
 </pre></div>
 </div>
 <p>Shrink or enlarge a network so that it fits within a window</p>
