@@ -7,7 +7,7 @@ import sys
 from os.path import expanduser
 from os.path import join
 
-import graphfab
+import sbnw
 
 if sys.version_info[0] < 3:
   from sets import Set as set
@@ -209,8 +209,8 @@ class PyfabConfig(object):
     for k,v in dict_iteritems(self.state.get_table()):
       try:
         role = translateConfigArrowOptToRole(k)
-        if graphfab.get_arrow_style(role) != v:
-          graphfab.set_arrow_style(role, v)
+        if sbnw.get_arrow_style(role) != v:
+          sbnw.set_arrow_style(role, v)
       except RuntimeError:
         pass
 

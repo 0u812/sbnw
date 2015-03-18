@@ -2,11 +2,11 @@
 
 # pyqt_layout.py
 print('hi')
-import graphfab
+import sbnw
 # load the model
-model = graphfab.loadsbml('/home/sagrada/myhome/code/graphfab-trunk/testcases/twocompsys-ex.xml')
+model = sbnw.loadsbml('/home/sagrada/myhome/code/sbnw-trunk/testcases/twocompsys-ex.xml')
 print('loading model')
-#model = graphfab.loadsbml(r'C:\Users\user\Documents\layout\twocompsys-ex.xml')
+#model = sbnw.loadsbml(r'C:\Users\user\Documents\layout\twocompsys-ex.xml')
 print('getting layout')
 layout = model.layout
 print('got layout')

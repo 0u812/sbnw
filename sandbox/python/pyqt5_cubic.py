@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # pyqt_layout.py
-import graphfab
+import sbnw
 
 wndwidth, wndheight = 740,480
 pad = 30
@@ -84,10 +84,10 @@ class ParamcubicFrame(QtWidgets.QFrame):
         thinpen = QtGui.QPen(QtGui.QBrush(QtGui.QColor(0,0,0,255)), 1., QtCore.Qt.SolidLine)
         path = QtGui.QPainterPath()
 
-        p0 = graphfab.point(100,150)
-        p1 = graphfab.point(200,250)
-        p2 = graphfab.point(250,50)
-        p3 = graphfab.point(400,100)
+        p0 = sbnw.point(100,150)
+        p1 = sbnw.point(200,250)
+        p2 = sbnw.point(250,50)
+        p3 = sbnw.point(400,100)
 
         # draw cubic
         path.moveTo(QPoint(p0))
@@ -99,19 +99,19 @@ class ParamcubicFrame(QtWidgets.QFrame):
         painter.setBrush(brush)
 
         for t in frange(0,1,0.1):
-          p = graphfab.paramcubic(p0,p1,p2,p3,t)
+          p = sbnw.paramcubic(p0,p1,p2,p3,t)
           print('p {},{}'.format(p.x,p.y))
           painter.drawEllipse(p.x-2, p.y-2, 4, 4)
 
         # draw line
-        l0 = graphfab.point(90,160)
-        l1 = graphfab.point(450,75)
+        l0 = sbnw.point(90,160)
+        l1 = sbnw.point(450,75)
 
         path.moveTo(QPoint(l0))
         path.lineTo(QPoint(l1))
         painter.strokePath(path, thinpen)
 
-        intersec = graphfab.cubicintersec()
+        intersec = sbnw.cubicintersec()
         pts = intersec.getpoints(p0,p1,p2,p3,l0,l1)
 
         for p in pts:

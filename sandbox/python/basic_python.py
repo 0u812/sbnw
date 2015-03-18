@@ -1,6 +1,6 @@
-import graphfab
+import sbnw
 # load the model
-model = graphfab.loadsbml('../testcases/BorisEJB.xml')
+model = sbnw.loadsbml('../testcases/BorisEJB.xml')
 
 # retrieve layout information
 layout = model.layout
