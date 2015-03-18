@@ -56,8 +56,12 @@ Example 2: Add layout information to an SBML model
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: sbnw
-    :members:
+.. currentmodule:: sphinx
+
+.. autosummary::
+
+   environment.BuildEnvironment
+   util.relative_uri
 
 Indices and tables
 ==================
