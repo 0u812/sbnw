@@ -18,7 +18,7 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
 
 ## How to compile the library
 
- * Install the latest version of <a href="http://sourceforge.net/projects/sbml/files/libsbml/">libSBML</a> (tested with 5.6, 5.8, 5.10, 5.11).
+ * Install the latest version of <a href="http://sourceforge.net/projects/sbml/files/libsbml/">libSBML</a> or build it from source (tested with 5.6, 5.8, 5.10, 5.11).
  * **NOTE**: If you install a pre-built binary of libSBML then you must compile SBNW with the same version of Visual Studio as used to build libSBML (2010 at the time of writing).
  * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">master branch</a> to Documents\sbnw via git.
  * Download and instsall <a href="http://www.cmake.org/">CMake</a> (compatible with major version 2 or 3).
