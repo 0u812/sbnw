@@ -5,7 +5,7 @@
 import os
 #print('this file: {}'.format(__file__))
 localpath = os.path.dirname(os.path.realpath(__file__))
-print('local path: {}'.format(localpath))
+#print('local path: {}'.format(localpath))
 newpath = os.path.abspath(os.path.join(localpath, '..', '..', 'bin'))
 #print('newpath: {}'.format(newpath))
 #os.chdir(newpath)
