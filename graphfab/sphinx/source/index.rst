@@ -62,6 +62,7 @@ API Documentation
    :toctree: generated/
 
    loadsbml
+   sbmlmodel
    point
    network
    layout
