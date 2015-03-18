@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-print('pyfab start')
+#print('pyfab start')
 
 import os
 #print('this file: {}'.format(__file__))
@@ -11,10 +11,10 @@ newpath = os.path.abspath(os.path.join(localpath, '..', '..', 'bin'))
 #os.chdir(newpath)
 #print('not changing dir')
 
-print('pre import sbnw')
+#print('pre import sbnw')
 import sbnw
 
-print('post import sbnw')
+#print('post import sbnw')
 
 import sys
 if sys.version_info[0] < 3:
@@ -88,7 +88,7 @@ import random
 import math
 import platform
 
-print('imported platform')
+#print('imported platform')
 
 if is_pyqt5():
   import PyQt5
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     optparser.parse_args()
     defaultfile = optparser.values.openfile
 
-print('after option parser')
+#print('after option parser')
 
 def intervalContains(a, b, x):
     if a <= x <= b:
@@ -138,7 +138,7 @@ def fixNodes(network):
     for node in network.nodes:
         fixNode(node)
 
-print('is pyqt5?')
+#print('is pyqt5?')
 
 if is_pyqt5():
   MainWindowBaseClass = QtWidgets.QMainWindow
@@ -188,7 +188,7 @@ elif is_pyqt4():
 class PyfabRenderer:
   pass
 
-print('after is pyqt5')
+#print('after is pyqt5')
 
 #os.chdir(localpath)
 
@@ -318,7 +318,7 @@ class Autolayout(MainWindowBaseClass):
         self.selectToolAct.activate(QAction.Trigger)
 
         self.setGeometry(300, 300, wndwidth, wndheight)
-        self.setWindowTitle('Pyfab Autolayout')
+        self.setWindowTitle('Pyfab SBNW')
         self.mainframe = LayoutFrame(self)
         #self.prefframe = PrefFrame(self)
 
