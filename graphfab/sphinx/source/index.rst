@@ -10,12 +10,12 @@ Example 1: Basic Usage
    Load the model
 
    >>> model = sbnw.loadsbml('/path/to/sbnw/testcases/twocompsys-ex.xml')
-   >>> layout = model.layout
-   >>> canvas = layout.canvas
+   >>> layout = model.layout # Holds layout information
+   >>> canvas = layout.canvas # 2D bounding box for layout
 
    Access the network from the layout
 
-   >>> network = layout.network
+   >>> network = layout.network # Represents reaction network
 
    Shrink or enlarge a network so that it fits within a window
 
