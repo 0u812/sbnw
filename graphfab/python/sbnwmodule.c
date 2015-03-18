@@ -1583,10 +1583,20 @@ static PyObject *gfp_Network_isLayoutSpecified(gfp_Network *self, void *closure)
 
 static PyMethodDef Network_methods[] = {
     {"randomize", (PyCFunction)gfp_NetworkRandomizeLayout, METH_VARARGS | METH_KEYWORDS,
-     "Randomize the layout"
+     "Randomize the layout\n\n"
+     ":param canvas: The layout canvas\n"
     },
     {"autolayout", (PyCFunction)gfp_NetworkAutolayout, METH_VARARGS | METH_KEYWORDS,
-     "Run the FR algorithm"
+     "Run the FR algorithm\n\n"
+     ":param canvas: The layout canvas\n"
+     ":param float k: The stiffness\n"
+     ":param int boundary: Use boundary\n"
+     ":param int mag: Use magnetism\n"
+     ":param float grav: Gravity value\n"
+     ":param int bary: Use barycenter\n"
+     ":param int autobary: Use autobary\n"
+     ":param int comps: Enable compartments (leave off)\n"
+     ":param int prerand: Pre-randomize\n"
     },
     {"rebuildcurves", (PyCFunction)gfp_NetworkRebuildCurves, METH_NOARGS,
      "Rebuild the curves for changed node positions"
@@ -1595,16 +1605,21 @@ static PyMethodDef Network_methods[] = {
      "Recenter reaction junctions for changed node positions (you do not have to also call rebuildcurves)"
     },
     {"newnode", (PyCFunction)gfp_NetworkNewNode, METH_VARARGS | METH_KEYWORDS,
-     "Add a node to the network"
+     "Add a node to the network\n\n"
+     ":param str id: The node name\n"
+     ":param str id: The node id\n"
+     ":param comp: The compartment to use (optional)\n"
     },
     {"removenode", (PyCFunction)gfp_NetworkRemoveNode, METH_VARARGS | METH_KEYWORDS,
-     "Remove a node from the network"
+     "Remove a node from the network\n\n"
+     ":param node: The node to remove\n"
     },
     {"aliasnode", (PyCFunction)gfp_NetworkAliasNode, METH_VARARGS | METH_KEYWORDS,
-     "Alias a node"
+     "Alias a node\n\n"
+     ":param node: The node to alias\n"
     },
     {"haslayout", (PyCFunction)gfp_Network_isLayoutSpecified, METH_NOARGS,
-     "Determine whether the SBML model included layout information or not"
+     "Return whether the SBML model included layout information or not"
     },
     {NULL}  /* Sentinel */
 };
@@ -1765,7 +1780,7 @@ PyObject* gfp_Cubicintersec_GetPoints(gfp_Cubicintersec *self, PyObject *args, P
 
 static PyMethodDef gfp_Cubicintersec_methods[] = {
     {"getpoints", (PyCFunction)gfp_Cubicintersec_GetPoints, METH_VARARGS | METH_KEYWORDS,
-     "Get the intersection points"
+     "Get the intersection points of a cubic curve & line"
     },
     {NULL}  /* Sentinel */
 };
@@ -1938,10 +1953,14 @@ PyObject* gfp_Layout_TF_FitToWindow(gfp_Layout *self, PyObject *args, PyObject *
 
 static PyMethodDef gfp_Layout_methods[] = {
     {"fitwindow", (PyCFunction)gfp_Layout_FitToWindow, METH_VARARGS | METH_KEYWORDS,
-     "fitwindow doc"
+     "Pan & scale the network so it fits in the given window\n\n"
+     ":param float xmin: The start of the window in X\n"
+     ":param float ymin: The start of the window in Y\n"
+     ":param float xmax: The end of the window in X\n"
+     ":param float ymax: The end of the window in Y\n"
     },
     {"tf_fitwindow", (PyCFunction)gfp_Layout_TF_FitToWindow, METH_VARARGS | METH_KEYWORDS,
-     "Just returns the transformation, does not apply"
+     "Like fitwindow but just returns the transformation, does not apply"
     },
     {NULL}  /* Sentinel */
 };
