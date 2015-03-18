@@ -33,7 +33,7 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
 
 ## Using the Tellurium Plugin
 
-The network viewer is available as a plugin in Tellurium. Simply switch to the network viewer tab, open a model from the [test cases](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) (e.g. BorisEJB.xml), and enter the following code:
+The network viewer is available as a plugin for a pre-release of [Tellurium](https://github.com/0u812/sbnw/releases/tag/1.2.5). Simply switch to the network viewer tab, open a model from the [test cases](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) (e.g. BorisEJB.xml), and enter the following code:
 
 ```
 # The nwed module is used to communicate with the plugin

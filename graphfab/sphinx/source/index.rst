@@ -58,7 +58,6 @@ API Documentation
 .. currentmodule:: sbnw
 
 .. autosummary::
-   :nosignatures:
    :toctree: generated/
 
    loadsbml
