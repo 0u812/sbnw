@@ -48,7 +48,7 @@ nwed.setsbml(sbmlstr)
 
 ## Using the Library (C API)
 
-The C API is exposed via graphfab/autolayoutc_api.h.  There's an example in sandbox/basic that demonstrates all the functionality you need to get the layout working.  The relevant lines are:
+The C API is exposed via graphfab/autolayoutc_api.h.  There is an example in sandbox/basic that demonstrates all the functionality needed to get the layout working:
 
 ```
         // type to store layout info
