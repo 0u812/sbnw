@@ -803,7 +803,8 @@ static PyMethodDef gfp_Rxn_methods[] = {
      "Recalculate the curve cps, don't recenter"
     },
     {"has", (PyCFunction)gfp_Rxn_has, METH_VARARGS | METH_KEYWORDS,
-     "Return true if a node is in this reaction"
+     "Return true if a given node is in this reaction\n\n"
+     ":param node: A node\n"
     },
     {NULL}  /* Sentinel */
 };
