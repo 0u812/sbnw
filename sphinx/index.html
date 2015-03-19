@@ -48,6 +48,26 @@
   <div class="section" id="libsbnw-documentation">
 <h1>libSBNW Documentation<a class="headerlink" href="#libsbnw-documentation" title="Permalink to this headline">¶</a></h1>
 <p>Contents:</p>
+<p>Example 1: Basic Usage</p>
+<blockquote>
+<div><p>Import the module</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sbnw</span>
+</pre></div>
+</div>
+<p>Load an SBML model</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">sbnw</span><span class="o">.</span><span class="n">loadsbml</span><span class="p">(</span><span class="s">&#39;BorisEJB.xml&#39;</span><span class="p">)</span> <span class="c"># included in the test cases</span>
+</pre></div>
+</div>
+<p>Shrink or enlarge a network so that it fits within a window</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">fitwindow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Access the node coordinates</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="k">print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
 <p>Example 2: Add layout information to an SBML model</p>
 <blockquote>
 <div><p>Import the module</p>
