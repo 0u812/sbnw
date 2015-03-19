@@ -1602,7 +1602,7 @@ static PyObject* gfp_NetworkAliasNode(gfp_Network *self, PyObject *args, PyObjec
         return NULL;
     }
 
-    gfp_Network_rawinit(self, self->n);
+    gfp_Network_rawinit(self, self->n, self->l);
 
     Py_RETURN_NONE;
 }
@@ -1666,7 +1666,7 @@ static PyMemberDef gfp_Network_members[] = {
      "rxns"},
     {"compartments", T_OBJECT_EX, offsetof(gfp_Network,comps), READONLY,
      "compartments"},
-    {"canvas", T_OBJECT_EX, offsetof(gfp_Layout, canv), 0,
+    {"canvas", T_OBJECT_EX, offsetof(gfp_Network, canv), 0,
      "canvas"},
     {NULL}  /* Sentinel */
 };
@@ -2260,9 +2260,13 @@ static PyObject* gfp_SBMLModel_getAttro(PyObject *self_, PyObject *attr) {
 //     printf("positive hit\n");
     #endif
         if(!self->layout) {
+            // construct the layout
             self->layout = (gfp_Layout*)PyObject_Call((PyObject*)&gfp_LayoutType, PyTuple_New(0), NULL);
-            //self->layout->l = gf_processLayout(self->m);
             gfp_Layout_rawinit(self->layout, gf_processLayout(self->m));
+
+            // construct the network
+            self->network = (gfp_Network*)PyObject_Call((PyObject*)&gfp_NetworkType, PyTuple_New(0), NULL);
+            gfp_Network_rawinit(self->network, gf_getNetwork(self->layout->l), self->layout->l);
         }
     }
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
