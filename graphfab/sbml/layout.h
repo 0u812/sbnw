@@ -807,6 +807,16 @@ _GraphfabExport void gf_randomizeLayout(gf_layoutInfo* m);
  */
 _GraphfabExport void gf_randomizeLayout2(gf_network* n, gf_canvas* c);
 
+/** @brief Randomize node positions for a given network & extents
+ *  @param[in] n Network
+ *  @param[in] left The minimum X coord of the bounding box
+ *  @param[in] top The minimum Y coord of the bounding box
+ *  @param[in] right The maximum X coord of the bounding box
+ *  @param[in] bottom The maximum Y coord of the bounding box
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_randomizeLayout_fromExtents(gf_network* n, double left, double top, double right, double bottom);
+
 // -- Output --
 
 /** @brief Write an SBML file, including layout

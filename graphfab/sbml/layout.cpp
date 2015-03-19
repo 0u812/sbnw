@@ -1749,6 +1749,13 @@ void gf_randomizeLayout2(gf_network* n, gf_canvas* c) {
     net->randomizePositions(Graphfab::Box(Graphfab::Point(0.,0.), Graphfab::Point(can->getWidth(), can->getHeight())));
 }
 
+void gf_randomizeLayout_fromExtents(gf_network* n, double left, double top, double right, double bottom) {
+    Network* net = CastToNetwork(n->n);
+    AN(net, "No network");
+
+    net->randomizePositions(Graphfab::Box(Graphfab::Point(left,top), Graphfab::Point(right, bottom)));
+}
+
 //TODO: move to more appropriate place like core/version or something
 // and rename to more succinct function - is anyone going to want to get the version
 // for anything other than the CURRENT library?

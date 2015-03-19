@@ -1232,16 +1232,25 @@ typedef struct {
     PyObject* nodes;
     PyObject* rxns;
     PyObject* comps;
+
+    // added to condense object hierarchy
+    gf_layoutInfo* l;
+    gfp_Canvas*  canv;
 } gfp_Network;
 
 static void gfp_Network_dealloc(gfp_Network* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
     printf("Network dealloc\n");
     #endif
+
     gf_releaseNetwork(&self->n);
+
     Py_XDECREF(self->nodes);
     Py_XDECREF(self->rxns);
     Py_XDECREF(self->comps);
+
+    Py_XDECREF(self->canv);
+
     Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
@@ -1257,6 +1266,8 @@ static PyObject* gfp_Network_new(PyTypeObject *type, PyObject *args, PyObject *k
         self->nodes = NULL;
         self->rxns  = NULL;
         self->comps = NULL;
+
+        self->canv = NULL;
     }
     
     return (PyObject*)self;
@@ -1270,10 +1281,16 @@ static int gfp_Network_init(gfp_Network *self, PyObject *args, PyObject *kwds) {
     return 0;
 }
 
-static int gfp_Network_rawinit(gfp_Network *self, gf_network n) {
+static int gfp_Network_rawinit(gfp_Network *self, gf_network n, gf_layoutInfo* l) {
     size_t i, numnodes, numrxns, numcomps;
     
     self->n = n;
+
+    self->l = l;
+    // canvas
+    self->canv = (gfp_Canvas*)PyObject_Call((PyObject*)&gfp_CanvasType, PyTuple_New(0), NULL);
+    if(gfp_Canvas_rawinit(self->canv, gf_getCanvas(self->l)))
+        return 1;
     
     numnodes = gf_nw_getNumNodes(&self->n);
     numrxns  = gf_nw_getNumRxns (&self->n);
@@ -1327,22 +1344,35 @@ static int gfp_Network_SetAttr(gfp_Network* self, PyObject* attr, PyObject* v) {
 static PyObject* gfp_NetworkRandomizeLayout(gfp_Network *self, PyObject *args, PyObject *kwds) {
     gfp_Canvas* canvas=NULL;
     static char *kwlist[] = {"canvas", NULL};
+    static char *kwlist_coords[] = {"left", "top", "right", "bottom", NULL};
+
+    double left, top, right, bottom;
+    int use_coords = 0; // if false use canvas, else use coords
+
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     printf("gfp_NetworkRandomizeLayout called\n");
     #endif
     
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist, &gfp_CanvasType, &canvas)) {
+      if(!PyArg_ParseTupleAndKeywords(args, kwds, "dddd", kwlist_coords, &left, &top, &right, &bottom)) {
         PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
+      } else {
+        use_coords = 1;
+      }
     }
-    AN(canvas, "No canvas");
-    Py_INCREF(canvas);
-    // this is rendered unnecessary by "O!" above
-    if(Py_TYPE(canvas) != &gfp_CanvasType) {
-        PyErr_SetString(PyExc_TypeError, "Expected sbnw.canvas type");
-        return NULL;
+    if(!use_coords) {
+      AN(canvas, "No canvas");
+      Py_INCREF(canvas);
+      // this is rendered unnecessary by "O!" above
+      if(Py_TYPE(canvas) != &gfp_CanvasType) {
+          PyErr_SetString(PyExc_TypeError, "Expected sbnw.canvas type");
+          return NULL;
+      }
+      gf_randomizeLayout2(&self->n, &canvas->c);
+    } else {
+      gf_randomizeLayout_fromExtents(&self->n, left, top, right, bottom);
     }
-    gf_randomizeLayout2(&self->n, &canvas->c);
     
     Py_XDECREF(canvas);
     
@@ -1585,7 +1615,11 @@ static PyObject *gfp_Network_isLayoutSpecified(gfp_Network *self, void *closure)
 static PyMethodDef Network_methods[] = {
     {"randomize", (PyCFunction)gfp_NetworkRandomizeLayout, METH_VARARGS | METH_KEYWORDS,
      "Randomize the layout\n\n"
-     ":param canvas: The layout canvas\n"
+//      ":param canvas: The layout canvas\n"
+     ":param float left:The minimum X coord of the bounding box\n"
+     ":param float top: The minimum Y coord of the bounding box\n"
+     ":param float right: The maximum X coord of the bounding box\n"
+     ":param float bottom: The maximum Y coord of the bounding box\n"
     },
     {"autolayout", (PyCFunction)gfp_NetworkAutolayout, METH_VARARGS | METH_KEYWORDS,
      "Run the FR algorithm\n\n"

@@ -78,8 +78,6 @@ API Documentation
    sbmlmodel
    point
    network
-   layout
-   canvas
    node
    compartment
    reaction
