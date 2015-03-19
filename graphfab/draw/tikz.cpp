@@ -43,7 +43,7 @@ const char* gf_renderTikZ(gf_layoutInfo* l) {
   Canvas* can = (Canvas*)l->canv;
   AN(can, "No canvas");
 
-  Real cmscale = 50.;
+  Graphfab::Real cmscale = 50.;
   TikZRenderer renderer(can->getBox(), can->getWidth()/cmscale, can->getHeight()/cmscale);
   return gf_strclone(renderer.str(net, can).c_str());
 }
