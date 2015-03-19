@@ -1666,6 +1666,8 @@ static PyMemberDef gfp_Network_members[] = {
      "rxns"},
     {"compartments", T_OBJECT_EX, offsetof(gfp_Network,comps), READONLY,
      "compartments"},
+    {"canvas", T_OBJECT_EX, offsetof(gfp_Layout, canv), 0,
+     "canvas"},
     {NULL}  /* Sentinel */
 };
 
@@ -1929,7 +1931,7 @@ static int gfp_Layout_rawinit(gfp_Layout* self, gf_layoutInfo* l) {
         return 1;
     // network
     self->network = (gfp_Network*)PyObject_Call((PyObject*)&gfp_NetworkType, PyTuple_New(0), NULL);
-    if(gfp_Network_rawinit(self->network, gf_getNetwork(self->l)))
+    if(gfp_Network_rawinit(self->network, gf_getNetwork(self->l), self->l))
         return 1;
     
     return 0;
@@ -2071,6 +2073,7 @@ typedef struct {
     PyObject_HEAD
     gf_SBMLModel* m;
     gfp_Layout* layout;
+    gfp_Network* network;
 } gfp_SBMLModel;
 
 // "Useful" function (Exported)
@@ -2095,9 +2098,13 @@ gfp_SBMLModel_dealloc(gfp_SBMLModel* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
     printf("SBMLModel dealloc\n");
     #endif
+
     Py_XDECREF(self->layout);
+    Py_XDECREF(self->network);
+
     if(self->m)
         gf_freeSBMLModel(self->m);
+
     Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
@@ -2112,7 +2119,9 @@ static PyObject* gfp_SBMLModel_new(PyTypeObject *type, PyObject *args, PyObject 
         self->m = NULL;
 //         self->layout = Py_None;
 //         Py_INCREF(Py_None);
+
         self->layout = NULL;
+        self->network = NULL;
     }
     
     return (PyObject*)self;
@@ -2195,7 +2204,7 @@ PyObject* gfp_SBMLModel_renderTikZ_file(gfp_SBMLModel *self, PyObject *args, PyO
     int error;
 
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("gfp_SBMLModel_renderTikZ_file started\n");
+//     printf("gfp_SBMLModel_renderTikZ_file started\n");
     #endif
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &outfile)) {
@@ -2220,7 +2229,7 @@ PyObject* gfp_SBMLModel_renderTikZ_file(gfp_SBMLModel *self, PyObject *args, PyO
 
 PyObject* gfp_SBMLModel_getsbml(gfp_SBMLModel *self, PyObject *args, PyObject *kwds) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("gfp_SBMLModel_getsbml started\n");
+//     printf("gfp_SBMLModel_getsbml started\n");
     #endif
 
     if(self->layout) {
@@ -2245,7 +2254,8 @@ static PyObject* gfp_SBMLModel_getAttro(PyObject *self_, PyObject *attr) {
     }
     #endif
     
-    if(PyCompareString(attr, "layout")) {
+    // hook to compute layout information if not already present
+    if(PyCompareString(attr, "layout") || PyCompareString(attr, "network")) {
         #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     printf("positive hit\n");
     #endif
@@ -2322,6 +2332,9 @@ static PyMemberDef SBMLModel_members[] = {
      "Layout structure for this model. Since not all models have "
      "associated layout information, it is loaded on-demand when "
      "the attribute is requested."
+    },
+    {"network", T_OBJECT_EX, offsetof(gfp_SBMLModel, network), 0,
+     "The reaction network for this model."
     },
     {NULL}  /* Sentinel */
 };
