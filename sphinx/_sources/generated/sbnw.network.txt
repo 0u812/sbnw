@@ -15,6 +15,7 @@ sbnw.network
    
       ~network.aliasnode
       ~network.autolayout
+      ~network.fitwindow
       ~network.haslayout
       ~network.newnode
       ~network.randomize
@@ -30,6 +31,7 @@ sbnw.network
 
    .. autosummary::
    
+      ~network.canvas
       ~network.compartments
       ~network.nodes
       ~network.rxns

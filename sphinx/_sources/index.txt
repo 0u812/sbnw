@@ -7,42 +7,41 @@ Contents:
 
 Example 1: Basic Usage
 
+   Import the module
+
+   >>> import sbnw
+
    Load the model
 
-   >>> model = sbnw.loadsbml('/path/to/sbnw/testcases/twocompsys-ex.xml')
-   >>> layout = model.layout # Holds layout information
-   >>> canvas = layout.canvas # 2D bounding box for layout
-
-   Access the network from the layout
-
-   >>> network = layout.network # Represents reaction network
+   >>> model = sbnw.loadsbml('twocompsys-ex.xml')
 
    Shrink or enlarge a network so that it fits within a window
 
-   >>> layout.fitwindow(0,0,300,300)
+   >>> model.network.fitwindow(0,0,300,300)
 
    Access the node coordinates
 
-   >>> for node in network.nodes:
+   >>> for node in model.network.nodes:
    >>>   print(node.centroid)
 
 Example 2: Add layout information to an SBML model
 
+   Import the module
+
+   >>> import sbnw
+
    Load the model
 
-   >>> model = sbnw.loadsbml('/path/to/sbnw/testcases/ant_power_law_sbml.xml')
-   >>> layout = model.layout
-   >>> canvas = layout.canvas
-   >>> network = layout.network
+   >>> model = sbnw.loadsbml('ant_power_law_sbml.xml') # included in the test cases
 
    Randomize the initial configuration and run the FR algorithm
 
-   >>> network.randomize(canvas)
-   >>> network.autolayout()
+   >>> model.network.randomize(canvas)
+   >>> model.network.autolayout()
 
    Shrink or enlarge a network so that it fits within a window
 
-   >>> layout.fitwindow(0,0,300,300)
+   >>> model.network.fitwindow(0,0,300,300)
 
    Override SBML level/version if desired
 
@@ -51,7 +50,7 @@ Example 2: Add layout information to an SBML model
 
    Save the model to an SBML file
 
-   >>> model.save('/path/to/output.xml')
+   >>> model.save('output.xml')
 
 API Documentation
 
@@ -78,8 +77,6 @@ API Documentation
    sbmlmodel
    point
    network
-   layout
-   canvas
    node
    compartment
    reaction

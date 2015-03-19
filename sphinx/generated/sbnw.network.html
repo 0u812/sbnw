@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="sbnw 4 documentation" href="../index.html" />
-    <link rel="next" title="sbnw.layout" href="sbnw.layout.html" />
+    <link rel="next" title="sbnw.node" href="sbnw.node.html" />
     <link rel="prev" title="sbnw.point" href="sbnw.point.html" /> 
   </head>
   <body>
@@ -35,7 +35,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="sbnw.layout.html" title="sbnw.layout"
+          <a href="sbnw.node.html" title="sbnw.node"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="sbnw.point.html" title="sbnw.point"
@@ -74,22 +74,25 @@
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">autolayout</span></tt></td>
 <td>Run the FR algorithm</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">haslayout</span></tt></td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">fitwindow</span></tt></td>
+<td>Pan &amp; scale the network so it fits in the given window</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">haslayout</span></tt></td>
 <td>Return whether the SBML model included layout information or not</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">newnode</span></tt></td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">newnode</span></tt></td>
 <td>Add a node to the network</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">randomize</span></tt></td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">randomize</span></tt></td>
 <td>Randomize the layout</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">rebuildcurves</span></tt></td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">rebuildcurves</span></tt></td>
 <td>Rebuild the curves for changed node positions</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">recenterjunct</span></tt></td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">recenterjunct</span></tt></td>
 <td>Recenter reaction junctions for changed node positions (you do not have to also call rebuildcurves)</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">removenode</span></tt></td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">removenode</span></tt></td>
 <td>Remove a node from the network</td>
 </tr>
 </tbody>
@@ -101,13 +104,16 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">compartments</span></tt></td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">canvas</span></tt></td>
+<td>canvas</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">compartments</span></tt></td>
 <td>compartments</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">nodes</span></tt></td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">nodes</span></tt></td>
 <td>nodes</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">rxns</span></tt></td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">rxns</span></tt></td>
 <td>rxns</td>
 </tr>
 </tbody>
@@ -126,8 +132,8 @@
   <p class="topless"><a href="sbnw.point.html"
                         title="previous chapter">sbnw.point</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="sbnw.layout.html"
-                        title="next chapter">sbnw.layout</a></p>
+  <p class="topless"><a href="sbnw.node.html"
+                        title="next chapter">sbnw.node</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/generated/sbnw.network.txt"
@@ -157,7 +163,7 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="sbnw.layout.html" title="sbnw.layout"
+          <a href="sbnw.node.html" title="sbnw.node"
              >next</a> |</li>
         <li class="right" >
           <a href="sbnw.point.html" title="sbnw.point"

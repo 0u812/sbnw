@@ -27,6 +27,7 @@ sbnw.sbmlmodel
    
       ~sbmlmodel.layout
       ~sbmlmodel.level
+      ~sbmlmodel.network
       ~sbmlmodel.version
    
    

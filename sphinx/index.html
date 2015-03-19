@@ -50,42 +50,41 @@
 <p>Contents:</p>
 <p>Example 1: Basic Usage</p>
 <blockquote>
-<div><p>Load the model</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">sbnw</span><span class="o">.</span><span class="n">loadsbml</span><span class="p">(</span><span class="s">&#39;/path/to/sbnw/testcases/twocompsys-ex.xml&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">layout</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layout</span> <span class="c"># Holds layout information</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">canvas</span> <span class="c"># 2D bounding box for layout</span>
+<div><p>Import the module</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sbnw</span>
 </pre></div>
 </div>
-<p>Access the network from the layout</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">network</span> <span class="c"># Represents reaction network</span>
+<p>Load the model</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">sbnw</span><span class="o">.</span><span class="n">loadsbml</span><span class="p">(</span><span class="s">&#39;twocompsys-ex.xml&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Shrink or enlarge a network so that it fits within a window</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">layout</span><span class="o">.</span><span class="n">fitwindow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">fitwindow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Access the node coordinates</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">network</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>  <span class="k">print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>Example 2: Add layout information to an SBML model</p>
 <blockquote>
-<div><p>Load the model</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">sbnw</span><span class="o">.</span><span class="n">loadsbml</span><span class="p">(</span><span class="s">&#39;/path/to/sbnw/testcases/ant_power_law_sbml.xml&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">layout</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layout</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">canvas</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">network</span>
+<div><p>Import the module</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sbnw</span>
+</pre></div>
+</div>
+<p>Load the model</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">sbnw</span><span class="o">.</span><span class="n">loadsbml</span><span class="p">(</span><span class="s">&#39;ant_power_law_sbml.xml&#39;</span><span class="p">)</span> <span class="c"># included in the test cases</span>
 </pre></div>
 </div>
 <p>Randomize the initial configuration and run the FR algorithm</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">network</span><span class="o">.</span><span class="n">randomize</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">network</span><span class="o">.</span><span class="n">autolayout</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">randomize</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">autolayout</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Shrink or enlarge a network so that it fits within a window</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">layout</span><span class="o">.</span><span class="n">fitwindow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">fitwindow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Override SBML level/version if desired</p>
@@ -94,7 +93,7 @@
 </pre></div>
 </div>
 <p>Save the model to an SBML file</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;/path/to/output.xml&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;output.xml&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -149,12 +148,6 @@
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/sbnw.network.html#sbnw.network" title="sbnw.network"><tt class="xref py py-obj docutils literal"><span class="pre">network</span></tt></a></td>
 <td>Represents a model of the network including species and reactions</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/sbnw.layout.html#sbnw.layout" title="sbnw.layout"><tt class="xref py py-obj docutils literal"><span class="pre">layout</span></tt></a></td>
-<td>The layout information for an SBML model.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/sbnw.canvas.html#sbnw.canvas" title="sbnw.canvas"><tt class="xref py py-obj docutils literal"><span class="pre">canvas</span></tt></a></td>
-<td>The canvas (2D rectangle) on which the layout is applied</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="generated/sbnw.node.html#sbnw.node" title="sbnw.node"><tt class="xref py py-obj docutils literal"><span class="pre">node</span></tt></a></td>
 <td>A node in the layout engine represents a (chemical) species in the SBML model.</td>
