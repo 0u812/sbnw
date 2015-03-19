@@ -11,9 +11,9 @@ Example 1: Basic Usage
 
    >>> import sbnw
 
-   Load the model
+   Load an SBML model
 
-   >>> model = sbnw.loadsbml('twocompsys-ex.xml')
+   >>> model = sbnw.loadsbml('twocompsys-ex.xml') # included in the test cases
 
    Shrink or enlarge a network so that it fits within a window
 
@@ -30,7 +30,7 @@ Example 2: Add layout information to an SBML model
 
    >>> import sbnw
 
-   Load the model
+   Load an SBML model
 
    >>> model = sbnw.loadsbml('ant_power_law_sbml.xml') # included in the test cases
 
