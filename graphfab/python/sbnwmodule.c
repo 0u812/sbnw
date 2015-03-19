@@ -1614,6 +1614,19 @@ static PyObject *gfp_Network_isLayoutSpecified(gfp_Network *self, void *closure)
     return PyBool_FromLong(gf_nw_isLayoutSpecified(&self->n));
 }
 
+PyObject* gfp_Network_FitToWindow(gfp_Network *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"left", "top", "right", "bottom", NULL};
+    double left, top, right, bottom;
+
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "dddd", kwlist, &left, &top, &right, &bottom)) {
+        return NULL;
+    }
+
+    gf_fit_to_window(self->l, left, top, right, bottom);
+
+    Py_RETURN_NONE;
+}
+
 static PyMethodDef Network_methods[] = {
     {"randomize", (PyCFunction)gfp_NetworkRandomizeLayout, METH_VARARGS | METH_KEYWORDS,
      "Randomize the layout\n\n"
@@ -1657,6 +1670,13 @@ static PyMethodDef Network_methods[] = {
     },
     {"haslayout", (PyCFunction)gfp_Network_isLayoutSpecified, METH_NOARGS,
      "Return whether the SBML model included layout information or not"
+    },
+    {"fitwindow", (PyCFunction)gfp_Network_FitToWindow, METH_VARARGS | METH_KEYWORDS,
+     "Pan & scale the network so it fits in the given window\n\n"
+     ":param float xmin: The start of the window in X\n"
+     ":param float ymin: The start of the window in Y\n"
+     ":param float xmax: The end of the window in X\n"
+     ":param float ymax: The end of the window in Y\n"
     },
     {NULL}  /* Sentinel */
 };
@@ -1936,7 +1956,7 @@ static int gfp_Layout_rawinit(gfp_Layout* self, gf_layoutInfo* l) {
     self->network = (gfp_Network*)PyObject_Call((PyObject*)&gfp_NetworkType, PyTuple_New(0), NULL);
     if(gfp_Network_rawinit(self->network, gf_getNetwork(self->l), self->l))
         return 1;
-    
+
     // set canvas object
     Py_INCREF(self->canv);
     self->network->canv = self->canv;

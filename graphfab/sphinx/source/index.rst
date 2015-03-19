@@ -30,15 +30,12 @@ Example 2: Add layout information to an SBML model
 
    Load the model
 
-   >>> model = sbnw.loadsbml('/path/to/sbnw/testcases/ant_power_law_sbml.xml')
-   >>> layout = model.layout
-   >>> canvas = layout.canvas
-   >>> network = layout.network
+   >>> model = sbnw.loadsbml('ant_power_law_sbml.xml') # included in the test cases
 
    Randomize the initial configuration and run the FR algorithm
 
-   >>> network.randomize(canvas)
-   >>> network.autolayout()
+   >>> model.network.randomize(canvas)
+   >>> model.network.autolayout()
 
    Shrink or enlarge a network so that it fits within a window
 
@@ -51,7 +48,7 @@ Example 2: Add layout information to an SBML model
 
    Save the model to an SBML file
 
-   >>> model.save('/path/to/output.xml')
+   >>> model.save('output.xml')
 
 API Documentation
 
