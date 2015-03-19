@@ -1346,7 +1346,7 @@ static PyObject* gfp_NetworkRandomizeLayout(gfp_Network *self, PyObject *args, P
     static char *kwlist[] = {"canvas", NULL};
     static char *kwlist_coords[] = {"left", "top", "right", "bottom", NULL};
 
-    double left, top, right, bottom;
+    double left=0., top=0., right=1000., bottom=1000.;
     int use_coords = 0; // if false use canvas, else use coords
 
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
@@ -1354,7 +1354,7 @@ static PyObject* gfp_NetworkRandomizeLayout(gfp_Network *self, PyObject *args, P
     #endif
     
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist, &gfp_CanvasType, &canvas)) {
-      if(!PyArg_ParseTupleAndKeywords(args, kwds, "dddd", kwlist_coords, &left, &top, &right, &bottom)) {
+      if(!PyArg_ParseTupleAndKeywords(args, kwds, "|dddd", kwlist_coords, &left, &top, &right, &bottom)) {
         PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
       } else {
