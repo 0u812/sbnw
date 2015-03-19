@@ -7,26 +7,28 @@ Contents:
 
 Example 1: Basic Usage
 
+   Import the module
+
+   >>> import sbnw
+
    Load the model
 
-   >>> model = sbnw.loadsbml('/path/to/sbnw/testcases/twocompsys-ex.xml')
-   >>> layout = model.layout # Holds layout information
-   >>> canvas = layout.canvas # 2D bounding box for layout
-
-   Access the network from the layout
-
-   >>> network = layout.network # Represents reaction network
+   >>> model = sbnw.loadsbml('twocompsys-ex.xml')
 
    Shrink or enlarge a network so that it fits within a window
 
-   >>> layout.fitwindow(0,0,300,300)
+   >>> model.network.fitwindow(0,0,300,300)
 
    Access the node coordinates
 
-   >>> for node in network.nodes:
+   >>> for node in model.network.nodes:
    >>>   print(node.centroid)
 
 Example 2: Add layout information to an SBML model
+
+   Import the module
+
+   >>> import sbnw
 
    Load the model
 
@@ -39,7 +41,7 @@ Example 2: Add layout information to an SBML model
 
    Shrink or enlarge a network so that it fits within a window
 
-   >>> layout.fitwindow(0,0,300,300)
+   >>> model.network.fitwindow(0,0,300,300)
 
    Override SBML level/version if desired
 
