@@ -1287,10 +1287,6 @@ static int gfp_Network_rawinit(gfp_Network *self, gf_network n, gf_layoutInfo* l
     self->n = n;
 
     self->l = l;
-    // canvas
-    self->canv = (gfp_Canvas*)PyObject_Call((PyObject*)&gfp_CanvasType, PyTuple_New(0), NULL);
-    if(gfp_Canvas_rawinit(self->canv, gf_getCanvas(self->l)))
-        return 1;
     
     numnodes = gf_nw_getNumNodes(&self->n);
     numrxns  = gf_nw_getNumRxns (&self->n);
@@ -1359,9 +1355,12 @@ static PyObject* gfp_NetworkRandomizeLayout(gfp_Network *self, PyObject *args, P
         return NULL;
       } else {
         use_coords = 1;
+        // PyArg_ParseTupleAndKeywords sets an error whether you want it to or not
+        PyErr_Clear();
       }
     }
     if(!use_coords) {
+
       AN(canvas, "No canvas");
       Py_INCREF(canvas);
       // this is rendered unnecessary by "O!" above
@@ -1370,11 +1369,14 @@ static PyObject* gfp_NetworkRandomizeLayout(gfp_Network *self, PyObject *args, P
           return NULL;
       }
       gf_randomizeLayout2(&self->n, &canvas->c);
+
+      Py_XDECREF(canvas);
+
     } else {
+
       gf_randomizeLayout_fromExtents(&self->n, left, top, right, bottom);
+
     }
-    
-    Py_XDECREF(canvas);
     
     Py_RETURN_NONE;
 }
@@ -1929,10 +1931,15 @@ static int gfp_Layout_rawinit(gfp_Layout* self, gf_layoutInfo* l) {
     self->canv = (gfp_Canvas*)PyObject_Call((PyObject*)&gfp_CanvasType, PyTuple_New(0), NULL);
     if(gfp_Canvas_rawinit(self->canv, gf_getCanvas(self->l)))
         return 1;
+
     // network
     self->network = (gfp_Network*)PyObject_Call((PyObject*)&gfp_NetworkType, PyTuple_New(0), NULL);
     if(gfp_Network_rawinit(self->network, gf_getNetwork(self->l), self->l))
         return 1;
+    
+    // set canvas object
+    Py_INCREF(self->canv);
+    self->network->canv = self->canv;
     
     return 0;
 }
@@ -2265,8 +2272,10 @@ static PyObject* gfp_SBMLModel_getAttro(PyObject *self_, PyObject *attr) {
             gfp_Layout_rawinit(self->layout, gf_processLayout(self->m));
 
             // construct the network
-            self->network = (gfp_Network*)PyObject_Call((PyObject*)&gfp_NetworkType, PyTuple_New(0), NULL);
-            gfp_Network_rawinit(self->network, gf_getNetwork(self->layout->l), self->layout->l);
+//             self->network = (gfp_Network*)PyObject_Call((PyObject*)&gfp_NetworkType, PyTuple_New(0), NULL);
+//             gfp_Network_rawinit(self->network, gf_getNetwork(self->layout->l), self->layout->l);
+            Py_INCREF(self->layout->network);
+            self->network = self->layout->network;
         }
     }
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
