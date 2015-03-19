@@ -13,7 +13,7 @@ Example 1: Basic Usage
 
    Load an SBML model
 
-   >>> model = sbnw.loadsbml('twocompsys-ex.xml') # included in the test cases
+   >>> model = sbnw.loadsbml('BorisEJB.xml') # included in the test cases
 
    Shrink or enlarge a network so that it fits within a window
 
