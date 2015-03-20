@@ -71,7 +71,7 @@ namespace Graphfab {
     std::string result(input);
     std::size_t index = 0;
     while (true) {
-      index = input.find(src, index);
+      index = result.find(src, index);
       if (index == std::string::npos) break;
 
       result.replace(index, src.size(), dst);
@@ -98,7 +98,7 @@ namespace Graphfab {
 
     ss << "\\definecolor{jdorange}{rgb}{0.8, 0.5, 0.5}\n";
 
-    ss << "\\definecolor{jdzero}{rgb}{0.9, 0.8, 0}\n";
+    ss << "\\definecolor{jdzero}{rgb}{1.0, 0.5, 0.5}\n";
 
     ss << "\n";
 
