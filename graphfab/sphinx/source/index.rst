@@ -52,6 +52,20 @@ Example 2: Add layout information to an SBML model
 
    >>> model.save('output.xml')
 
+Example 3: Render network as a TikZ
+
+   Import the module
+
+   >>> import sbnw
+
+   Load an SBML model
+
+   >>> model = sbnw.loadsbml('GlycolysisOriginal.xml') # included in the test cases
+
+   Render the model to a TikZ file
+
+   >>> model.savetikz('GlycolysisOriginal_Render.tikz')
+
 API Documentation
 
 .. currentmodule:: sbnw

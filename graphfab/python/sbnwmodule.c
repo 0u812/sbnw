@@ -593,7 +593,7 @@ typedef struct {
 
 static void gfp_Rxn_dealloc(gfp_Rxn* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("Rxn dealloc\n");
+//     printf("Rxn dealloc\n");
     #endif
     if(self->owning)
       gf_releaseRxn(&self->r);
@@ -866,7 +866,7 @@ typedef struct {
 
 static void gfp_Node_dealloc(gfp_Node* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("Node dealloc %p\n", self->n.n);
+//     printf("Node dealloc %p\n", self->n.n);
     #endif
     if(self->owning)
       gf_releaseNode(&self->n);
@@ -1122,7 +1122,7 @@ typedef struct {
 
 static void gfp_Canvas_dealloc(gfp_Canvas* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("Canvas dealloc\n");
+//     printf("Canvas dealloc\n");
     #endif
     gf_releaseCanvas(&self->c);
     Py_TYPE(self)->tp_free((PyObject*)self);
@@ -1240,7 +1240,7 @@ typedef struct {
 
 static void gfp_Network_dealloc(gfp_Network* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("Network dealloc\n");
+//     printf("Network dealloc\n");
     #endif
 
     gf_releaseNetwork(&self->n);
@@ -1910,7 +1910,7 @@ static int gfp_Layout_Check(PyObject* p);
 
 static void gfp_Layout_dealloc(gfp_Layout* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("Layout dealloc\n");
+//     printf("Layout dealloc\n");
     #endif
     gf_freeLayoutInfo(self->l);
     Py_XDECREF(self->canv);
@@ -1921,7 +1921,7 @@ static void gfp_Layout_dealloc(gfp_Layout* self) {
 static PyObject* gfp_Layout_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
     gfp_Layout* self;
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("gfp_Layout_new called\n");
+//     printf("gfp_Layout_new called\n");
     #endif
     
     self = (gfp_Layout*)type->tp_alloc(type, 0);
@@ -2123,7 +2123,7 @@ gfp_sbnw_system(PyObject *self, PyObject *args)
 static void
 gfp_SBMLModel_dealloc(gfp_SBMLModel* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("SBMLModel dealloc\n");
+//     printf("SBMLModel dealloc\n");
     #endif
 
     Py_XDECREF(self->layout);
@@ -2225,35 +2225,6 @@ PyObject* gfp_SBMLModel_save(gfp_SBMLModel *self, PyObject *args, PyObject *kwds
     Py_RETURN_NONE;
 }
 
-PyObject* gfp_SBMLModel_renderTikZ_file(gfp_SBMLModel *self, PyObject *args, PyObject *kwds) {
-    static char *kwlist[] = {"filepath", NULL};
-    const char* outfile = NULL;
-    int error;
-
-    #if SAGITTARIUS_DEBUG_LEVEL >= 2
-//     printf("gfp_SBMLModel_renderTikZ_file started\n");
-    #endif
-
-    if(!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &outfile)) {
-        PyErr_SetString(SBNWError, "Invalid arguments to sbnw.model.save; expected filepath string");
-        return NULL;
-    }
-
-    if(self->layout)
-        error = gf_renderTikZFile(self->layout->l, outfile);
-    else {
-        PyErr_Format(SBNWError, "No layout information");
-        return NULL;
-    }
-
-    if(error) {
-        PyErr_Format(SBNWError, "Unable to write file; write access may be disabled");
-        return NULL;
-    }
-
-    Py_RETURN_NONE;
-}
-
 PyObject* gfp_SBMLModel_getsbml(gfp_SBMLModel *self, PyObject *args, PyObject *kwds) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     printf("gfp_SBMLModel_getsbml started\n");
@@ -2268,6 +2239,22 @@ PyObject* gfp_SBMLModel_getsbml(gfp_SBMLModel *self, PyObject *args, PyObject *k
         PyErr_Format(SBNWError, "Cannot get SBML - no layout information");
         return NULL;
     }
+}
+
+
+
+static int gfp_SBMLModel_processLayout(gfp_SBMLModel *self) {
+    // construct the layout
+    self->layout = (gfp_Layout*)PyObject_Call((PyObject*)&gfp_LayoutType, PyTuple_New(0), NULL);
+    gfp_Layout_rawinit(self->layout, gf_processLayout(self->m));
+
+    // construct the network
+//             self->network = (gfp_Network*)PyObject_Call((PyObject*)&gfp_NetworkType, PyTuple_New(0), NULL);
+//             gfp_Network_rawinit(self->network, gf_getNetwork(self->layout->l), self->layout->l);
+    Py_INCREF(self->layout->network);
+    self->network = self->layout->network;
+
+    return 0;
 }
 
 static PyObject* gfp_SBMLModel_getAttro(PyObject *self_, PyObject *attr) {
@@ -2287,15 +2274,7 @@ static PyObject* gfp_SBMLModel_getAttro(PyObject *self_, PyObject *attr) {
 //     printf("positive hit\n");
     #endif
         if(!self->layout) {
-            // construct the layout
-            self->layout = (gfp_Layout*)PyObject_Call((PyObject*)&gfp_LayoutType, PyTuple_New(0), NULL);
-            gfp_Layout_rawinit(self->layout, gf_processLayout(self->m));
-
-            // construct the network
-//             self->network = (gfp_Network*)PyObject_Call((PyObject*)&gfp_NetworkType, PyTuple_New(0), NULL);
-//             gfp_Network_rawinit(self->network, gf_getNetwork(self->layout->l), self->layout->l);
-            Py_INCREF(self->layout->network);
-            self->network = self->layout->network;
+            gfp_SBMLModel_processLayout(self);
         }
     }
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
@@ -2303,6 +2282,40 @@ static PyObject* gfp_SBMLModel_getAttro(PyObject *self_, PyObject *attr) {
     #endif
     
     return PyObject_GenericGetAttr((PyObject *)self, attr);
+}
+
+PyObject* gfp_SBMLModel_renderTikZ_file(gfp_SBMLModel *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"filepath", NULL};
+    const char* outfile = NULL;
+    int error;
+
+    #if SAGITTARIUS_DEBUG_LEVEL >= 2
+//     printf("gfp_SBMLModel_renderTikZ_file started\n");
+    #endif
+
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &outfile)) {
+        PyErr_SetString(SBNWError, "Invalid arguments to sbnw.model.save; expected filepath string");
+        return NULL;
+    }
+
+    // try to add layout info if not present
+    if(!self->layout)
+        gfp_SBMLModel_processLayout(self);
+
+    if(self->layout)
+        error = gf_renderTikZFile(self->layout->l, outfile);
+    else {
+        // failed to add layout info
+        PyErr_Format(SBNWError, "No layout information");
+        return NULL;
+    }
+
+    if(error) {
+        PyErr_Format(SBNWError, "Unable to write file; write access may be disabled");
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
 }
 
 static PyObject *
