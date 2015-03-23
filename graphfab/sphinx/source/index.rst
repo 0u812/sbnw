@@ -66,6 +66,27 @@ Example 3: Render network as a TikZ
 
    >>> model.savetikz('GlycolysisOriginal_Render.tikz')
 
+Example 4: Curves
+
+   Import the module
+
+   >>> import sbnw
+
+   Load an SBML model
+
+   >>> model = sbnw.loadsbml('BorisEJB.xml') # included in the test cases
+
+   Access the curve control points:
+
+   >>> for reaction in model.network.rxns:
+   >>>   for curve in reaction.curves:
+   >>>   print('Curve: Start {}, End {}, CP1 {}, CP2 {}'.format(curve[0], curve[3], curve[1], curve[2]))
+
+   Access endcap polygon:
+
+   >>>   if len(curve) > 5 and len(curve[5]) > 0:
+   >>>     print('Endcap poly: {}'.format(curve[5]))
+
 API Documentation
 
 .. currentmodule:: sbnw
