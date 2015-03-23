@@ -3,6 +3,14 @@
 ## Introduction
 libSBNW is a network viewer which supports autolayout of reaction networks and uses libSBML for reading/writing models. The intent of this project is to provide user and developers of systems/synthetic biology software tools a convenient, portable library to enable automatic layout of SBML models and to record this information in the SBML layout extension. To facilitate this, the functionality of the library is provided as a custom plugin within the Spyder-based [Tellurium](http://tellurium.analogmachine.org/) modeling environment. For developers, pre-built binaries including bindings for Python 2 are provided via the [release](https://github.com/0u812/sbnw/releases) page on this site.
 
+## Use Cases
+The library is designed as a reusable implementation of a automatic layout for SBML. As such, it has many downstream uses. To name a few:
+
+* Called by Python code via the included Python bindings
+* Via the network viewer GUI plugin for Tellurium
+* Directly via the C API in a pre-existing project
+* As part of e.g. a Django web service
+
 ## Download
 
 The latest release can be downloaded at https://github.com/0u812/sbnw/releases.
