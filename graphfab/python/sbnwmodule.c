@@ -2587,13 +2587,13 @@ static PyMethodDef SBNWMethods[] = {
      "Get the number of arrow styles\n\n"
     },
     {"get_arrow_style",  (PyCFunction)gfp_arrow_get_style, METH_VARARGS | METH_KEYWORDS,
-     "Set the arrow style for a role\n\n"
-     ":param role: The role\n"
+     "Set the arrow style for a role. Returns an integer.\n\n"
+     ":param role: The role (SUBSTRATE,PRODUCT,MODIFIER,ACTIVATOR,INHIBITOR)\n"
      ":type role: str\n"
     },
     {"set_arrow_style",  (PyCFunction)gfp_arrow_set_style, METH_VARARGS | METH_KEYWORDS,
      "Set the arrow style for a role\n\n"
-     ":param role: The role\n"
+     ":param role: The role (SUBSTRATE,PRODUCT,MODIFIER,ACTIVATOR,INHIBITOR)\n"
      ":type role: str\n"
      ":param style: The style to assign\n"
      ":type style: int\n"
