@@ -87,6 +87,11 @@ Example 4: Curves
    >>>   if len(curve) > 5 and len(curve[5]) > 0:
    >>>     print('Endcap poly: {}'.format(curve[5]))
 
+   Set endcap (a.k.a. arrowhead styles):
+
+   >>> sbnw.get_arrow_style('SUBSTRATE') # Other values are PRODUCT, MODIFIER, ACTIVATOR, INHIBITOR
+   >>> sbnw.set_arrow_style('SUBSTRATE', 3)
+
 API Documentation
 
 .. currentmodule:: sbnw
