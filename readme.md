@@ -97,4 +97,4 @@ The C API is exposed via graphfab/autolayoutc_api.h.  There is an example in san
 
 ## Acknowledgements
 
-This work was funded under National Institute of General Medical Sciences of the National Institutes of Health award R01-GM081070
+This work was funded by the generous support of the National Institute of General Medical Sciences of the National Institutes of Health under award R01-GM081070
