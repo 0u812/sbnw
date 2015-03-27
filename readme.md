@@ -94,3 +94,7 @@ The C API is exposed via graphfab/autolayoutc_api.h.  There is an example in san
         // run destructors on the layout
         gf_freeLayoutInfo(l);
 ```
+
+## Acknowledgements
+
+This work was funded under National Institute of General Medical Sciences of the National Institutes of Health award R01-GM081070
