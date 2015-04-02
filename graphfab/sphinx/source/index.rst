@@ -92,6 +92,13 @@ Example 4: Curves
    >>> sbnw.get_arrow_style('SUBSTRATE') # Other values are PRODUCT, MODIFIER, ACTIVATOR, INHIBITOR
    >>> sbnw.set_arrow_style('SUBSTRATE', 3)
 
+Example 5: Version
+
+    Get the version information
+
+    >>> import sbnw
+    >>> print(sbnw.__version__)
+
 API Documentation
 
 .. currentmodule:: sbnw
