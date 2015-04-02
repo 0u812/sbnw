@@ -2718,6 +2718,9 @@ initsbnw(void)
     // sbmlmodel
     Py_INCREF(&gfp_SBMLModelType);
     PyModule_AddObject(m, "sbmlmodel", (PyObject *)&gfp_SBMLModelType);
+
+    // add version info
+    PyModule_AddStringConstant(m, "__version__", gf_getCurrentLibraryVersion());
     
     MODINIT_SUCCESS(m);
 }
