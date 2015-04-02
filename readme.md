@@ -23,6 +23,10 @@ The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.2.4/tes
 
 Online C API documentation (via Doxygen) can be found at http://0u812.github.io/sbnw/docs. Python documentation can be found at http://0u812.github.io/sbnw/sphinx.
 
+## Using the Python bindings
+
+* On Mac, extract the contents of http://sourceforge.net/projects/sbnw/files/1.2.7/sbnw-1.2.7-os-x-site-packages-py2.tar.bz2/download to your site-packages directory.
+* On Windows, extract the contents of http://sourceforge.net/projects/sbnw/files/1.2.7/sbnw-1.2.7-site-packages-win32.zip/download to your site-packages directory.
 
 ## How to compile the library
 
