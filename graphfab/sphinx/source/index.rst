@@ -36,7 +36,7 @@ Example 2: Add layout information to an SBML model
 
    Randomize the initial configuration and run the FR algorithm
 
-   >>> model.network.randomize(canvas)
+   >>> model.network.randomize(0,0,300,300)
    >>> model.network.autolayout()
 
    Shrink or enlarge a network so that it fits within a window
