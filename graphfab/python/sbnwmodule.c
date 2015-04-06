@@ -1350,10 +1350,13 @@ static PyObject* gfp_NetworkRandomizeLayout(gfp_Network *self, PyObject *args, P
     #endif
     
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist, &gfp_CanvasType, &canvas)) {
+      PyErr_Clear();
       if(!PyArg_ParseTupleAndKeywords(args, kwds, "|dddd", kwlist_coords, &left, &top, &right, &bottom)) {
+//         printf("could not parse the dubs\n");
         PyErr_SetString(SBNWError, "Invalid arguments");
         return NULL;
       } else {
+//         printf("parsed the dubs\n");
         use_coords = 1;
         // PyArg_ParseTupleAndKeywords sets an error whether you want it to or not
         PyErr_Clear();
