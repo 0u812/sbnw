@@ -308,7 +308,7 @@ class Autolayout(MainWindowBaseClass):
 
         # Help
 
-        self.homepageAct = QAction(QtGui.QIcon(self.getIconPath('32x32/homepage.png')), '&Online Documentation', self)
+        self.homepageAct = QAction(QtGui.QIcon(self.getIconPath('32x32/homepage.png')), '&Homepage', self)
         self.homepageAct.triggered.connect(self.openhomepageEvent)
 
         self.aboutAct = QAction(QtGui.QIcon(self.getIconPath('32x32/help-about-2.png')), '&About', self)
@@ -662,7 +662,7 @@ class Autolayout(MainWindowBaseClass):
       self.config.updateArrowStyles()
 
     def openhomepageEvent(self, event):
-        QtGui.QDesktopServices.openUrl(QtCore.QUrl('http://code.google.com/p/sbnw/'))
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl('https://github.com/0u812/sbnw'))
 
 if not inspyder:
   FrameBaseClass = QtWidgets.QFrame
