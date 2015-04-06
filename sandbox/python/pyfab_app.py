@@ -974,6 +974,7 @@ class LayoutFrame(FrameBaseClass):
                 #(event.y() - self.translate.y())/self.scale))
             qtfi = self.qtf.inverted()[0]
             mouse = qtfi.map(QPoint((event.x(), event.y())))
+            dragging_object = False
 
             if self.parent().createNodeToolAct.isChecked():
                 self.addNode(mouse.x(), mouse.y())
@@ -988,6 +989,7 @@ class LayoutFrame(FrameBaseClass):
                             node.custom.isBeingDragged = True
                             node.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(node))
                             self.dragging = True
+                            dragging_object = True
                             self.dragSource = mouse
                         elif self.parent().lockToolAct.isChecked():
                             if not node.islocked():
@@ -1011,7 +1013,13 @@ class LayoutFrame(FrameBaseClass):
                             rxn.custom.isBeingDragged = True
                             rxn.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(rxn))
                             self.dragging = True
+                            dragging_object = True
                             self.dragSource = mouse
+
+                if not dragging_object:
+                  mouse = QPoint((event.x(), event.y()))
+                  self.panning = True
+                  self.panstart = mouse
         elif event.button() == 4:
             mouse = QPoint((event.x(), event.y()))
             self.panning = True
@@ -1021,14 +1029,18 @@ class LayoutFrame(FrameBaseClass):
     # Mouse release
     def mouseReleaseEvent(self, event):
         if event.button() == 1:
-            self.dragging = False
-            for node in self.network.nodes:
-                if node.custom.isBeingDragged:
-                    node.custom.isBeingDragged = False
-            for rxn in self.network.rxns:
-                if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
-                    rxn.custom.isBeingDragged = False
-            self.update()
+            if self.panning:
+              self.panning = False
+              self.applyTranslation()
+            else:
+              self.dragging = False
+              for node in self.network.nodes:
+                  if node.custom.isBeingDragged:
+                      node.custom.isBeingDragged = False
+              for rxn in self.network.rxns:
+                  if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
+                      rxn.custom.isBeingDragged = False
+              self.update()
         if(event.button() == 4):
             self.panning = False
             self.applyTranslation()
