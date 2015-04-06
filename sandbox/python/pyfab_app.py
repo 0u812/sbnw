@@ -410,7 +410,7 @@ class Autolayout(MainWindowBaseClass):
 
         # File
         self.filetoolbar = addToolBar('File')
-        self.filetoolbar.addAction(self.newAct)
+        #self.filetoolbar.addAction(self.newAct)
         self.filetoolbar.addAction(self.openAct)
         self.filetoolbar.addAction(self.saveAct)
         self.filetoolbar.addAction(self.saveasAct)
