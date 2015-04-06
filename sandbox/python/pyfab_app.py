@@ -963,8 +963,8 @@ class LayoutFrame(FrameBaseClass):
           self.postScale *= math.exp(event.angleDelta().y() / 600.)
         else:
           self.postScale *= math.exp(event.delta() / 600.)
-        if self.postScale < 0.1: self.postScale = 0.1
-        if self.postScale > 4.: self.postScale = 4.
+        if self.postScale < 0.01: self.postScale = 0.01
+        if self.postScale > 40.: self.postScale = 40.
         #print('postScale: {}'.format(self.postScale))
         #self.postScale =
         #self.sigScaleChg.emit()
