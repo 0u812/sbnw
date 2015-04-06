@@ -1100,19 +1100,22 @@ class SBMLOptsCfgPage(QWidget):
       self.sbml_ns_layout = QGridLayout()
       self.sbml_ns_group.setLayout(self.sbml_ns_layout)
 
-      self.level_label = QLabel('SBML Level')
+      self.level_label = QLabel('Control the output SBML level/version')
       self.sbml_ns_layout.addWidget(self.level_label, 0, 0)
+
+      self.level_label = QLabel('SBML Level')
+      self.sbml_ns_layout.addWidget(self.level_label, 1, 0)
       self.level = QSpinBox(self)
       self.level.setMinimum(1)
       self.level.setMaximum(3)
       self.level.valueChanged.connect(self.set_sbml_level)
-      self.sbml_ns_layout.addWidget(self.level, 0, 1)
+      self.sbml_ns_layout.addWidget(self.level, 1, 1)
 
       self.version_label = QLabel('SBML Version')
-      self.sbml_ns_layout.addWidget(self.version_label, 1, 0)
+      self.sbml_ns_layout.addWidget(self.version_label, 2, 0)
       self.version = QSpinBox(self)
       self.version.valueChanged.connect(self.set_sbml_version)
-      self.sbml_ns_layout.addWidget(self.version, 1, 1)
+      self.sbml_ns_layout.addWidget(self.version, 2, 1)
 
       self.sync_widgets()
 
