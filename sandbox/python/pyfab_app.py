@@ -435,6 +435,10 @@ class Autolayout(MainWindowBaseClass):
         #self.sliderwidget.setValue(50)
         self.sliderwidget.setValue(self.openconfig().state.stiffness)
         self.sliderwidget.sliderReleased.connect(self.stiffness_changed_via_slider)
+
+        self.slider_label = QLabel('Stiffness:')
+        self.toolbar.addWidget(self.slider_label)
+
         self.toolbar.addWidget(self.sliderwidget)
 
         self.model = None
