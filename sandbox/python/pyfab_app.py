@@ -444,13 +444,15 @@ class Autolayout(MainWindowBaseClass):
         with self.openconfig() as config:
             config.state.stiffness = float(self.sliderwidget.value())
 
+    # marker for Spyder plugin detection
     def pyfabMarker():
         return 'pyfab'
 
+    # proxy - this function is overridden by the Spyder plugin to rebind the asset path
     def getIconPath(self, p):
-	result = str(os.path.join(localpath, '..', '..', 'icons', p))
-	print('icon path: {}'.format(result))
-        return result
+      result = str(os.path.join(localpath, '..', '..', 'icons', p))
+      #print('icon path: {}'.format(result))
+      return result
 
     def center(self, offset=(0,0)):
         screen = QDesktopWidget().screenGeometry()

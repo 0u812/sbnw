@@ -203,5 +203,31 @@ class PyfabPlugin(pyfab_app.Autolayout, SpyderPluginMixin, PyfabConfigSpyder):
   def getobj(self):
       print('getobj derived')
 
+  def opensbml(self, sbml):
+    if self.dockwidget is not None:
+      self.dockwidget.blockSignals(True)
+
+    # raise window
+    self.eventually_raise_network_viewer(False)
+
+    if self.dockwidget is not None:
+      self.dockwidget.blockSignals(False)
+
+    # open sbml in the raised window
+    pyfab_app.Autolayout.opensbml(self, sbml)
+
+  # Based on Spyder's __eventually_raise_inspector in inspector.py
+  def eventually_raise_network_viewer(self, force=False):
+      if hasattr(self.main, 'tabifiedDockWidgets'):
+          # 'QMainWindow.tabifiedDockWidgets' was introduced in PyQt 4.5
+          if self.dockwidget and (force or self.dockwidget.isVisible()) \
+              and not self.ismaximized:
+              dockwidgets = self.main.tabifiedDockWidgets(self.dockwidget)
+              if self.main.console.dockwidget not in dockwidgets and \
+                  (hasattr(self.main, 'extconsole') and \
+                  self.main.extconsole.dockwidget not in dockwidgets):
+                  self.dockwidget.show()
+                  self.dockwidget.raise_()
+
 
 PLUGIN_CLASS = PyfabPlugin
