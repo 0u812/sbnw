@@ -357,8 +357,11 @@ class Autolayout(MainWindowBaseClass):
         if not inspyder and enable_matplotlib2tikz:
           self.filemenu.addAction(self.saveTikZAct)
         self.filemenu.addAction(self.saveTikZIntAct)
-        self.filemenu.addSeparator()
-        self.filemenu.addAction(self.exitAct)
+
+        # don't include exit option when in Spyder
+        if not inspyder:
+          self.filemenu.addSeparator()
+          self.filemenu.addAction(self.exitAct)
 
         self.editmenu = menu.addMenu('&Edit')
         #self.editmenu.addAction(self.selectAllAct)
