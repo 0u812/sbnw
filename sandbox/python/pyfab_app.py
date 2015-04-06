@@ -361,8 +361,8 @@ class Autolayout(MainWindowBaseClass):
         self.filemenu.addAction(self.exitAct)
 
         self.editmenu = menu.addMenu('&Edit')
-        self.editmenu.addAction(self.selectAllAct)
-        self.editmenu.addAction(self.selectNoneAct)
+        #self.editmenu.addAction(self.selectAllAct)
+        #self.editmenu.addAction(self.selectNoneAct)
         self.editmenu.addAction(self.copySBMLCbAct)
         self.editmenu.addAction(self.layoutAct)
 
