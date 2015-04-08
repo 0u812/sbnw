@@ -25,6 +25,8 @@ from spyderlib.utils.qthelpers import get_icon, create_action, qapplication
 from spyderlib.qt.QtCore import SIGNAL, Qt
 from spyderlib.py3compat import configparser as cp
 
+from spyderlib.plugins.externalconsole import ExternalConsole
+
 _ = get_translation("p_pyfab", dirname="spyderplugins")
 
 class PyfabSpyderConfigState(PyfabConfigState):
@@ -147,6 +149,16 @@ class PyfabPlugin(pyfab_app.Autolayout, SpyderPluginMixin, PyfabConfigSpyder):
   def register_plugin(self):
     self.main.add_dockwidget(self)
 
+    print('** Looking for ExternalPythonShell')
+    #from spyderlib.widgets.externalshell import pythonshell
+    #print(len(self.main.extconsole.shellwidgets))
+    #for sw in self.main.extconsole.shellwidgets:
+      #print('sw {}'.format(sw))
+      #if isinstance(sw, pythonshell.ExternalPythonShell):
+        #print('    Found ExternalPythonShell: {}'.format(sw))
+    print(self.main.extconsole.start)
+    self.main.extconsole.__class__ = SBNWExternalConsole
+
     if self.main.explorer is not None:
       self.connect(self.main.explorer, SIGNAL("open_interpreter(QString)"),
                    self.sigslot)
@@ -231,3 +243,8 @@ class PyfabPlugin(pyfab_app.Autolayout, SpyderPluginMixin, PyfabConfigSpyder):
 
 
 PLUGIN_CLASS = PyfabPlugin
+
+class SBNWExternalConsole(ExternalConsole):
+  def start(self, *args, **kwds):
+    print('SBNWExternalConsole start')
+    ExternalConsole.start(self, *args, **kwds)
