@@ -3,7 +3,7 @@ project (SBNW)
 
 set(SBNW_MAJOR_VER  1)
 set(SBNW_MINOR_VER  2)
-set(SBNW_PATCHLEVEL 8)
+set(SBNW_PATCHLEVEL 9)
 
 #User Configuration
 if(${WIN32})
