@@ -246,5 +246,86 @@ PLUGIN_CLASS = PyfabPlugin
 
 class SBNWExternalConsole(ExternalConsole):
   def start(self, *args, **kwds):
+    from spyderlib.widgets.externalshell import pythonshell
     print('SBNWExternalConsole start')
     ExternalConsole.start(self, *args, **kwds)
+
+    for sw in self.shellwidgets:
+      #print('sw {}'.format(sw))
+      if isinstance(sw, pythonshell.ExternalPythonShell):
+        print('    Found ExternalPythonShell: {}'.format(sw))
+        print('      NotificationThread: {}'.format(sw.notification_thread))
+        sw.notification_thread.__class__ = SBNWNotificationThread
+        print('      terminate NotificationThread')
+        sw.notification_thread.terminate()
+        sw.notification_thread.start()
+
+from spyderlib.widgets.externalshell.introspection import NotificationThread
+from spyderlib.baseconfig import get_conf_path, DEBUG
+from spyderlib.utils.bsdsocket import read_packet, write_packet
+from spyderlib.utils.debug import log_last_error
+
+LOG_FILENAME = get_conf_path('introspection.log')
+
+class SBNWNotificationThread(NotificationThread):
+    def run(self):
+        print('run')
+        """Start notification thread"""
+        while True:
+            print('SBNWNotificationThread while True')
+            if self.notify_socket is None:
+                continue
+            output = None
+            try:
+                try:
+                    cdict = read_packet(self.notify_socket)
+                except:
+                    # This except statement is intended to handle a struct.error
+                    # (but when writing 'except struct.error', it doesn't work)
+                    # Note: struct.error is raised when the communication has
+                    # been interrupted and the received data is not a string
+                    # of length 8 as required by struct.unpack (see read_packet)
+                    break
+                if cdict is None:
+                    # Another notification thread has just terminated and
+                    # then wrote 'None' in the notification socket
+                    # (see the 'finally' statement below)
+                    continue
+                if not isinstance(cdict, dict):
+                    raise TypeError("Invalid data type: %r" % cdict)
+                command = cdict['command']
+                data = cdict.get('data')
+                if command == 'pdb_step':
+                    fname, lineno = data
+                    self.sig_pdb.emit(fname, lineno)
+                    self.refresh_namespace_browser.emit()
+                elif command == 'refresh':
+                    self.refresh_namespace_browser.emit()
+                elif command == 'remote_view':
+                    self.sig_process_remote_view.emit(data)
+                elif command == 'ipykernel':
+                    self.new_ipython_kernel.emit(data)
+                elif command == 'open_file':
+                    fname, lineno = data
+                    self.open_file.emit(fname, lineno)
+                elif command == 'layout':
+                    print('SBNWNotificationThread layout')
+                    #sbml = data
+                    #if sbml != '~::empty::~':
+                    #  self.layout.emit(sbml)
+                    #else:
+                    #  if hasattr(self, 'network_viewer_sbml_hook'):
+                    #    output = self.network_viewer_sbml_hook()
+                else:
+                    raise RuntimeError('Unsupported command: %r' % command)
+                if DEBUG_INTROSPECTION:
+                    logging.debug("received command: %r" % command)
+            except:
+                log_last_error(LOG_FILENAME, "notification thread")
+            finally:
+                try:
+                    write_packet(self.notify_socket, output)
+                except:
+                    # The only reason why it should fail is that Spyder is
+                    # closing while this thread is still alive
+                    break
