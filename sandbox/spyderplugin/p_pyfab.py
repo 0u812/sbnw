@@ -244,6 +244,8 @@ class PyfabPlugin(pyfab_app.Autolayout, SpyderPluginMixin, PyfabConfigSpyder):
 
 PLUGIN_CLASS = PyfabPlugin
 
+from spyderlib.qt.QtCore import Signal as SpyderSignal
+
 class SBNWExternalConsole(ExternalConsole):
   def start(self, *args, **kwds):
     from spyderlib.widgets.externalshell import pythonshell
@@ -257,8 +259,51 @@ class SBNWExternalConsole(ExternalConsole):
         print('      NotificationThread: {}'.format(sw.notification_thread))
         sw.notification_thread.__class__ = SBNWNotificationThread
         print('      terminate NotificationThread')
+
+        # stop the thread
         sw.notification_thread.terminate()
+
+        # add the layout signal if it doesn't already exist
+        #if not hasattr(sw.notification_thread, 'layout'):
+          #sw.notification_thread.layout = SpyderSignal(str)
+
+        # connect the layout signal to the handlers
+        print(SpyderSignal)
+        print(type(sw.notification_thread.layout))
+        print(dir(sw.notification_thread.layout))
+        sw.notification_thread.layout.connect(self.network_layout)
+        sw.notification_thread.network_viewer_sbml_hook = self.get_network_viewer_sbml
+
+        # start the thread again
         sw.notification_thread.start()
+
+  def network_layout(self, sbml):
+    """Open the SBML model in the pyfab layout viewer"""
+    print('network_layout, sbml {}'.format(sbml))
+    if sbml != '~::empty::~':
+      # find pyfab
+      pyfab = None
+      for plugin in self.main.thirdparty_plugins:
+          if(hasattr(plugin, 'pyfabMarker')):
+              pyfab = plugin
+              break
+
+      if pyfab is not None:
+          pyfab.opensbml(sbml)
+    else:
+      raise RuntimeError('No SBML string')
+
+  def get_network_viewer_sbml(self):
+    print('get_network_viewer_sbml')
+    # find pyfab
+    pyfab = None
+    for plugin in self.main.thirdparty_plugins:
+        if(hasattr(plugin, 'pyfabMarker')):
+            pyfab = plugin
+            break
+
+    if pyfab is not None:
+        return pyfab.getsbml()
 
 from spyderlib.widgets.externalshell.introspection import NotificationThread
 from spyderlib.baseconfig import get_conf_path, DEBUG
@@ -268,11 +313,17 @@ from spyderlib.utils.debug import log_last_error
 LOG_FILENAME = get_conf_path('introspection.log')
 
 class SBNWNotificationThread(NotificationThread):
+    layout = SpyderSignal(str)
+
     def run(self):
-        print('run')
+        #print('run')
         """Start notification thread"""
         while True:
-            print('SBNWNotificationThread while True')
+            #print('SBNWNotificationThread while True')
+
+            # add layout signal if it doesn't already exist
+            #if not hasattr(self, 'layout'):
+
             if self.notify_socket is None:
                 continue
             output = None
@@ -310,12 +361,17 @@ class SBNWNotificationThread(NotificationThread):
                     self.open_file.emit(fname, lineno)
                 elif command == 'layout':
                     print('SBNWNotificationThread layout')
-                    #sbml = data
-                    #if sbml != '~::empty::~':
-                    #  self.layout.emit(sbml)
-                    #else:
-                    #  if hasattr(self, 'network_viewer_sbml_hook'):
-                    #    output = self.network_viewer_sbml_hook()
+                    sbml = data
+                    if sbml != '~::empty::~':
+                      print('SBNWNotificationThread emit layout signal')
+                      self.layout.emit(sbml)
+                    else:
+                      print('SBNWNotificationThread get sbml')
+                      if hasattr(self, 'network_viewer_sbml_hook'):
+                        output = self.network_viewer_sbml_hook()
+                        print('output = {}'.format(output))
+                      else:
+                        print('no attr network_viewer_sbml_hook')
                 else:
                     raise RuntimeError('Unsupported command: %r' % command)
                 if DEBUG_INTROSPECTION:
