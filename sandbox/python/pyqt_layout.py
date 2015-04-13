@@ -2,11 +2,11 @@
 
 # pyqt_layout.py
 print('hi')
-import sbnw
+import sbnet
 # load the model
-model = sbnw.loadsbml('/home/sagrada/myhome/code/sbnw-trunk/testcases/twocompsys-ex.xml')
+model = sbnet.loadsbml('/home/sagrada/myhome/code/sbnet-trunk/testcases/twocompsys-ex.xml')
 print('loading model')
-#model = sbnw.loadsbml(r'C:\Users\user\Documents\layout\twocompsys-ex.xml')
+#model = sbnet.loadsbml(r'C:\Users\user\Documents\layout\twocompsys-ex.xml')
 print('getting layout')
 layout = model.layout
 print('got layout')

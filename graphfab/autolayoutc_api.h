@@ -104,7 +104,7 @@
 //
 // * \section install_sec Installation
 // *
-// * Installation documentation is provided at https://github.com/0u812/sbnw.
+// * Installation documentation is provided at https://github.com/0u812/sbnet.
 
 
 // \defgroup C_API All C Methods
