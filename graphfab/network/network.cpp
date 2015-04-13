@@ -634,10 +634,12 @@ namespace Graphfab {
 
 # if PRINT_CURVE_DIAG
     static bool filterRxn(Reaction* rxn) {
-      if (rxn->findSpeciesById("glycerate_3_phosphate"))
-        return false;
-      else
-        return true;
+      for(Reaction::NodeIt i=rxn->NodesBegin(); i!=rxn->NodesEnd(); ++i) {
+        Node* n = i->first;
+        if(n->getId() == "glyceraldehyde_3_phosphate" && i->second == RXN_ROLE_PRODUCT)
+          return false;
+      }
+      return true;
     }
 # endif
 
@@ -687,7 +689,7 @@ namespace Graphfab {
 #if PRINT_CURVE_DIAG
         if (!filterRxn(this)) {
           //  use mock centroid position from C# version
-          setCentroid(Point(359, 384));
+          setCentroid(Point(359, 258));
           std::cerr << "centroid pos: " << getCentroid() << "\n";
         }
 #endif
@@ -787,8 +789,10 @@ namespace Graphfab {
                     break;
                 case RXN_CURVE_PRODUCT:
 #if PRINT_CURVE_DIAG
-                    if (!filterRxn(this))
+                    if (!filterRxn(this)) {
                       std::cerr << "PRODUCT\n";
+                      std::cerr << "  rxn " << getId() <<  ", ctrlCent: " << ctrlCent << ", _p: " << _p << ", *c->ae: " << *c->ae << ", ne: " << c->ne->getId() << ", ne coords: " << c->ne->getCentroid() << ", ne corner: " << c->ne->getBoundingBox().getMin() << "\n";
+                    }
 #endif
                     c->s = *c->as;
 //                     std::cerr << "* Product startpoint: " << c->s << "\n";
@@ -853,7 +857,13 @@ namespace Graphfab {
             RxnBezier* c2 = *j;
             AN(c2);
 
-            if (c1->getNodeUsed() !=  NULL && c1->getNodeUsed() ==  c2->getNodeUsed() && c1->getRole() ==  c2->getRole()) {
+            if (c1->getNodeUsed() != NULL && c1->getNodeUsed() == c2->getNodeUsed() && c1->getRole() == c2->getRole()) {
+
+              if (!filterRxn(this)) {
+                std::cerr << "c1 node min: " << c1->getNodeUsed()->getMin() << ", c1 node cent: " << c1->getNodeUsed()->getCentroid() << ", c1 node: " << c1->getNodeSide() << ", c1 node cp: " << c1->getNodeSideCP() << "\n";
+                std::cerr << "c2 node min: " << c2->getNodeUsed()->getMin() << ", c2 node cent: " << c2->getNodeUsed()->getCentroid() << ", c2 node: " << c2->getNodeSide() << ", c2 node cp: " << c2->getNodeSideCP() << "\n";
+              }
+
               c1->setNodeSideCP(new2ndPos(c1->getNodeUsed()->getMin(), c1->getNodeSideCP(),  20., 10., false));
               c2->setNodeSideCP(new2ndPos(c2->getNodeUsed()->getMin(), c2->getNodeSideCP(), -20., 10., false));
 
