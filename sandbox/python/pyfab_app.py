@@ -319,7 +319,7 @@ class Autolayout(MainWindowBaseClass):
         self.selectToolAct.activate(QAction.Trigger)
 
         self.setGeometry(300, 300, wndwidth, wndheight)
-        self.setWindowTitle('Pyfab SBNW')
+        self.setWindowTitle('Pyfab SBNET')
         self.mainframe = LayoutFrame(self)
         #self.prefframe = PrefFrame(self)
 
@@ -673,15 +673,15 @@ class Autolayout(MainWindowBaseClass):
         QtGui.QDesktopServices.openUrl(QtCore.QUrl('https://github.com/0u812/sbnw'))
 
     def openAboutBoxEvent(self, event):
-      box = QMessageBox.about(self, 'SBNW: SBML Network Viewer',
-                              '<center><h1>SBNW</h1>\n\n<h2>Network Viewer for SBML</h2>\n<a href=\"https://github.com/0u812/sbnw\">Visit Homepage</a>\n</center>\n<br/>' +
+      box = QMessageBox.about(self, 'SBNET: SBML Network Viewer',
+                              '<center><h1>SBNET</h1>\n\n<h2>Network Viewer for SBML</h2>\n<a href=\"https://github.com/0u812/sbnw\">Visit Homepage</a>\n</center>\n<br/>' +
 '''<strong>Copyright (c) 2015, J. Kyle Medley, Herbert M. Sauro</strong> <br/>
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
 <ul>
     <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
     <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
-    <li>Neither the name of SBNW nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+    <li>Neither the name of SBNET nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
 </ul>
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''')

@@ -95,7 +95,7 @@ namespace Graphfab
     #define GF_PYREALFMT "d"
         
     /// Determines verbosity of diagnostic messages
-    #define SAGITTARIUS_DEBUG_LEVEL SBNW_DEBUG_LEVEL
+    #define SAGITTARIUS_DEBUG_LEVEL SBNET_DEBUG_LEVEL
     
     //C++ typedefs
     

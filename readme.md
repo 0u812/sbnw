@@ -1,7 +1,7 @@
-# libSBNW: A Network Viewer for SBML
+# libSBNet: A Network Viewer for SBML
 
 ## Introduction
-libSBNW is a network viewer which supports autolayout of reaction networks and uses libSBML for reading/writing models. The intent of this project is to provide user and developers of systems/synthetic biology software tools a convenient, portable library to enable automatic layout of SBML models and to record this information in the SBML layout extension. To facilitate this, the functionality of the library is provided as a custom plugin within the Spyder-based [Tellurium](http://tellurium.analogmachine.org/) modeling environment. For developers, pre-built binaries including bindings for Python 2 are provided via the [release](https://github.com/0u812/sbnw/releases) page on this site.
+libSBNet is a network viewer which supports autolayout of reaction networks and uses libSBML for reading/writing models. The intent of this project is to provide user and developers of systems/synthetic biology software tools a convenient, portable library to enable automatic layout of SBML models and to record this information in the SBML layout extension. To facilitate this, the functionality of the library is provided as a custom plugin within the Spyder-based [Tellurium](http://tellurium.analogmachine.org/) modeling environment. For developers, pre-built binaries including bindings for Python 2 are provided via the [release](https://github.com/0u812/sbnw/releases) page on this site.
 
 ## Use Cases
 The library is designed as a reusable implementation of a automatic layout for SBML. As such, it has many downstream uses. To name a few:
@@ -13,7 +13,7 @@ The library is designed as a reusable implementation of a automatic layout for S
 
 ## Download
 
-The network viewer plugin is part of Tellurium, which can be downloaded for [Windows](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Windows/) and [Mac OS X](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Mac/). Seperate binaries for the libSBNW library are available from [SourceForge](https://sourceforge.net/projects/sbnw/files/).
+The network viewer plugin is part of Tellurium, which can be downloaded for [Windows](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Windows/) and [Mac OS X](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Mac/). Seperate binaries for the libSBNet library are available from [SourceForge](https://sourceforge.net/projects/sbnw/files/).
 
 ## Test Cases
 
@@ -31,17 +31,17 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
 ## How to compile the library
 
  * Install the latest version of <a href="http://sourceforge.net/projects/sbml/files/libsbml/">libSBML</a> or build it from source (tested with 5.6, 5.8, 5.10, 5.11).
- * **NOTE**: If you install a pre-built binary of libSBML then you must compile SBNW with the same version of Visual Studio as used to build libSBML (2010 at the time of writing).
+ * **NOTE**: If you install a pre-built binary of libSBML then you must compile SBNet with the same version of Visual Studio as used to build libSBML (2010 at the time of writing).
  * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">master branch</a> to Documents\sbnw via git. In the Documents folder, run `git clone https://github.com/0u812/sbnw.git`
  * Download and instsall <a href="http://www.cmake.org/">CMake</a> (compatible with major version 2 or 3).
  * Open CMake and select Documents\sbnw as the source directory.
  * Select Documents\sbnw-build (or choose a directory at will) as the build directory.
  * Click configure & generate via CMake, choosing a generator that matches the required configuration (32-bit x86 is recommended on Windows; on Linux the default generator is sufficient).
  * Using CMake, set the `LIBSBML_DIR` variable to point to the directory where libSBML is installed/downloaded. Click configure & generate again.
- * **NOTE**: In order to statically link to libSBML, specify `SBNW_LINK_TO_STATIC_LIBSBML=ON`. Otherwise, the libSBML DLLs must be in the PATH to run any compiled code.
+ * **NOTE**: In order to statically link to libSBML, specify `SBNet_LINK_TO_STATIC_LIBSBML=ON`. Otherwise, the libSBML DLLs must be in the PATH to run any compiled code.
  * On Windows, open the generated .sln in Visual Studio, and change the configuration to "Release"; on Linux/Mac simply run make -j4 install from the build directory.
  * *(This step was previously used to instruct the user to set the MSVC runtime library. It is now set automatically through CMake. This placeholder serves as a reminder in case this solution breaks at some point.)*
- * **Windows Specific:** In Visual Studio, right click on the INSTALL target and select build. SBNW will be installed to the location stored in CMAKE_INSTALL_PREFIX (ensure your user has write access).
+ * **Windows Specific:** In Visual Studio, right click on the INSTALL target and select build. SBNet will be installed to the location stored in CMAKE_INSTALL_PREFIX (ensure your user has write access).
 
 ## Using the Tellurium Plugin
 

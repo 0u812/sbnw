@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNW_MATH_DIST_H_
-#define __SBNW_MATH_DIST_H_
+#ifndef __SBNET_MATH_DIST_H_
+#define __SBNET_MATH_DIST_H_
 
 //== INCLUDES ========================================================================
 

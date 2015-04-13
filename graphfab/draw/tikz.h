@@ -37,8 +37,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNW_DRAW_TIKZ_H_
-#define __SBNW_DRAW_TIKZ_H_
+#ifndef __SBNET_DRAW_TIKZ_H_
+#define __SBNET_DRAW_TIKZ_H_
 
 //== INCLUDES ========================================================================
 

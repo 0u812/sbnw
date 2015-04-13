@@ -65,7 +65,7 @@ namespace Graphfab {
         case 2:
           return x3_;
         default:
-          SBNW_THROW(InvalidParameterException, "Index out of bounds", "CubicRoots::getRoot");
+          SBNET_THROW(InvalidParameterException, "Index out of bounds", "CubicRoots::getRoot");
       }
     }
 
@@ -78,7 +78,7 @@ namespace Graphfab {
 
     Real CubicRoots::getRealRoot(int i) const {
       if (!isRootReal(i))
-        SBNW_THROW(RedundancyCheckFailureException, "Root is not real", "CubicRoots::getRealRoot");
+        SBNET_THROW(RedundancyCheckFailureException, "Root is not real", "CubicRoots::getRealRoot");
       return std::real(getRoot(i));
     }
 

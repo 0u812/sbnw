@@ -295,7 +295,7 @@ namespace Graphfab
                 }
     };
     
-#define SBNW_THROW( type, desc, origin ) throw type( desc, origin, __FILE__, __LINE__ );
+#define SBNET_THROW( type, desc, origin ) throw type( desc, origin, __FILE__, __LINE__ );
 } //namespace Sagittarius
 
 #endif

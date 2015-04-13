@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNW_LAYOUT_CURVE_H_
-#define __SBNW_LAYOUT_CURVE_H_
+#ifndef __SBNET_LAYOUT_CURVE_H_
+#define __SBNET_LAYOUT_CURVE_H_
 
 //== INCLUDES ========================================================================
 

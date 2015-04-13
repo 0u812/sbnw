@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNW_AUTOLAYOUT_H_
-#define __SBNW_AUTOLAYOUT_H_
+#ifndef __SBNET_AUTOLAYOUT_H_
+#define __SBNET_AUTOLAYOUT_H_
 
 //== INCLUDES ========================================================================
 
@@ -46,11 +46,11 @@
 #endif
 
 
-///*! \mainpage libSBNW
+///*! \mainpage libSBNET
 // *
 // * \section intro_sec Introduction
 // *
-// * libSBNW is a SBML compliant layout generation program.
+// * libSBNET is a SBML compliant layout generation program.
 // *
 //
 // Example:

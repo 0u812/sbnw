@@ -245,7 +245,7 @@ namespace Graphfab {
 
     int Node::alias(Network* net) {
         if(!net->containsNode(this))
-          SBNW_THROW(InvalidParameterException, "No such node in network", "Network::alias");
+          SBNET_THROW(InvalidParameterException, "No such node in network", "Network::alias");
 
         net->clearExcludeFromSubgraphEnum();
         int nsub_before = net->getNumSubgraphs();
@@ -312,7 +312,7 @@ namespace Graphfab {
         try {
           net->removeNode(this);
         } catch(...) {
-          SBNW_THROW(InternalCheckFailureException, "Could not remove original node", "Network::alias");
+          SBNET_THROW(InternalCheckFailureException, "Could not remove original node", "Network::alias");
         }
 
         return 0;
@@ -538,7 +538,7 @@ namespace Graphfab {
                 return i->second;
             }
         }
-        SBNW_THROW(InternalCheckFailureException, "No such node", "Reaction::getSpeciesRole");
+        SBNET_THROW(InternalCheckFailureException, "No such node", "Reaction::getSpeciesRole");
     }
     
     void Reaction::substituteSpecies(Node* before, Node* after) {
@@ -1125,7 +1125,7 @@ namespace Graphfab {
                 return;
             }
         }
-        SBNW_THROW(InvalidParameterException, "No such node", "Network::removeNode");
+        SBNET_THROW(InvalidParameterException, "No such node", "Network::removeNode");
     }
     
     Node* Network::findNodeById(const std::string& id) {
@@ -1325,7 +1325,7 @@ namespace Graphfab {
                 return;
             }
         }
-        SBNW_THROW(InvalidParameterException, "No such reaction", "Network::removeReaction");
+        SBNET_THROW(InvalidParameterException, "No such reaction", "Network::removeReaction");
     }
     
     void Network::elideEmptyComps() {

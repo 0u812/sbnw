@@ -37,8 +37,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNW_LAYOUT_ARROWHEAD_H_
-#define __SBNW_LAYOUT_ARROWHEAD_H_
+#ifndef __SBNET_LAYOUT_ARROWHEAD_H_
+#define __SBNET_LAYOUT_ARROWHEAD_H_
 
 //== INCLUDES ========================================================================
 
@@ -100,7 +100,7 @@ namespace Graphfab {
         case 2:
           return Point(-1, 0);
         default:
-          SBNW_THROW(InvalidParameterException, "Index out of range", "Arrowhead::getVert");
+          SBNET_THROW(InvalidParameterException, "Index out of range", "Arrowhead::getVert");
       }
     }
 
