@@ -630,7 +630,17 @@ namespace Graphfab {
 //         std::cerr << "Done rebuilding curves\n";
     }
 
-#define PRINT_CURVE_DIAG 0
+#define PRINT_CURVE_DIAG 1
+
+# if PRINT_CURVE_DIAG
+    static bool filterRxn(Reaction* rxn) {
+      if (rxn->findSpeciesById("glycerate_3_phosphate"))
+        return false;
+      else
+        return true;
+    }
+# endif
+
     void Reaction::recalcCurveCPs() {
 //         std::cerr << "recalcCurveCPs\n";
         uint64 csub=0;
@@ -648,7 +658,10 @@ namespace Graphfab {
                 case RXN_ROLE_SIDESUBSTRATE:
                     // control pt stuff
                     ctrlCent += n->getCentroid();
-//                     std::cerr << "  ctrlCent substrate used: " << n->getCentroid() << "\n";
+#if PRINT_CURVE_DIAG
+                    if (!filterRxn(this))
+                      std::cerr << "  ctrlCent substrate used: " << n->getCentroid() << "\n";
+#endif
                     csub++;
                     for(ConstNodeIt j=NodesBegin(); j!=NodesEnd(); ++j) {
                         Node* nn = j->first;
@@ -672,13 +685,18 @@ namespace Graphfab {
         }
         
 #if PRINT_CURVE_DIAG
-        std::cerr << "centroid pos: " << _p << "\n";
+        if (!filterRxn(this)) {
+          //  use mock centroid position from C# version
+          setCentroid(Point(359, 384));
+          std::cerr << "centroid pos: " << getCentroid() << "\n";
+        }
 #endif
 
         ctrlCent = (ctrlCent+_p) * (1. / (csub+1));
         
 #if PRINT_CURVE_DIAG
-        std::cerr << "ctrlCent first value: " << ctrlCent << "\n";
+        if (!filterRxn(this))
+          std::cerr << "ctrlCent first value: " << ctrlCent << "\n";
 #endif
 
         if(looped) {
@@ -691,7 +709,8 @@ namespace Graphfab {
         }
         
 #if PRINT_CURVE_DIAG
-        std::cerr << "ctrlCent loop correction: " << ctrlCent << "\n";
+        if (!filterRxn(this))
+          std::cerr << "ctrlCent loop correction: " << ctrlCent << "\n";
 #endif
 
         // Correction applied to uni-uni reactions
@@ -720,7 +739,8 @@ namespace Graphfab {
                     case RXN_ROLE_INHIBITOR:
                         break;
                     default:
-                        std::cerr << "Unrecognized species type\n";
+                        if (!filterRxn(this))
+                          std::cerr << "Unrecognized species type\n";
                         AN(0, "Unrecognized species type");
                 }
             }
@@ -730,7 +750,8 @@ namespace Graphfab {
         }
         
 #if PRINT_CURVE_DIAG
-        std::cerr << "ctrlCent uni-uni correction: " << ctrlCent << "\n";
+        if (!filterRxn(this))
+          std::cerr << "ctrlCent uni-uni correction: " << ctrlCent << "\n";
 #endif
 
         // keep dir, subtract 25 from length
@@ -739,7 +760,8 @@ namespace Graphfab {
 //         ctrlCent = new2ndPos(ctrlCent, _p, 0., 50., false);
         
 #if PRINT_CURVE_DIAG
-        std::cerr << "ctrlCent adjust length: " << ctrlCent << "\n";
+        if (!filterRxn(this))
+          std::cerr << "ctrlCent adjust length: " << ctrlCent << "\n";
 #endif
 
         // control points
@@ -754,7 +776,8 @@ namespace Graphfab {
             switch(role) {
                 case RXN_CURVE_SUBSTRATE:
 #if PRINT_CURVE_DIAG
-                    std::cerr << "SUBSTRATE\n";
+                    if (!filterRxn(this))
+                      std::cerr << "SUBSTRATE\n";
 #endif
                     c->s = calcCurveBackup(ctrlCent, *c->as, c->ns ? c->ns->getBoundingBox() : bs, 10.);
                     c->c1 = new2ndPos(_p, c->s, 0., -20., false);
@@ -764,7 +787,8 @@ namespace Graphfab {
                     break;
                 case RXN_CURVE_PRODUCT:
 #if PRINT_CURVE_DIAG
-                    std::cerr << "PRODUCT\n";
+                    if (!filterRxn(this))
+                      std::cerr << "PRODUCT\n";
 #endif
                     c->s = *c->as;
 //                     std::cerr << "* Product startpoint: " << c->s << "\n";
@@ -776,7 +800,8 @@ namespace Graphfab {
                 case RXN_CURVE_INHIBITOR:
                 case RXN_CURVE_MODIFIER:
 #if PRINT_CURVE_DIAG
-                    std::cerr << "MODIFIER\n";
+                    if (!filterRxn(this))
+                      std::cerr << "MODIFIER\n";
 #endif
                     c->s  = calcCurveBackup(_p, *c->as, c->ns ? c->ns->getBoundingBox() : bs, 10.);
                     c->c1 = new2ndPos(*c->as, _p, 0., -15., false);
@@ -784,7 +809,8 @@ namespace Graphfab {
                     c->c2 = new2ndPos(*c->as, _p, 0., -20., false);
                     break;
                 default:
-                    AN(0, "Unrecognized curve type");
+                    if (!filterRxn(this))
+                      AN(0, "Unrecognized curve type");
                     c->s = calcCurveBackup(_p, *c->as, c->ns ? c->ns->getBoundingBox() : bs, 10.);
                     c->c1 = c->s;
                     c->e = _p;
@@ -792,12 +818,14 @@ namespace Graphfab {
                     break;
             }
 #if PRINT_CURVE_DIAG
-            std::cout << "curve " << *c << "\n";
+            if (!filterRxn(this))
+              std::cout << "curve " << *c << "\n";
 #endif
         }
         
 #if PRINT_CURVE_DIAG
-        std::cerr << "ctrlCent after curves: " << ctrlCent << "\n";
+        if (!filterRxn(this))
+          std::cerr << "ctrlCent after curves: " << ctrlCent << "\n";
 #endif
 //         for(CurveIt i=CurvesBegin(); i!=CurvesEnd(); ++i) {
 //             RxnBezier* c = *i;
@@ -834,7 +862,8 @@ namespace Graphfab {
             }
           }
 #if PRINT_CURVE_DIAG
-          std::cerr << "curve " << k_i++ << " getNodeSide: " << c1->getNodeSide() << ", getNodeSideCP: " << c1->getNodeSideCP() << "\n";
+          if (!filterRxn(this))
+            std::cerr << "curve " << k_i++ << " getNodeSide: " << c1->getNodeSide() << ", getNodeSideCP: " << c1->getNodeSideCP() << "\n";
 #endif
         }
     }
