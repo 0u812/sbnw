@@ -630,7 +630,7 @@ namespace Graphfab {
 //         std::cerr << "Done rebuilding curves\n";
     }
 
-#define PRINT_CURVE_DIAG 1
+#define PRINT_CURVE_DIAG 0
 
 # if PRINT_CURVE_DIAG
     static bool filterRxn(Reaction* rxn) {
@@ -741,8 +741,10 @@ namespace Graphfab {
                     case RXN_ROLE_INHIBITOR:
                         break;
                     default:
+#if PRINT_CURVE_DIAG
                         if (!filterRxn(this))
                           std::cerr << "Unrecognized species type\n";
+#endif
                         AN(0, "Unrecognized species type");
                 }
             }
@@ -813,8 +815,7 @@ namespace Graphfab {
                     c->c2 = new2ndPos(*c->as, _p, 0., -20., false);
                     break;
                 default:
-                    if (!filterRxn(this))
-                      AN(0, "Unrecognized curve type");
+                    AN(0, "Unrecognized curve type");
                     c->s = calcCurveBackup(_p, *c->as, c->ns ? c->ns->getBoundingBox() : bs, 10.);
                     c->c1 = c->s;
                     c->e = _p;
