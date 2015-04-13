@@ -319,7 +319,7 @@ class Autolayout(MainWindowBaseClass):
         self.selectToolAct.activate(QAction.Trigger)
 
         self.setGeometry(300, 300, wndwidth, wndheight)
-        self.setWindowTitle('Pyfab SBNET')
+        self.setWindowTitle('Pyfab SBNet')
         self.mainframe = LayoutFrame(self)
         #self.prefframe = PrefFrame(self)
 
