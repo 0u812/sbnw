@@ -864,10 +864,10 @@ namespace Graphfab {
                 std::cerr << "c2 node min: " << c2->getNodeUsed()->getMin() << ", c2 node cent: " << c2->getNodeUsed()->getCentroid() << ", c2 node: " << c2->getNodeSide() << ", c2 node cp: " << c2->getNodeSideCP() << "\n";
               }
 
-              c1->setNodeSideCP(new2ndPos(c1->getNodeUsed()->getMin(), c1->getNodeSideCP(),  20., 10., false));
-              c2->setNodeSideCP(new2ndPos(c2->getNodeUsed()->getMin(), c2->getNodeSideCP(), -20., 10., false));
+              c1->setNodeSideCP(new2ndPos(c1->getNodeUsed()->getCentroid(), c1->getNodeSideCP(),  20., 10., false));
+              c2->setNodeSideCP(new2ndPos(c2->getNodeUsed()->getCentroid(), c2->getNodeSideCP(), -20., 10., false));
 
-              c1->setNodeSide(new2ndPos(c1->getNodeSideCP(), c1->getNodeSide(), -10., 0., false));
+              c1->setNodeSide(new2ndPos(c1->getNodeSideCP(), c1->getNodeSide(), -20., 0., false));
               c2->setNodeSide(new2ndPos(c2->getNodeSideCP(), c2->getNodeSide(),  10., 0., false));
             }
           }
