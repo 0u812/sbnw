@@ -859,10 +859,12 @@ namespace Graphfab {
 
             if (c1->getNodeUsed() != NULL && c1->getNodeUsed() == c2->getNodeUsed() && c1->getRole() == c2->getRole()) {
 
+#if PRINT_CURVE_DIAG
               if (!filterRxn(this)) {
                 std::cerr << "c1 node min: " << c1->getNodeUsed()->getMin() << ", c1 node cent: " << c1->getNodeUsed()->getCentroid() << ", c1 node: " << c1->getNodeSide() << ", c1 node cp: " << c1->getNodeSideCP() << "\n";
                 std::cerr << "c2 node min: " << c2->getNodeUsed()->getMin() << ", c2 node cent: " << c2->getNodeUsed()->getCentroid() << ", c2 node: " << c2->getNodeSide() << ", c2 node cp: " << c2->getNodeSideCP() << "\n";
               }
+#endif
 
               c1->setNodeSideCP(new2ndPos(c1->getNodeUsed()->getCentroid(), c1->getNodeSideCP(),  20., 10., false));
               c2->setNodeSideCP(new2ndPos(c2->getNodeUsed()->getCentroid(), c2->getNodeSideCP(), -20., 10., false));
