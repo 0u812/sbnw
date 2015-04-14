@@ -87,6 +87,19 @@ namespace Graphfab {
         }
     }
 
+    // true for substrates/products
+    static bool isRoleActive(RxnRoleType role) {
+        switch (role) {
+            case RXN_ROLE_SUBSTRATE:
+            case RXN_ROLE_PRODUCT:
+            case RXN_ROLE_SIDESUBSTRATE:
+            case RXN_ROLE_SIDEPRODUCT:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     //-- Reaction Curves --
 
     ArrowheadStyle SubCurve::getArrowheadStyle() const {
@@ -1704,7 +1717,11 @@ namespace Graphfab {
 //                   std::cerr << "Not present\n";
 //                 else
 //                   std::cerr << "Is present\n";
-                r->substituteSpeciesByIdwRole(srg->getSpeciesReferenceId(), alias, SBMLRole2GraphfabRole(srg->getRole()));
+                RxnRoleType role = SBMLRole2GraphfabRole(srg->getRole());
+                if (isRoleActive(role))
+                    r->substituteSpeciesByIdwRole(srg->getSpeciesReferenceId(), alias, role);
+                else
+                    r->addSpeciesRef(alias, role);
 
 //                 for (Reaction::CurveIt ci = r->CurvesBegin(); ci != r->CurvesEnd(); ++ci) {
 //                   RxnBezier* c = *ci;
