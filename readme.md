@@ -1,7 +1,7 @@
 # libSBNet: A Network Viewer for SBML
 
 ## Introduction
-libSBNet is a network viewer which supports autolayout of reaction networks and uses libSBML for reading/writing models. The intent of this project is to provide user and developers of systems/synthetic biology software tools a convenient, portable library to enable automatic layout of SBML models and to record this information in the SBML layout extension. To facilitate this, the functionality of the library is provided as a custom plugin within the Spyder-based [Tellurium](http://tellurium.analogmachine.org/) modeling environment. For developers, pre-built binaries including bindings for Python 2 are provided via the [release](https://github.com/0u812/sbnet/releases) page on this site.
+libSBNet is a network viewer which supports autolayout of reaction networks and uses libSBML for reading/writing models. The intent of this project is to provide user and developers of systems/synthetic biology software tools a convenient, portable library to enable automatic layout of SBML models and to record this information in the SBML layout extension. To facilitate this, the functionality of the library is provided as a custom plugin within the Spyder-based [Tellurium](http://tellurium.analogmachine.org/) modeling environment. For developers, pre-built binaries including bindings for Python 2 are provided via the [release](https://github.com/0u812/sbnw/releases) page on this site.
 
 ## Use Cases
 The library is designed as a reusable implementation of a automatic layout for SBML. As such, it has many downstream uses. To name a few:
@@ -13,29 +13,29 @@ The library is designed as a reusable implementation of a automatic layout for S
 
 ## Download
 
-The network viewer plugin is part of Tellurium, which can be downloaded for [Windows](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Windows/) and [Mac OS X](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Mac/). Seperate binaries for the libSBNet library are available from [SourceForge](https://sourceforge.net/projects/sbnet/files/).
+The network viewer plugin is part of Tellurium, which can be downloaded for [Windows](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Windows/) and [Mac OS X](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Mac/). Seperate binaries for the libSBNet library are available from [SourceForge](https://sourceforge.net/projects/sbnw/files/).
 
 ## Test Cases
 
-The SBML [test models](https://github.com/0u812/sbnet/releases/download/1.2.4/testcases.zip) used in development of this tool are available for download from the releases page as well. The network viewer is frequently tested with these files (with the exception of EquilibRaw_wlayout.xml which is known to fail).
+The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) used in development of this tool are available for download from the releases page as well. The network viewer is frequently tested with these files (with the exception of EquilibRaw_wlayout.xml which is known to fail).
 
 ## Online Documentation
 
-Online C API documentation (via Doxygen) can be found at http://0u812.github.io/sbnet/docs. Python documentation can be found at http://0u812.github.io/sbnet/sphinx.
+Online C API documentation (via Doxygen) can be found at http://0u812.github.io/sbnw/docs. Python documentation can be found at http://0u812.github.io/sbnw/sphinx.
 
 ## Using the Python bindings
 
-* On Mac, extract the contents of http://sourceforge.net/projects/sbnet/files/1.2.7/sbnet-1.2.7-os-x-site-packages-py2.tar.bz2/download to your site-packages directory.
-* On Windows, extract the contents of http://sourceforge.net/projects/sbnet/files/1.2.7/sbnet-1.2.7-site-packages-win32.zip/download to your site-packages directory.
+* On Mac, extract the contents of http://sourceforge.net/projects/sbnw/files/1.2.7/sbnw-1.2.7-os-x-site-packages-py2.tar.bz2/download to your site-packages directory.
+* On Windows, extract the contents of http://sourceforge.net/projects/sbnw/files/1.2.7/sbnw-1.2.7-site-packages-win32.zip/download to your site-packages directory.
 
 ## How to compile the library
 
  * Install the latest version of <a href="http://sourceforge.net/projects/sbml/files/libsbml/">libSBML</a> or build it from source (tested with 5.6, 5.8, 5.10, 5.11).
  * **NOTE**: If you install a pre-built binary of libSBML then you must compile SBNet with the same version of Visual Studio as used to build libSBML (2010 at the time of writing).
- * Clone the latest revision of the <a href="https://github.com/0u812/sbnet">master branch</a> to Documents\sbnet via git. In the Documents folder, run `git clone https://github.com/0u812/sbnet.git`
+ * Clone the latest revision of the <a href="https://github.com/0u812/sbnw">master branch</a> to Documents\sbnw via git. In the Documents folder, run `git clone https://github.com/0u812/sbnw.git`
  * Download and instsall <a href="http://www.cmake.org/">CMake</a> (compatible with major version 2 or 3).
- * Open CMake and select Documents\sbnet as the source directory.
- * Select Documents\sbnet-build (or choose a directory at will) as the build directory.
+ * Open CMake and select Documents\sbnw as the source directory.
+ * Select Documents\sbnw-build (or choose a directory at will) as the build directory.
  * Click configure & generate via CMake, choosing a generator that matches the required configuration (32-bit x86 is recommended on Windows; on Linux the default generator is sufficient).
  * Using CMake, set the `LIBSBML_DIR` variable to point to the directory where libSBML is installed/downloaded. Click configure & generate again.
  * **NOTE**: In order to statically link to libSBML, specify `SBNet_LINK_TO_STATIC_LIBSBML=ON`. Otherwise, the libSBML DLLs must be in the PATH to run any compiled code.
@@ -45,7 +45,7 @@ Online C API documentation (via Doxygen) can be found at http://0u812.github.io/
 
 ## Using the Tellurium Plugin
 
-The network viewer is available as a plugin for a pre-release of [Tellurium](https://github.com/0u812/sbnet/releases/tag/1.2.5). Simply switch to the network viewer tab, open a model from the [test cases](https://github.com/0u812/sbnet/releases/download/1.2.4/testcases.zip) (e.g. BorisEJB.xml), and enter the following code:
+The network viewer is available as a plugin for a pre-release of [Tellurium](https://github.com/0u812/sbnw/releases/tag/1.2.5). Simply switch to the network viewer tab, open a model from the [test cases](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) (e.g. BorisEJB.xml), and enter the following code:
 
 ```
 # The nwed module is used to communicate with the plugin
@@ -58,7 +58,7 @@ print(sbmlstr)
 nwed.setsbml(sbmlstr)
 ```
 
-![Usage example](http://0u812.github.io/sbnet/hosted/img/usage_ex.png)
+![Usage example](http://0u812.github.io/sbnw/hosted/img/usage_ex.png)
 
 ## Using the Library (C API)
 

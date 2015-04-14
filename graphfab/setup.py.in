@@ -41,18 +41,18 @@ if TestCMakeBool('@SBNET_WINDOWS_BUILD@'):
     else:
         libprefix = ''
     
-    deps = [x.replace('/', '\\') for x in [r'@CMAKE_INSTALL_PREFIX@/bin/{}sbnet.dll'.format(libprefix), r'@CMAKE_INSTALL_PREFIX@/bin/libsbml.dll']]
+    deps = [x.replace('/', '\\') for x in [r'@CMAKE_INSTALL_PREFIX@/bin/{}sbnw.dll'.format(libprefix), r'@CMAKE_INSTALL_PREFIX@/bin/libsbml.dll']]
     print('gf dll: ' + deps[0])
     
              
 if TestCMakeBool('@ENABLE_PYTHON_BINDINGS@'):
-    module1 = Extension('sbnet',
+    module1 = Extension('sbnw',
                     define_macros = defines,
                     #include_dirs = ['/usr/local/include'],
                     include_dirs = ['..'],
-                    libraries = libs + ['sbnet'],
+                    libraries = libs + ['sbnw'],
                     library_dirs = libDirs + [r'@CMAKE_INSTALL_PREFIX@/lib'],
-                    sources = sources + ['python/sbnetmodule.c'])
+                    sources = sources + ['python/sbnwmodule.c'])
 print('sysconfig.get_python_lib() = ' + repr(sysconfig.get_python_lib()))
 
 if TestCMakeBool('@SBNET_WINDOWS_BUILD@'):
@@ -61,12 +61,12 @@ if TestCMakeBool('@SBNET_WINDOWS_BUILD@'):
            description = 'Graph layout library',
            author = 'J Medley',
            author_email = 'medleyj@uw.edu',
-           url = 'http://code.google.com/p/sbnet/',
-           #ext_package = 'sbnet',
-           packages = ['sbnet'],
-           package_dir = {'sbnet': ''},
+           url = 'http://code.google.com/p/sbnw/',
+           #ext_package = 'sbnw',
+           packages = ['sbnw'],
+           package_dir = {'sbnw': ''},
            # Does not work:
-           # package_data = {'sbnet': deps},
+           # package_data = {'sbnw': deps},
            # http://stackoverflow.com/questions/2822424/python-copy-a-dll-to-site-packages-on-windows
            data_files = [(sysconfig.get_python_lib(), deps)],
            long_description = '''
@@ -79,7 +79,7 @@ else:
            description = 'Graph layout library',
            author = 'J Medley',
            author_email = 'medleyj@uw.edu',
-           url = 'http://code.google.com/p/sbnet/',
+           url = 'http://code.google.com/p/sbnw/',
            long_description = '''
     Graph layout library for SBML.
     ''',

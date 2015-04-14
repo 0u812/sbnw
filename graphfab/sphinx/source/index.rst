@@ -9,11 +9,11 @@ Example 1: Basic Usage
 
    Import the module
 
-   >>> import sbnet
+   >>> import sbnw
 
    Load an SBML model
 
-   >>> model = sbnet.loadsbml('BorisEJB.xml') # included in the test cases
+   >>> model = sbnw.loadsbml('BorisEJB.xml') # included in the test cases
 
    Shrink or enlarge a network so that it fits within a window
 
@@ -28,11 +28,11 @@ Example 2: Add layout information to an SBML model
 
    Import the module
 
-   >>> import sbnet
+   >>> import sbnw
 
    Load an SBML model
 
-   >>> model = sbnet.loadsbml('ant_power_law_sbml.xml') # included in the test cases
+   >>> model = sbnw.loadsbml('ant_power_law_sbml.xml') # included in the test cases
 
    Randomize the initial configuration and run the FR algorithm
 
@@ -56,11 +56,11 @@ Example 3: Render network as a TikZ
 
    Import the module
 
-   >>> import sbnet
+   >>> import sbnw
 
    Load an SBML model
 
-   >>> model = sbnet.loadsbml('GlycolysisOriginal.xml') # included in the test cases
+   >>> model = sbnw.loadsbml('GlycolysisOriginal.xml') # included in the test cases
 
    Render the model to a TikZ file
 
@@ -70,11 +70,11 @@ Example 4: Curves
 
    Import the module
 
-   >>> import sbnet
+   >>> import sbnw
 
    Load an SBML model
 
-   >>> model = sbnet.loadsbml('BorisEJB.xml') # included in the test cases
+   >>> model = sbnw.loadsbml('BorisEJB.xml') # included in the test cases
 
    Access the curve control points:
 
@@ -89,19 +89,19 @@ Example 4: Curves
 
    Set endcap (a.k.a. arrowhead styles):
 
-   >>> sbnet.get_arrow_style('SUBSTRATE') # Other values are PRODUCT, MODIFIER, ACTIVATOR, INHIBITOR
-   >>> sbnet.set_arrow_style('SUBSTRATE', 3)
+   >>> sbnw.get_arrow_style('SUBSTRATE') # Other values are PRODUCT, MODIFIER, ACTIVATOR, INHIBITOR
+   >>> sbnw.set_arrow_style('SUBSTRATE', 3)
 
 Example 5: Version
 
     Get the version information
 
-    >>> import sbnet
-    >>> print(sbnet.__version__)
+    >>> import sbnw
+    >>> print(sbnw.__version__)
 
 API Documentation
 
-.. currentmodule:: sbnet
+.. currentmodule:: sbnw
 
 .. autosummary::
    :toctree: generated/

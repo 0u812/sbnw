@@ -3,13 +3,13 @@
 import sys
 sys.path.insert(1,'/home/poltergeist/home/etc/install/pyqt-5.3.2-py2/site-packages')
 sys.path.insert(1,'/home/poltergeist/home/etc/install/sip-4.16.4-py2/site-packages')
-sys.path.insert(1,'/home/poltergeist/home/devel/install/sbnet-trunk/site-packages-py2')
+sys.path.insert(1,'/home/poltergeist/home/devel/install/sbnw-trunk/site-packages-py2')
 
 import os
-os.chdir('/home/poltergeist/home/devel/install/sbnet-trunk/bin')
+os.chdir('/home/poltergeist/home/devel/install/sbnw-trunk/bin')
 
 # pyqt_layout.py
-import sbnet
+import sbnw
 
 wndwidth, wndheight = 740,480
 pad = 30
@@ -231,7 +231,7 @@ class Autolayout(QtWidgets.QMainWindow):
     def openfile(self, filepath):
         self.openfilepath = filepath
         try:
-            self.model = sbnet.loadsbml(filepath)
+            self.model = sbnw.loadsbml(filepath)
         except:
             msg = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, 'Open File Dialog', 
             'Failed to open file ' + filepath + ' (check spelling)', QtWidgets.QMessageBox.Ok, self, 
@@ -258,7 +258,7 @@ class Autolayout(QtWidgets.QMainWindow):
         print('saved file ' + filepath)
         
     def openhomepageEvent(self, event):
-        QtGui.QDesktopServices.openUrl(QtCore.QUrl('http://code.google.com/p/sbnet/'))
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl('http://code.google.com/p/sbnw/'))
         
 class LayoutFrame(QtWidgets.QFrame):
     def __init__(self, parent):

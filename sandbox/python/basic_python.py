@@ -1,6 +1,6 @@
-import sbnet
+import sbnw
 # load the model
-model = sbnet.loadsbml('../testcases/BorisEJB.xml')
+model = sbnw.loadsbml('../testcases/BorisEJB.xml')
 
 # retrieve layout information
 layout = model.layout

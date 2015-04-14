@@ -44,7 +44,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'sbnet'
+project = 'sbnw'
 copyright = '2013-2015, JK Medley'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -168,7 +168,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'sbnetdoc'
+htmlhelp_basename = 'sbnwdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -217,7 +217,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'sbnet', 'SBNET Documentation',
+    ('index', 'sbnw', 'SBNET Documentation',
      ['JK Medley'], 1)
 ]
 
@@ -231,8 +231,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'sbnet', 'SBNET Documentation',
-   'JK Medley', 'sbnet', 'One line description of project.',
+  ('index', 'sbnw', 'SBNET Documentation',
+   'JK Medley', 'sbnw', 'One line description of project.',
    'Miscellaneous'),
 ]
 

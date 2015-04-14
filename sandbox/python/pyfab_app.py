@@ -11,10 +11,10 @@ newpath = os.path.abspath(os.path.join(localpath, '..', '..', 'bin'))
 #os.chdir(newpath)
 #print('not changing dir')
 
-#print('pre import sbnet')
-import sbnet
+#print('pre import sbnw')
+import sbnw
 
-#print('post import sbnet')
+#print('post import sbnw')
 
 import sys
 if sys.version_info[0] < 3:
@@ -593,7 +593,7 @@ class Autolayout(MainWindowBaseClass):
 
     def readsbml(self, sbml, filepath='<buffer>'):
         try:
-            self.model = sbnet.loadsbml(sbml)
+            self.model = sbnw.loadsbml(sbml)
         except:
             title = 'Failed to Open File'
             errorstr = 'Failed to read SBML '
@@ -670,11 +670,11 @@ class Autolayout(MainWindowBaseClass):
       self.config.updateArrowStyles()
 
     def openhomepageEvent(self, event):
-        QtGui.QDesktopServices.openUrl(QtCore.QUrl('https://github.com/0u812/sbnet'))
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl('https://github.com/0u812/sbnw'))
 
     def openAboutBoxEvent(self, event):
       box = QMessageBox.about(self, 'SBNET: SBML Network Viewer',
-                              '<center><h1>SBNET</h1>\n\n<h2>Network Viewer for SBML</h2>\n<a href=\"https://github.com/0u812/sbnet\">Visit Homepage</a>\n</center>\n<br/>' +
+                              '<center><h1>SBNET</h1>\n\n<h2>Network Viewer for SBML</h2>\n<a href=\"https://github.com/0u812/sbnw\">Visit Homepage</a>\n</center>\n<br/>' +
 '''<strong>Copyright (c) 2015, J. Kyle Medley, Herbert M. Sauro</strong> <br/>
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
@@ -920,7 +920,7 @@ class LayoutFrame(FrameBaseClass):
           # closed poly
           #path.lineTo(QPoint(arrowhead[0]))
 
-        if sbnet.arrowpoly_filled(sbnet.get_arrow_style(curve[4])):
+        if sbnw.arrowpoly_filled(sbnw.get_arrow_style(curve[4])):
           painter.fillPath(path, brush)
 
         painter.strokePath(path, pen)
@@ -1196,7 +1196,7 @@ def makeArrowImage(style):
   pixmap = QPixmap(256, 256)
   pixmap.fill(Qt.transparent)
 
-  arrowhead = sbnet.arrowpoly(style)
+  arrowhead = sbnw.arrowpoly(style)
 
   if len(arrowhead) > 0:
     tf = QtGui.QTransform()
@@ -1215,7 +1215,7 @@ def makeArrowImage(style):
 
     painter.strokePath(path, pen)
 
-    if sbnet.arrowpoly_filled(style):
+    if sbnw.arrowpoly_filled(style):
       brush = QBrush(Qt.black)
       painter.fillPath(path, brush)
 
@@ -1244,7 +1244,7 @@ class DrawStyleCfgPage(QWidget):
     self.mainlayout = QVBoxLayout()
     self.setLayout(self.mainlayout)
 
-    self.nstyles = sbnet.narrow_styles()
+    self.nstyles = sbnw.narrow_styles()
 
     # icons
     self.icon_width = self.icon_height = 25
@@ -1341,7 +1341,7 @@ class DrawStyleCfgPage(QWidget):
       print('set style for {} to {}'.format(role, style))
       button.setIcon(self.icons[style])
       setattr(self.config.state, translateRoleToConfigArrowOpt(role), style)
-      #sbnet.set_arrow_style(role, style)
+      #sbnw.set_arrow_style(role, style)
     return setc
 
   def makeArrowMenu(self, role, button):
