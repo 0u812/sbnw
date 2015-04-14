@@ -556,18 +556,24 @@ namespace Graphfab {
         curveGuard();
         return _curv;
     }
+
+#define REBUILD_CURVES_DIAG 0
     
     void Reaction::rebuildCurves() {
         deleteCurves();
 
-//         std::cerr << "Rebuild curves\n";
+# if REBUILD_CURVES_DIAG
+        std::cerr << "Rebuild curves\n";
+# endif
         
         for(ConstNodeIt i=NodesBegin(); i!=NodesEnd(); ++i) {
             Node* n = i->first;
             RxnRoleType r = i->second;
             // the curve
             RxnBezier* curv = NULL;
-//             std::cerr << "  Role: " << rxnRoleToString(r) << "\n";
+# if REBUILD_CURVES_DIAG
+            std::cerr << "  Role: " << rxnRoleToString(r) << "\n";
+# endif
             switch(r) {
                 case RXN_ROLE_SUBSTRATE:
                 case RXN_ROLE_SIDESUBSTRATE:
@@ -616,7 +622,9 @@ namespace Graphfab {
                     AN(0, "Unrecognized role type");
             }
             AN(curv, "Failed to create curve");
-//             std::cerr << "  Curve type: " << CurveTypeToString(curv->getRole()) << "\n";
+# if REBUILD_CURVES_DIAG
+            std::cerr << "  Curve type: " << CurveTypeToString(curv->getRole()) << "\n";
+# endif
             
             curv->setTransform(tf_);
             curv->setInverseTransform(itf_);
