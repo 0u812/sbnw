@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNET_LAYOUT_BOX_H_
-#define __SBNET_LAYOUT_BOX_H_
+#ifndef __SBNW_LAYOUT_BOX_H_
+#define __SBNW_LAYOUT_BOX_H_
 
 //== INCLUDES ========================================================================
 

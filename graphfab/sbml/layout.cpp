@@ -1760,7 +1760,7 @@ void gf_randomizeLayout_fromExtents(gf_network* n, double left, double top, doub
 // and rename to more succinct function - is anyone going to want to get the version
 // for anything other than the CURRENT library?
 const char* gf_getCurrentLibraryVersion() {
-    return GF_EXPAND_AND_QUOTE(SBNET_MAJOR_VER) "." GF_EXPAND_AND_QUOTE(SBNET_MINOR_VER) "." GF_EXPAND_AND_QUOTE(SBNET_PATCHLEVEL);
+    return GF_EXPAND_AND_QUOTE(SBNW_MAJOR_VER) "." GF_EXPAND_AND_QUOTE(SBNW_MINOR_VER) "." GF_EXPAND_AND_QUOTE(SBNW_PATCHLEVEL);
 }
 
 void gf_free(void* x) {

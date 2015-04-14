@@ -46,14 +46,14 @@ namespace Graphfab {
     
     void Canvas::setWidth(Real w) {
         if(w < 0.)
-            SBNET_THROW(InvalidParameterException, "Width cannot be negative", "Canvas::setWidth");
+            SBNW_THROW(InvalidParameterException, "Width cannot be negative", "Canvas::setWidth");
         _w = w;
     }
     
     
     void Canvas::setHeight(Real h) {
         if(h < 0.)
-            SBNET_THROW(InvalidParameterException, "Height cannot be negative", "Canvas::setWidth");
+            SBNW_THROW(InvalidParameterException, "Height cannot be negative", "Canvas::setWidth");
         _h = h;
     }
 

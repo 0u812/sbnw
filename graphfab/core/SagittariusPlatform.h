@@ -143,7 +143,7 @@
     //is synonymous with __declspec(dllexport). When linking to said library,
     //the same symbols must instead be imported, hence the meaning of _GraphfabExport
     //is changed to __declspec(dllimport)
-#   if(!SBNET_CLIENT_BUILD)
+#   if(!SBNW_CLIENT_BUILD)
 #       define _GraphfabExport  __declspec(dllexport)
 #       define _GraphfabPrivate 
 #   else

@@ -3,12 +3,12 @@
 set(SAGITTARIUS_BUILD_ROOT ${CMAKE_CURRENT_BINARY_DIR})
 
 #Internal Options
-set(SBNET_CLIENT_BUILD 0)
-# set(SBNET_WIN_COPY_DEPS_TO_INSTALL OFF CACHE BOOL "Should be off for Linux")
-set(SBNET_DEBUG_LEVEL 2 CACHE INTEGER "Verbosity of debug checks")
+set(SBNW_CLIENT_BUILD 0)
+# set(SBNW_WIN_COPY_DEPS_TO_INSTALL OFF CACHE BOOL "Should be off for Linux")
+set(SBNW_DEBUG_LEVEL 2 CACHE INTEGER "Verbosity of debug checks")
 set(ENABLE_FULL_RPATH 1 CACHE BOOL "Enable full RPath in generated executable code")
 
-set(SBNET_LINK_TO_STATIC_LIBSBML OFF CACHE BOOL "Link to a static version of libSBML where available")
+set(SBNW_LINK_TO_STATIC_LIBSBML OFF CACHE BOOL "Link to a static version of libSBML where available")
 
 #libSBML
 set(LINK_WITH_LIBSBML 1 CACHE BOOL "Link with libSBML? (effectively a requirement)")

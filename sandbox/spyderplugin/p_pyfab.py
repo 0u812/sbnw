@@ -157,7 +157,7 @@ class PyfabPlugin(pyfab_app.Autolayout, SpyderPluginMixin, PyfabConfigSpyder):
       #if isinstance(sw, pythonshell.ExternalPythonShell):
         #print('    Found ExternalPythonShell: {}'.format(sw))
     print(self.main.extconsole.start)
-    self.main.extconsole.__class__ = SBNETExternalConsole
+    self.main.extconsole.__class__ = SBNWExternalConsole
 
     if self.main.explorer is not None:
       self.connect(self.main.explorer, SIGNAL("open_interpreter(QString)"),
@@ -246,10 +246,10 @@ PLUGIN_CLASS = PyfabPlugin
 
 from spyderlib.qt.QtCore import Signal as SpyderSignal
 
-class SBNETExternalConsole(ExternalConsole):
+class SBNWExternalConsole(ExternalConsole):
   def start(self, *args, **kwds):
     from spyderlib.widgets.externalshell import pythonshell
-    print('SBNETExternalConsole start')
+    print('SBNWExternalConsole start')
     ExternalConsole.start(self, *args, **kwds)
 
     for sw in self.shellwidgets:
@@ -257,7 +257,7 @@ class SBNETExternalConsole(ExternalConsole):
       if isinstance(sw, pythonshell.ExternalPythonShell):
         print('    Found ExternalPythonShell: {}'.format(sw))
         print('      NotificationThread: {}'.format(sw.notification_thread))
-        sw.notification_thread.__class__ = SBNETNotificationThread
+        sw.notification_thread.__class__ = SBNWNotificationThread
         print('      terminate NotificationThread')
 
         # stop the thread
@@ -312,14 +312,14 @@ from spyderlib.utils.debug import log_last_error
 
 LOG_FILENAME = get_conf_path('introspection.log')
 
-class SBNETNotificationThread(NotificationThread):
+class SBNWNotificationThread(NotificationThread):
     layout = SpyderSignal(str)
 
     def run(self):
         #print('run')
         """Start notification thread"""
         while True:
-            #print('SBNETNotificationThread while True')
+            #print('SBNWNotificationThread while True')
 
             # add layout signal if it doesn't already exist
             #if not hasattr(self, 'layout'):
@@ -360,13 +360,13 @@ class SBNETNotificationThread(NotificationThread):
                     fname, lineno = data
                     self.open_file.emit(fname, lineno)
                 elif command == 'layout':
-                    print('SBNETNotificationThread layout')
+                    print('SBNWNotificationThread layout')
                     sbml = data
                     if sbml != '~::empty::~':
-                      print('SBNETNotificationThread emit layout signal')
+                      print('SBNWNotificationThread emit layout signal')
                       self.layout.emit(sbml)
                     else:
-                      print('SBNETNotificationThread get sbml')
+                      print('SBNWNotificationThread get sbml')
                       if hasattr(self, 'network_viewer_sbml_hook'):
                         output = self.network_viewer_sbml_hook()
                         print('output = {}'.format(output))

@@ -17,7 +17,7 @@ libs += sbmlLibs
 libDirs.append('@LIBSBML_LIBDIR@')
 
 # Account for libxml2
-if TestCMakeBool('@SBNET_WINDOWS_BUILD@'):
+if TestCMakeBool('@SBNW_WINDOWS_BUILD@'):
     libDirs.append('@LIBXML2_LIBDIR@')
 
 if '@LINK_WITH_MAGICK@'.lower() == 'on':
@@ -26,7 +26,7 @@ if '@LINK_WITH_MAGICK@'.lower() == 'on':
     libDirs.append('@MAGICK_LIBDIR@')
 
 sources = []
-#sources = [x.strip() for x in '@SBNET_SOURCES@'.split(';') if len(x.strip())]
+#sources = [x.strip() for x in '@SBNW_SOURCES@'.split(';') if len(x.strip())]
     
 print('sources = {}'.format(sources))
 
@@ -34,10 +34,10 @@ defines = [('PYTHON_DIST',),
                  ('PYTHON_API_VER', str(PYTHON_MAJ_VER)),
                  ('PYTHON_SCREWED_IT_UP', 1)]
  
-if TestCMakeBool('@SBNET_WINDOWS_BUILD@'):
-    if TestCMakeBool('@SBNET_MINGW@'):
+if TestCMakeBool('@SBNW_WINDOWS_BUILD@'):
+    if TestCMakeBool('@SBNW_MINGW@'):
         libprefix = 'lib'
-        defines.append( ('NTDDI_VERSION', '@SBNET_NTDDI_VERSION@') )
+        defines.append( ('NTDDI_VERSION', '@SBNW_NTDDI_VERSION@') )
     else:
         libprefix = ''
     
@@ -55,9 +55,9 @@ if TestCMakeBool('@ENABLE_PYTHON_BINDINGS@'):
                     sources = sources + ['python/sbnwmodule.c'])
 print('sysconfig.get_python_lib() = ' + repr(sysconfig.get_python_lib()))
 
-if TestCMakeBool('@SBNET_WINDOWS_BUILD@'):
-    setup (name = 'SBNET',
-           version = '@SBNET_MAJOR_VER@.@SBNET_MINOR_VER@.@SBNET_PATCHLEVEL@',
+if TestCMakeBool('@SBNW_WINDOWS_BUILD@'):
+    setup (name = 'SBNW',
+           version = '@SBNW_MAJOR_VER@.@SBNW_MINOR_VER@.@SBNW_PATCHLEVEL@',
            description = 'Graph layout library',
            author = 'J Medley',
            author_email = 'medleyj@uw.edu',
@@ -74,8 +74,8 @@ if TestCMakeBool('@SBNET_WINDOWS_BUILD@'):
     ''',
            ext_modules = [module1])
 else:
-    setup (name = 'SBNET',
-           version = '@SBNET_MAJOR_VER@.@SBNET_MINOR_VER@.@SBNET_PATCHLEVEL@',
+    setup (name = 'SBNW',
+           version = '@SBNW_MAJOR_VER@.@SBNW_MINOR_VER@.@SBNW_PATCHLEVEL@',
            description = 'Graph layout library',
            author = 'J Medley',
            author_email = 'medleyj@uw.edu',

@@ -74,7 +74,7 @@ namespace Graphfab {
       case 7:
         return n_semicirc_segments;
       default:
-        SBNET_THROW(InvalidParameterException, "Unknown style", "ArrowheadStyles::getNumVerts");
+        SBNW_THROW(InvalidParameterException, "Unknown style", "ArrowheadStyles::getNumVerts");
     }
   }
 
@@ -97,14 +97,14 @@ namespace Graphfab {
       case 7:
         return false;
       default:
-        SBNET_THROW(InvalidParameterException, "Unknown style", "ArrowheadStyles::isFilled");
+        SBNW_THROW(InvalidParameterException, "Unknown style", "ArrowheadStyles::isFilled");
     }
   }
 
   Point ArrowheadStyles::getVert(ArrowheadStyle style, int n) {
     switch (style) {
       case 0:
-        SBNET_THROW(InvalidParameterException, "No verts", "ArrowheadStyles::getVert");
+        SBNW_THROW(InvalidParameterException, "No verts", "ArrowheadStyles::getVert");
       case 1:
       case 2:
         // wide arrow
@@ -118,7 +118,7 @@ namespace Graphfab {
           case 3:
             return Point(0, 1);
           default:
-            SBNET_THROW(InvalidParameterException, "Index out of range", "ArrowheadStyles::getVert");
+            SBNW_THROW(InvalidParameterException, "Index out of range", "ArrowheadStyles::getVert");
         }
       case 3:
       case 4:
@@ -133,7 +133,7 @@ namespace Graphfab {
           case 3:
             return Point(0, 1);
           default:
-            SBNET_THROW(InvalidParameterException, "Index out of range", "ArrowheadStyles::getVert");
+            SBNW_THROW(InvalidParameterException, "Index out of range", "ArrowheadStyles::getVert");
         }
       case 5:
         // crossbar
@@ -143,7 +143,7 @@ namespace Graphfab {
           case 1:
             return Point(1, 0);
           default:
-            SBNET_THROW(InvalidParameterException, "Index out of range", "ArrowheadStyles::getVert");
+            SBNW_THROW(InvalidParameterException, "Index out of range", "ArrowheadStyles::getVert");
         }
       case 6:
         // open box
@@ -157,7 +157,7 @@ namespace Graphfab {
           case 3:
             return Point(1, 0.5);
           default:
-            SBNET_THROW(InvalidParameterException, "Index out of range", "ArrowheadStyles::getVert");
+            SBNW_THROW(InvalidParameterException, "Index out of range", "ArrowheadStyles::getVert");
         }
       case 7:
         // semicircle
@@ -166,7 +166,7 @@ namespace Graphfab {
           return Point(cos(t*pi), -sin(t*pi)+1.);
         }
       default:
-        SBNET_THROW(InvalidParameterException, "Unknown style", "ArrowheadStyles::getVert");
+        SBNW_THROW(InvalidParameterException, "Unknown style", "ArrowheadStyles::getVert");
     }
   }
 

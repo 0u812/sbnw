@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNET_MIN_MAX_H_
-#define __SBNET_MIN_MAX_H_
+#ifndef __SBNW_MIN_MAX_H_
+#define __SBNW_MIN_MAX_H_
 
 //== INCLUDES ========================================================================
 

@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNET_TRANSFORM_H_
-#define __SBNET_TRANSFORM_H_
+#ifndef __SBNW_TRANSFORM_H_
+#define __SBNW_TRANSFORM_H_
 
 //== INCLUDES ========================================================================
 

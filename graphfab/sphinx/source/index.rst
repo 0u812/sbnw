@@ -1,6 +1,6 @@
-.. SBNET: a layout engine for SBML
+.. SBNW: a layout engine for SBML
 
-libSBNET Documentation
+libSBNW Documentation
 ====================================
 
 Contents:

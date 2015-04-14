@@ -38,8 +38,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNET_CUBIC_H_
-#define __SBNET_CUBIC_H_
+#ifndef __SBNW_CUBIC_H_
+#define __SBNW_CUBIC_H_
 
 //== INCLUDES ========================================================================
 

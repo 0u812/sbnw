@@ -33,8 +33,8 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#ifndef __SBNET_SBML_H_
-#define __SBNET_SBML_H_
+#ifndef __SBNW_SBML_H_
+#define __SBNW_SBML_H_
 
 //== INCLUDES ========================================================================
 
