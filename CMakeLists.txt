@@ -2,8 +2,8 @@ cmake_minimum_required (VERSION 2.8)
 project (SBNW)
 
 set(SBNW_MAJOR_VER  1)
-set(SBNW_MINOR_VER  2)
-set(SBNW_PATCHLEVEL 9)
+set(SBNW_MINOR_VER  3)
+set(SBNW_PATCHLEVEL 0)
 
 #User Configuration
 if(${WIN32})
