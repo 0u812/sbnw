@@ -138,6 +138,8 @@ def start_notification_server():
 class NotificationThread(QThread):
     """Notification thread"""
     sig_process_remote_view = Signal(object)
+    layout = SpyderSignal(str)
+    
     def __init__(self):
         QThread.__init__(self)
         self.notify_socket = None
@@ -184,6 +186,19 @@ class NotificationThread(QThread):
                 elif command == 'open_file':
                     fname, lineno = data
                     self.emit(SIGNAL('open_file(QString,int)'), fname, lineno)
+                elif command == 'layout':
+                    #print('SBNWNotificationThread layout')
+                    sbml = data
+                    if sbml != '~::empty::~':
+                      #print('SBNWNotificationThread emit layout signal')
+                      self.layout.emit(sbml)
+                    else:
+                      #print('SBNWNotificationThread get sbml')
+                      if hasattr(self, 'network_viewer_sbml_hook'):
+                        output = self.network_viewer_sbml_hook()
+                        #print('output = {}'.format(output))
+                      #else:
+                        #print('no attr network_viewer_sbml_hook')
                 else:
                     raise RuntimeError('Unsupported command: %r' % command)
                 if DEBUG_INTROSPECTION:
