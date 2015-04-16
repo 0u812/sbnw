@@ -10,19 +10,24 @@ import os
 import os.path as osp
 import pdb
 import bdb
+# NWED
 try:
   import nwed
   have_network_ed = True
 except ImportError:
   have_network_ed = False
 from spyderlib.utils.bsdsocket import communicate
+# END NWED
 
 
+#==============================================================================
 # sys.argv can be missing when Python is embedded, taking care of it.
 # Fixes Issue 1473 and other crazy crashes with IPython 0.13 trying to
 # access it.
+#==============================================================================
 if not hasattr(sys, 'argv'):
     sys.argv = ['']
+
 
 #==============================================================================
 # Important Note:
@@ -47,16 +52,18 @@ def _print(*objects, **options):
         else:
             print >>file, string,
 
+
+#==============================================================================
+# Execfile functions
+# 
+# The definitions for Python 2 on Windows were taken from the IPython
+# project (present in IPython.utils.py3compat)
+# Copyright (C) The IPython Development Team
+# Distributed under the terms of the modified BSD license
+#==============================================================================
 try:
     # Python 2
     import __builtin__ as builtins
-    #==========================================================================
-    # These definitions of execfile for Python 2 are taken from the IPython
-    # project (present in IPython.utils.py3compat)
-    #
-    # Copyright (C) The IPython Development Team
-    # Distributed under the terms of the modified BSD license
-    #==========================================================================
     if os.name == 'nt':
         def encode(u):
             return u.encode('utf8', 'replace')
@@ -85,7 +92,10 @@ except ImportError:
         # Open a source file correctly, whatever its encoding is
         exec(compile(open(filename, 'rb').read(), filename, 'exec'), namespace)
 
-# Colorization of sys.stderr (standard Python interpreter)
+
+#==============================================================================
+# Colorization of sys.stderr (standard Python interpreter) 
+#==============================================================================
 if os.environ.get("COLORIZE_SYS_STDERR", "").lower() == "true":
     class StderrProxy(object):
         """Proxy to sys.stderr file object overriding only the `write` method 
@@ -117,8 +127,10 @@ if os.environ.get("COLORIZE_SYS_STDERR", "").lower() == "true":
     stderrproxy = StderrProxy()
 
 
+#==============================================================================
 # Prepending this spyderlib package's path to sys.path to be sure 
 # that another version of spyderlib won't be imported instead:
+#==============================================================================
 spyderlib_path = osp.dirname(__file__)
 while not osp.isdir(osp.join(spyderlib_path, 'spyderlib')):
     spyderlib_path = osp.abspath(osp.join(spyderlib_path, os.pardir))
@@ -132,7 +144,9 @@ if not spyderlib_path.startswith(sys.prefix):
 os.environ['SPYDER_PARENT_DIR'] = spyderlib_path
 
 
+#==============================================================================
 # Set PyQt4 API to #1 or #2
+#==============================================================================
 pyqt_api = int(os.environ.get("PYQT_API", "0"))
 if pyqt_api:
     try:
@@ -147,9 +161,11 @@ if pyqt_api:
         pass
 
 
-if os.name == 'nt': # Windows platforms
-            
-    # Setting console encoding (otherwise Python does not recognize encoding)
+#==============================================================================
+# Setting console encoding (otherwise Python does not recognize encoding)
+# for Windows platforms
+#==============================================================================
+if os.name == 'nt':
     try:
         import locale, ctypes
         _t, _cp = locale.getdefaultlocale('LANG')
@@ -164,8 +180,9 @@ if os.name == 'nt': # Windows platforms
         pass
 
 
-# For our MacOs X app
-
+#==============================================================================
+# Settings for our MacOs X app
+#==============================================================================
 if sys.platform == 'darwin':
     from spyderlib.baseconfig import MAC_APP_NAME
     if MAC_APP_NAME in __file__:
@@ -196,32 +213,18 @@ if sys.platform == 'darwin':
             site.USER_SITE = osx_app_site.getusersitepackages()
 
 
-mpl_backend = os.environ.get("MATPLOTLIB_BACKEND")
-mpl_ion = os.environ.get("MATPLOTLIB_ION", "")
-if mpl_backend:
-    try:
-        import matplotlib
-        if os.environ.get('QT_API') == 'pyside':
-            # Try to address PySide lack of an input hook on Mac by settting
-            # mpl_backend to always be MacOSX
-            # Fixes Issue 347
-            if mpl_backend == 'Qt4Agg' and sys.platform == 'darwin':
-                mpl_backend = 'MacOSX'
-        matplotlib.rcParams['docstring.hardcopy'] = True
-        if mpl_ion.lower() == "true":
-            matplotlib.rcParams['interactive'] = True
-        matplotlib.use(mpl_backend)
-    except ImportError:
-        pass
-
-
+#==============================================================================
+# Importing user's sitecustomize
+#==============================================================================
 try:
     import sitecustomize  #analysis:ignore
 except ImportError:
     pass
 
 
+#==============================================================================
 # Communication between Spyder and the remote process
+#==============================================================================
 if os.environ.get('SPYDER_SHELL_ID') is None:
     monitor = None
 else:
@@ -260,6 +263,7 @@ else:
             _print("Can't open file %s" % source, file=sys.stderr)
     builtins.open_in_spyder = open_in_spyder
 
+    # NWED
     if have_network_ed:
       def neted_setmodel(sbml):
         """
@@ -280,87 +284,114 @@ else:
         return communicate(monitor.n_request,
                            dict(command="layout", data=('~::empty::~')))
       nwed.getsbml = neted_getmodel
+    # END NWED
     
-    # * PyQt4:
-    #   * Removing PyQt4 input hook which is not working well on Windows since 
-    #     opening a subprocess do not attach a real console to it
-    #     (with keyboard events...)
-    #   * Replacing it with our own input hook
-    # * PySide:
-    #   * Installing an input hook: this feature is not yet supported 
-    #     natively by PySide
-    if os.environ.get("INSTALL_QT_INPUTHOOK", "").lower() == "true":
-        if os.environ["QT_API"] == 'pyqt':
-            from PyQt4 import QtCore
-            # Removing PyQt's PyOS_InputHook implementation:
-            QtCore.pyqtRemoveInputHook()
-        elif os.environ["QT_API"] == 'pyside':
-            from PySide import QtCore
-            # XXX: when PySide will implement an input hook, we will have to 
-            # remove it here
-        else:
-            assert False
+    if os.environ["QT_API"] == 'pyqt':
+        from PyQt4 import QtCore
+    elif os.environ["QT_API"] == 'pyside':
+        from PySide import QtCore          #analysis:ignore
 
-        def qt_inputhook():
-            """Qt input hook for Spyder's console
-            
-            This input hook wait for available stdin data (notified by
-            ExternalPythonShell through the monitor's inputhook_flag
-            attribute), and in the meantime it processes Qt events."""
-            # Refreshing variable explorer, except on first input hook call:
-            # (otherwise, on slow machines, this may freeze Spyder)
-            monitor.refresh_from_inputhook()
-            if os.name == 'nt':
-                try:
-                    # This call fails for Python without readline support
-                    # (or on Windows platforms) when PyOS_InputHook is called
-                    # for the second consecutive time, because the 100-bytes
-                    # stdin buffer is full.
-                    # For more details, see the `PyOS_StdioReadline` function
-                    # in Python source code (Parser/myreadline.c)
-                    sys.stdin.tell()
-                except IOError:
-                    return 0
-            app = QtCore.QCoreApplication.instance()
-            if app and app.thread() is QtCore.QThread.currentThread():
-                timer = QtCore.QTimer()
-                timer.timeout.connect(app.quit)
-                monitor.toggle_inputhook_flag(False)
-                while not monitor.inputhook_flag:
-                    timer.start(50)
-                    QtCore.QCoreApplication.exec_()
-                    timer.stop()
-#                # Socket-based alternative:
-#                socket = QtNetwork.QLocalSocket()
-#                socket.connectToServer(os.environ['SPYDER_SHELL_ID'])
-#                socket.waitForConnected(-1)
-#                while not socket.waitForReadyRead(10):
-#                    timer.start(50)
-#                    QtCore.QCoreApplication.exec_()
-#                    timer.stop()
-#                socket.read(3)
-#                socket.disconnectFromServer()
-            return 0
+    def qt_nt_inputhook():
+        """Qt input hook for Windows
+        
+        This input hook wait for available stdin data (notified by
+        ExternalPythonShell through the monitor's inputhook_flag
+        attribute), and in the meantime it processes Qt events."""
+        # Refreshing variable explorer, except on first input hook call:
+        # (otherwise, on slow machines, this may freeze Spyder)
+        monitor.refresh_from_inputhook()
+        if os.name == 'nt':
+            try:
+                # This call fails for Python without readline support
+                # (or on Windows platforms) when PyOS_InputHook is called
+                # for the second consecutive time, because the 100-bytes
+                # stdin buffer is full.
+                # For more details, see the `PyOS_StdioReadline` function
+                # in Python source code (Parser/myreadline.c)
+                sys.stdin.tell()
+            except IOError:
+                return 0
+        app = QtCore.QCoreApplication.instance()
+        if app and app.thread() is QtCore.QThread.currentThread():
+            timer = QtCore.QTimer()
+            QtCore.QObject.connect(timer, QtCore.SIGNAL('timeout()'),
+                                   app, QtCore.SLOT('quit()'))
+            monitor.toggle_inputhook_flag(False)
+            while not monitor.inputhook_flag:
+                timer.start(50)
+                QtCore.QCoreApplication.exec_()
+                timer.stop()
+#            # Socket-based alternative:
+#            socket = QtNetwork.QLocalSocket()
+#            socket.connectToServer(os.environ['SPYDER_SHELL_ID'])
+#            socket.waitForConnected(-1)
+#            while not socket.waitForReadyRead(10):
+#                timer.start(50)
+#                QtCore.QCoreApplication.exec_()
+#                timer.stop()
+#            socket.read(3)
+#            socket.disconnectFromServer()
+        return 0
+    
 
-        # Installing Spyder's PyOS_InputHook implementation:
+#==============================================================================
+# Matplotlib settings
+#==============================================================================
+mpl_backend = os.environ.get("MATPLOTLIB_BACKEND")
+mpl_ion = os.environ.get("MATPLOTLIB_ION", "")
+if mpl_backend:
+    try:
+        import matplotlib
         import ctypes
-        cb_pyfunctype = ctypes.PYFUNCTYPE(ctypes.c_int)(qt_inputhook)
-        pyos_ih = ctypes.c_void_p.in_dll(ctypes.pythonapi, "PyOS_InputHook")
-        pyos_ih.value = ctypes.cast(cb_pyfunctype, ctypes.c_void_p).value
-    else:
-        # Quite limited feature: notify only when a result is displayed in
-        # console (does not notify at every prompt)
-        def displayhook(obj):
-            sys.__displayhook__(obj)
-            monitor.refresh()
-    
-        sys.displayhook = displayhook
+        from spyderlib.widgets.externalshell import inputhooks
+        
+        # To have mpl docstrings as rst
+        matplotlib.rcParams['docstring.hardcopy'] = True
+
+        # Activate interactive mode when needed
+        if mpl_ion.lower() == "true":
+            matplotlib.rcParams['interactive'] = True
+
+        # Setting the user defined backend
+        matplotlib.use(mpl_backend)
+
+        # Setting the right input hook according to mpl_backend,
+        # but only for our Python consoles
+        # IMPORTANT NOTE: Don't try to abstract the steps to set a PyOS
+        # input hook callback in a function. It will *crash* the
+        # interpreter!!
+        if os.environ.get("IPYTHON_KERNEL", "").lower() != "true":
+            if mpl_backend == "Qt4Agg" and os.name == 'nt' and \
+              monitor is not None:
+                # Removing PyQt4 input hook which is not working well on
+                # Windows since opening a subprocess does not attach a real
+                # console to it (with keyboard events...)
+                if os.environ["QT_API"] == 'pyqt': 
+                    inputhooks.remove_pyqt_inputhook()
+                # Using our own input hook
+                # NOTE: it's not working correctly for some configurations
+                # (See issue 1831)
+                callback = inputhooks.set_pyft_callback(qt_nt_inputhook)
+                pyos_ih = inputhooks.get_pyos_inputhook()
+                pyos_ih.value = ctypes.cast(callback, ctypes.c_void_p).value
+            elif mpl_backend == "Qt4Agg" and os.environ["QT_API"] == 'pyside':
+                # PySide doesn't have an input hook, so we need to install one
+                # to be able to show plots.
+                # Note: This only works well for Posix systems
+                callback = inputhooks.set_pyft_callback(inputhooks.qt4)
+                pyos_ih = inputhooks.get_pyos_inputhook()
+                pyos_ih.value = ctypes.cast(callback, ctypes.c_void_p).value
+            elif mpl_backend != "Qt4Agg" and os.environ["QT_API"] == 'pyqt':
+                # Matplotlib backends install their own input hooks, so we
+                # need to remove the PyQt one to make them work
+                inputhooks.remove_pyqt_inputhook()
+    except ImportError:
+        pass
 
 
-#===============================================================================
-# Monkey-patching pdb
-#===============================================================================
-
+#==============================================================================
+# IPython adjustments
+#==============================================================================
 if os.environ.get("IPYTHON_KERNEL", "").lower() == "true":
 
     #XXX If Matplotlib is not imported first, the next IPython import will fail
@@ -385,18 +416,24 @@ if os.environ.get("IPYTHON_KERNEL", "").lower() == "true":
             TestProgram.__init__(self, *args, **kwargs)
     unittest.main = IPyTesProgram
     
-    # Patch a Pandas function to make it recognize our IPython consoles as
-    # proper qtconsoles
-    # Fixes Issue 2015
+    # Pandas monkey-patches
     try:
+        # Make Pandas recognize our IPython consoles as proper qtconsoles
+        # Fixes Issue 2015
         def in_qtconsole():
             return True
         import pandas as pd
         pd.core.common.in_qtconsole = in_qtconsole
+        
+        # Set Pandas output encoding
+        pd.options.display.encoding = 'utf-8'
     except:
         pass
         
 
+#==============================================================================
+# Pdb adjustments
+#==============================================================================
 class SpyderPdb(pdb.Pdb):
     def set_spyder_breakpoints(self):
         self.clear_all_breaks()
@@ -423,6 +460,8 @@ class SpyderPdb(pdb.Pdb):
         if not frame:
             return
         fname = self.canonic(frame.f_code.co_filename)
+        if sys.version[0] == '2':
+            fname = unicode(fname, "utf-8")
         lineno = frame.f_lineno
         if isinstance(fname, basestring) and isinstance(lineno, int):
             if osp.isfile(fname) and monitor is not None:
@@ -497,19 +536,52 @@ def postcmd(self, stop, line):
     self.notify_spyder(self.curframe)
     return self._old_Pdb_postcmd(stop, line)
 
+# Breakpoints don't work for files with non-ascii chars in Python 2
+# Fixes Issue 1484
+if sys.version[0] == '2':
+    @monkeypatch_method(pdb.Pdb, 'Pdb')
+    def break_here(self, frame):
+        from bdb import effective
+        filename = self.canonic(frame.f_code.co_filename)
+        filename = unicode(filename, "utf-8")
+        if not filename in self.breaks:
+            return False
+        lineno = frame.f_lineno
+        if not lineno in self.breaks[filename]:
+            # The line itself has no breakpoint, but maybe the line is the
+            # first line of a function with breakpoint set by function name.
+            lineno = frame.f_code.co_firstlineno
+            if not lineno in self.breaks[filename]:
+                return False
+    
+        # flag says ok to delete temp. bp
+        (bp, flag) = effective(filename, lineno, frame)
+        if bp:
+            self.currentbp = bp.number
+            if (flag and bp.temporary):
+                self.do_clear(str(bp.number))
+            return True
+        else:
+            return False
 
-# Restoring (almost) original sys.path:
+
+#==============================================================================
+# # Restoring (almost) original sys.path:
 # (Note: do not remove spyderlib_path from sys.path because if Spyder has been
 #  installed using python setup.py install, then this could remove the 
 #  'site-packages' directory from sys.path!)
+#==============================================================================
 try:
     sys.path.remove(osp.join(spyderlib_path,
                              "spyderlib", "widgets", "externalshell"))
 except ValueError:
     pass
 
+
+#==============================================================================
 # Ignore PyQt4's sip API changes (this should be used wisely -e.g. for
-# debugging- as dynamic API change is not supported by PyQt)
+# debugging- as dynamic API change is not supported by PyQt) 
+#==============================================================================
 if os.environ.get("IGNORE_SIP_SETAPI_ERRORS", "").lower() == "true":
     try:
         import sip
@@ -524,8 +596,9 @@ if os.environ.get("IGNORE_SIP_SETAPI_ERRORS", "").lower() == "true":
         pass
 
 
-# The following classes and functions are mainly intended to be used from 
-# an interactive Python session
+#==============================================================================
+# User module reloader
+#==============================================================================
 class UserModuleReloader(object):
     """
     User Module Reloader (UMR) aims at deleting user modules 
@@ -537,7 +610,10 @@ class UserModuleReloader(object):
     def __init__(self, namelist=None, pathlist=None):
         if namelist is None:
             namelist = []
-        self.namelist = namelist+['sitecustomize', 'spyderlib', 'spyderplugins']
+        spy_modules = ['sitecustomize', 'spyderlib', 'spyderplugins']
+        mpl_modules = ['matplotlib', 'tkinter', 'Tkinter', 'gtk']
+        self.namelist = namelist + spy_modules + mpl_modules
+        
         if pathlist is None:
             pathlist = []
         self.pathlist = pathlist
@@ -577,6 +653,9 @@ class UserModuleReloader(object):
 __umr__ = None
 
 
+#==============================================================================
+# runfile and debugfile commands
+#==============================================================================
 def _get_globals():
     """Return current Python interpreter globals namespace"""
     from __main__ import __dict__ as namespace
@@ -654,6 +733,9 @@ def debugfile(filename, args=None, wdir=None):
 builtins.debugfile = debugfile
 
 
+#==============================================================================
+# Evaluate external commands
+#==============================================================================
 def evalsc(command):
     """Evaluate special commands
     (analog to IPython's magic commands but far less powerful/complete)"""
@@ -702,7 +784,9 @@ def evalsc(command):
 builtins.evalsc = evalsc
 
 
+#==============================================================================
 # Restoring original PYTHONPATH
+#==============================================================================
 try:
     os.environ['PYTHONPATH'] = os.environ['OLD_PYTHONPATH']
     del os.environ['OLD_PYTHONPATH']
