@@ -1734,15 +1734,27 @@ namespace Graphfab {
 
             // delete preexisting curves
             r->deleteCurves();
+
+            ::Curve const* curve = rg->getCurve();
+            ::BoundingBox const* sbml_bb = rg->getBoundingBox();
             
             // calculate the centroid
-            ::Curve const* curve = rg->getCurve();
 //             if (!curve)
 //               std::cerr << rg->getId() << ": no curve\n";
 //             else
 //               std::cerr << rg->getId() << ": have curve, n segs = " << curve->getNumCurveSegments() << "\n";
-            if (curve && curve->getNumCurveSegments() > 0) {
-                // use preexisting coords via reaction curve
+
+            // first try bounding box (the proper method, which none of the models use)
+            if (sbml_bb &&
+             !(sbml_bb->getPosition()->x() == 0 && sbml_bb->getPosition()->y() == 0 &&
+             sbml_bb->getDimensions() && sbml_bb->getDimensions()->getWidth() == 0 && sbml_bb->getDimensions()->getHeight() == 0) ) {
+
+                Real x_offset = 0, y_offset = 0;
+                if (sbml_bb->getDimensions())
+                  x_offset = sbml_bb->getDimensions()->getWidth() * 0.5, y_offset = sbml_bb->getDimensions()->getHeight() * 0.5;
+                r->setCentroid(sbml_bb->getPosition()->x(), sbml_bb->getPosition()->y());
+            } else if (curve && curve->getNumCurveSegments() > 0) {
+                // next try using preexisting centroid coords via reaction curve
 //                 std::cerr << "manual centroid\n";
                 r->setCentroid(curve->getCurveSegment(0)->getEnd()->x(), curve->getCurveSegment(0)->getEnd()->y());
 
