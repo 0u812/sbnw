@@ -509,7 +509,7 @@ class Autolayout(MainWindowBaseClass):
         if not inspyder:
           filename = pyfab_getSaveFileName(self, filter=filt)[0]
         else:
-          filename = pyfab_getSaveFileName(self, filter=filt)
+          filename = pyfab_getSaveFileName(self, filter=filt)[0]
         if filename:
           self.mainframe.renderSVG(str(filename))
         #self.mainframe.renderSVG('tmp/pyfab.svg')
@@ -852,12 +852,12 @@ class LayoutFrame(FrameBaseClass):
                 QtCore.Qt.AlignCenter, node.name)
 
     def renderSVG(self, filename):
-        #print('renderSVG {}'.format(filename))
+        print('renderSVG {}'.format(filename))
         generator = QSvgGenerator()
         generator.setFileName(filename)
 
-        painter = QtGui.QPainter(self)
-        painter.begin(generator)
+        painter = QtGui.QPainter(generator)
+        #painter.begin(generator)
         self.render(painter, horizonEnabled=False)
 
         painter.end()
