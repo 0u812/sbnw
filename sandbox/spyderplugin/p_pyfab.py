@@ -255,10 +255,10 @@ class SBNWExternalConsole(ExternalConsole):
     for sw in self.shellwidgets:
       #print('sw {}'.format(sw))
       if isinstance(sw, pythonshell.ExternalPythonShell):
-        print('    Found ExternalPythonShell: {}'.format(sw))
-        print('      NotificationThread: {}'.format(sw.notification_thread))
+        #print('    Found ExternalPythonShell: {}'.format(sw))
+        #print('      NotificationThread: {}'.format(sw.notification_thread))
         #sw.notification_thread.__class__ = SBNWNotificationThread
-        print('      terminate NotificationThread')
+        #print('      terminate NotificationThread')
 
         # stop the thread
         #sw.notification_thread.terminate()
@@ -271,8 +271,8 @@ class SBNWExternalConsole(ExternalConsole):
         #print(SpyderSignal)
         #print(type(sw.notification_thread.layout))
         #print(dir(sw.notification_thread.layout))
-        #sw.notification_thread.layout.connect(self.network_layout)
-        #sw.notification_thread.network_viewer_sbml_hook = self.get_network_viewer_sbml
+        sw.notification_thread.layout.connect(self.network_layout)
+        sw.notification_thread.network_viewer_sbml_hook = self.get_network_viewer_sbml
 
         # start the thread again
         #sw.notification_thread.start()

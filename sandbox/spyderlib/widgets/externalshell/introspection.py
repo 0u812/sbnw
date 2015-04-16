@@ -187,13 +187,13 @@ class NotificationThread(QThread):
                     fname, lineno = data
                     self.emit(SIGNAL('open_file(QString,int)'), fname, lineno)
                 elif command == 'layout':
-                    #print('SBNWNotificationThread layout')
+                    #print('2.3.4 NotificationThread layout')
                     sbml = data
                     if sbml != '~::empty::~':
-                      #print('SBNWNotificationThread emit layout signal')
+                      #print('2.3.4 NotificationThread emit layout signal')
                       self.layout.emit(sbml)
                     else:
-                      #print('SBNWNotificationThread get sbml')
+                      #print('2.3.4 NotificationThread get sbml')
                       if hasattr(self, 'network_viewer_sbml_hook'):
                         output = self.network_viewer_sbml_hook()
                         #print('output = {}'.format(output))
