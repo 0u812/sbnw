@@ -519,7 +519,7 @@ class Autolayout(MainWindowBaseClass):
         if not inspyder:
           filename = pyfab_getSaveFileName(self, filter=filt)[0]
         else:
-          filename = pyfab_getSaveFileName(self, filter=filt)
+          filename = pyfab_getSaveFileName(self, filter=filt)[0]
         if filename:
           self.mainframe.renderPNG(str(filename))
         #self.mainframe.renderPNG('/tmp/pyfab.png')
@@ -863,17 +863,17 @@ class LayoutFrame(FrameBaseClass):
         painter.end()
 
     def renderPNG(self, filename):
-        #print('renderSVG {}'.format(filename))
+        print('renderPNG {}'.format(filename))
         pixmap = QImage(self.size().width(), self.size().height(), QImage.Format_ARGB32)
         pixmap.fill(Qt.transparent)
 
-        painter = QtGui.QPainter(self)
-        painter.begin(pixmap)
+        painter = QtGui.QPainter(pixmap)
+        #painter.begin(pixmap)
         self.render(painter, horizonEnabled=True)
 
         painter.end()
 
-        #print('save pixmap {}'.format(filename))
+        print('save pixmap {}'.format(filename))
         pixmap.save(filename)
 
     def renderTikZ(self, filename):
