@@ -138,8 +138,8 @@ def start_notification_server():
 class NotificationThread(QThread):
     """Notification thread"""
     sig_process_remote_view = Signal(object)
-    layout = SpyderSignal(str)
-    
+    layout = Signal(str)
+
     def __init__(self):
         QThread.__init__(self)
         self.notify_socket = None
