@@ -257,25 +257,25 @@ class SBNWExternalConsole(ExternalConsole):
       if isinstance(sw, pythonshell.ExternalPythonShell):
         print('    Found ExternalPythonShell: {}'.format(sw))
         print('      NotificationThread: {}'.format(sw.notification_thread))
-        sw.notification_thread.__class__ = SBNWNotificationThread
+        #sw.notification_thread.__class__ = SBNWNotificationThread
         print('      terminate NotificationThread')
 
         # stop the thread
-        sw.notification_thread.terminate()
+        #sw.notification_thread.terminate()
 
-        # add the layout signal if it doesn't already exist
+        ## add the layout signal if it doesn't already exist
         #if not hasattr(sw.notification_thread, 'layout'):
           #sw.notification_thread.layout = SpyderSignal(str)
 
-        # connect the layout signal to the handlers
-        print(SpyderSignal)
-        print(type(sw.notification_thread.layout))
-        print(dir(sw.notification_thread.layout))
-        sw.notification_thread.layout.connect(self.network_layout)
-        sw.notification_thread.network_viewer_sbml_hook = self.get_network_viewer_sbml
+        ## connect the layout signal to the handlers
+        #print(SpyderSignal)
+        #print(type(sw.notification_thread.layout))
+        #print(dir(sw.notification_thread.layout))
+        #sw.notification_thread.layout.connect(self.network_layout)
+        #sw.notification_thread.network_viewer_sbml_hook = self.get_network_viewer_sbml
 
         # start the thread again
-        sw.notification_thread.start()
+        #sw.notification_thread.start()
 
   def network_layout(self, sbml):
     """Open the SBML model in the pyfab layout viewer"""
