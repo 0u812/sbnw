@@ -2479,6 +2479,9 @@
           <speciesReference species="fructose_1_6_bisphosphate" stoichiometry="1" />
           <speciesReference species="ADP" stoichiometry="2" />
         </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="ATP"/>
+        </listOfModifiers>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
