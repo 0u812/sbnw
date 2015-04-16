@@ -94,12 +94,18 @@ if is_pyqt5():
   import PyQt5
   from PyQt5 import QtCore, QtGui, QtWidgets
   from PyQt5.QtCore import pyqtSignal
-elif is_pyqt4():
+
+  pyfab_getSaveFileName = QFileDialog.getSaveFileName
+
+elif is_pyqt4() and inspyder:
   import spyderlib
   from spyderlib.qt import QtCore, QtGui
   QWidget = QtGui.QWidget
   from spyderlib.utils.qthelpers import qapplication
   from spyderlib.plugins import SpyderPluginWidget, PluginConfigPage
+
+  def pyfab_getSaveFileName(parent, filter):
+    return spyderlib.qt.compat.getsavefilename(parent, filters=filter)
 
 
 defaultfile = None
@@ -490,7 +496,7 @@ class Autolayout(MainWindowBaseClass):
         self.saveAs(event)
 
     def saveAs(self, event):
-        filename = QFileDialog.getSaveFileName(self)[0]
+        filename = pyfab_getSaveFileName(self)[0]
         if filename:
           qfile = QtCore.QFile(filename)
           self.savefile(filename)
@@ -498,9 +504,9 @@ class Autolayout(MainWindowBaseClass):
     def saveSVG(self, event):
         filt = 'Scalable Vector Graphics (*.svg);; All Files(*.*)'
         if not inspyder:
-          filename = QFileDialog.getSaveFileName(self, filter=filt)[0]
+          filename = pyfab_getSaveFileName(self, filter=filt)[0]
         else:
-          filename = QFileDialog.getSaveFileName(self, filter=filt)
+          filename = pyfab_getSaveFileName(self, filter=filt)
         if filename:
           self.mainframe.renderSVG(str(filename))
         #self.mainframe.renderSVG('tmp/pyfab.svg')
@@ -508,22 +514,22 @@ class Autolayout(MainWindowBaseClass):
     def savePNG(self, event):
         filt = 'Portable Network Graphics (*.png);; All Files(*.*)'
         if not inspyder:
-          filename = QFileDialog.getSaveFileName(self, filter=filt)[0]
+          filename = pyfab_getSaveFileName(self, filter=filt)[0]
         else:
-          filename = QFileDialog.getSaveFileName(self, filter=filt)
+          filename = pyfab_getSaveFileName(self, filter=filt)
         if filename:
           self.mainframe.renderPNG(str(filename))
         #self.mainframe.renderPNG('/tmp/pyfab.png')
 
     def saveTikZ(self, event):
         filt = 'TikZ (*.tikz);; All Files(*.*)'
-        filename = QFileDialog.getSaveFileName(self, filter=filt)[0]
+        filename = pyfab_getSaveFileName(self, filter=filt)[0]
         if filename:
           self.mainframe.renderTikZ(filename)
 
     def saveTikZInt(self, event):
       filt = 'TikZ (*.tikz);; All Files(*.*)'
-      filename = QFileDialog.getSaveFileName(self, filter=filt)[0]
+      filename = pyfab_getSaveFileName(self, filter=filt)[0]
       if filename:
         self.savetikz(filename)
 
