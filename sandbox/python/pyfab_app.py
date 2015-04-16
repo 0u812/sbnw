@@ -104,8 +104,11 @@ elif is_pyqt4() and inspyder:
   from spyderlib.utils.qthelpers import qapplication
   from spyderlib.plugins import SpyderPluginWidget, PluginConfigPage
 
-  def pyfab_getSaveFileName(parent, filter):
-    return spyderlib.qt.compat.getsavefilename(parent, filters=filter)
+  def pyfab_getSaveFileName(parent, filter=None):
+    if filter is not None:
+      return spyderlib.qt.compat.getsavefilename(parent, filters=filter)
+    else:
+      return spyderlib.qt.compat.getsavefilename(parent)
 
 
 defaultfile = None
