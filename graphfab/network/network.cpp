@@ -920,29 +920,34 @@ namespace Graphfab {
 //         std::cerr << "RECOMP CENTROID\n";
         if(isCentroidSet())
             return;
-        uint32 count=0;
-        _p = Point(0.,0.);
-        for(ConstNodeIt i=NodesBegin(); i!=NodesEnd(); ++i) {
-            Node* n = i->first;
-            _p = _p + n->getCentroid();
-            ++count;
-        }
-        // normalize
-        _p = _p*(1./count);
+        doCentroidCalc();
     }
     
     void Reaction::forceRecalcCentroid() {
 //         std::cerr << "RECALC CENTROID\n";
-        uint32 count=0;
-        _p = Point(0.,0.);
-        for(ConstNodeIt i=NodesBegin(); i!=NodesEnd(); ++i) {
-            Node* n = i->first;
-            _p = _p + n->getCentroid();
-            ++count;
-        }
-        // normalize
-        _p = _p*(1./count);
+        doCentroidCalc();
         _pset = 1;
+    }
+
+    void Reaction::doCentroidCalc() {
+      uint32 count=0;
+      _p = Point(0.,0.);
+      for(ConstNodeIt i=NodesBegin(); i!=NodesEnd(); ++i) {
+        // detect duplicates
+        for(ConstNodeIt j=NodesBegin(); j!=i; ++j)
+          if (i->first == j->first)
+            goto doCentroidCalc_skip;
+
+        {
+          Node* n = i->first;
+          _p = _p + n->getCentroid();
+          ++count;
+        }
+
+        doCentroidCalc_skip:;
+      }
+      // normalize
+      _p = _p*(1./count);
     }
     
     void Reaction::deleteCurves() {

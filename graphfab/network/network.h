@@ -775,6 +775,9 @@ namespace Graphfab {
             
             /// Recomputes the centroid
             void recompCentroid();
+
+            /// Numeric centroid computation, no other side effects
+            void doCentroidCalc();
             
             void curveGuard() {
                 if(_cdirty && _spec.size()) {
