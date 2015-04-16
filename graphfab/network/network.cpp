@@ -1768,25 +1768,28 @@ namespace Graphfab {
 
                 r->clearDirtyFlag();
             } else {
-                // try to get the centroid from the reaction curves
-                for(int i_spc=0; i_spc<rg->getNumSpeciesReferenceGlyphs(); ++i_spc) {
-                    // spec ref
-                    const SpeciesReferenceGlyph* srg = rg->getSpeciesReferenceGlyph(i_spc);
-                    // role
-                    RxnRoleType role = SBMLRole2GraphfabRole(srg->getRole());
-                    // curve
-                    ::Curve const* crv = srg->getCurve();
-                    if (!crv)
-                      break;
+                // poor results
+                if (false) {
+                  // try to get the centroid from the reaction curves
+                  for(int i_spc=0; i_spc<rg->getNumSpeciesReferenceGlyphs(); ++i_spc) {
+                      // spec ref
+                      const SpeciesReferenceGlyph* srg = rg->getSpeciesReferenceGlyph(i_spc);
+                      // role
+                      RxnRoleType role = SBMLRole2GraphfabRole(srg->getRole());
+                      // curve
+                      ::Curve const* crv = srg->getCurve();
+                      if (!crv)
+                        break;
 
-                    for (int i_seg=0; i_seg<crv->getNumCurveSegments(); ++i_seg) {
-                      ::LineSegment const* seg = crv->getCurveSegment(i_seg);
-                      if (role == RXN_ROLE_PRODUCT || role == RXN_ROLE_SIDEPRODUCT)
-                        r->setCentroid(seg->getStart()->x(), seg->getStart()->y());
-                      else
-                        r->setCentroid(seg->getEnd()->x(), seg->getEnd()->y());
-                      goto skip_recalc_centroid;
-                    }
+                      for (int i_seg=0; i_seg<crv->getNumCurveSegments(); ++i_seg) {
+                        ::LineSegment const* seg = crv->getCurveSegment(i_seg);
+                        if (role == RXN_ROLE_PRODUCT || role == RXN_ROLE_SIDEPRODUCT)
+                          r->setCentroid(seg->getStart()->x(), seg->getStart()->y());
+                        else
+                          r->setCentroid(seg->getEnd()->x(), seg->getEnd()->y());
+                        goto skip_recalc_centroid;
+                      }
+                  }
                 }
 
                 // if all else fails average node coords
