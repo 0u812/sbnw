@@ -100,6 +100,19 @@ namespace Graphfab {
         }
     }
 
+    // modifiers match activators and inhibitors
+    static bool isGenericModifier(RxnRoleType role) {
+      return role == RXN_ROLE_MODIFIER || role == RXN_ROLE_ACTIVATOR || role == RXN_ROLE_INHIBITOR;
+    }
+
+    // modifiers match activators and inhibitors
+    static bool matchSBML_RoleGenericMod(RxnRoleType u, RxnRoleType v) {
+      if (isGenericModifier(u) && isGenericModifier(v))
+        return true;
+      else
+        return u == v;
+    }
+
     //-- Reaction Curves --
 
     ArrowheadStyle SubCurve::getArrowheadStyle() const {
@@ -531,12 +544,12 @@ namespace Graphfab {
     void Reaction::substituteSpeciesByIdwRole(const std::string& id, Node* spec, RxnRoleType role) {
         for(NodeVec::iterator i=_spec.begin(); i!=_spec.end(); ++i) {
             Node* n = i->first;
-            if(n->getId() == id) {
+            if(n->getId() == id && matchSBML_RoleGenericMod(i->second, role)) {
                 --n->_ldeg;
                 ++spec->_ldeg;
                 i->first = spec;
                 // SBML inconsistency
-                if (i->second != RXN_ROLE_MODIFIER || role == RXN_ROLE_ACTIVATOR || role == RXN_ROLE_INHIBITOR) {
+                if ((i->second == RXN_ROLE_MODIFIER) && (role == RXN_ROLE_ACTIVATOR || role == RXN_ROLE_INHIBITOR) ) {
 //                   std::cerr << "Set role for " << spec->getId() << " to " << rxnRoleToString(role) << "\n";
                   i->second = role;
                 }
@@ -1709,12 +1722,12 @@ namespace Graphfab {
             
             for(int i_spc=0; i_spc<rg->getNumSpeciesReferenceGlyphs(); ++i_spc) {
                 const SpeciesReferenceGlyph* srg = rg->getSpeciesReferenceGlyph(i_spc);
-                
+
                 //get the alias
 //                 std::cerr << "Searching for glyph " << srg->getSpeciesGlyphId() << "\n";
                 Node* alias = net->findNodeByGlyph(srg->getSpeciesGlyphId());
                 AN(alias, "Unable to find alias node");
-                
+
                 //fix the reference to point to the alias
 //                 r->substituteSpeciesById(srg->getSpeciesReferenceId(), alias);
 //                 std::cerr << srg->getId() << ": ";
@@ -1723,10 +1736,10 @@ namespace Graphfab {
 //                 else
 //                   std::cerr << "Is present\n";
                 RxnRoleType role = SBMLRole2GraphfabRole(srg->getRole());
-                if (isRoleActive(role))
+//                 if (isRoleActive(role))
                     r->substituteSpeciesByIdwRole(srg->getSpeciesReferenceId(), alias, role);
-                else
-                    r->addSpeciesRef(alias, role);
+//                 else
+//                     r->addSpeciesRef(alias, role);
 
 //                 for (Reaction::CurveIt ci = r->CurvesBegin(); ci != r->CurvesEnd(); ++ci) {
 //                   RxnBezier* c = *ci;
