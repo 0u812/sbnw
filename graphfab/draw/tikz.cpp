@@ -49,6 +49,7 @@ const char* gf_renderTikZ(gf_layoutInfo* l) {
 }
 
 int gf_renderTikZFile(gf_layoutInfo* l, const char* filename) {
+//   fprintf(stderr, "Saving to TikZ file %s\n", filename);
   FILE* f = fopen(filename, "w");
   if (!f)
     return 1;
