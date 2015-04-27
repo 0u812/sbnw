@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tellurium Video Tutorials</title>
-    <atom:link href="http://0u812.github.io/sbnw/tutorials//feed.xml" rel="self" type="application/rss+xml"></atom:link>
-    <link>http://0u812.github.io/sbnw/tutorials/</link>
+    <atom:link href="http://0u812.github.io/sbnw/tutorials/feed.xml" rel="self" type="application/rss+xml"></atom:link>
+    <link>http://0u812.github.io/sbnw/tutorials</link>
     <description>Tutorials for the Tellurium Modeling Environment</description>
     <pubDate>Sun, 26 Apr 2015 17:00:00 -0700</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
       <title>Getting Started On Windows</title>
-      <link>http://0u812.github.io/sbnw/tutorials//articles/getting-started-win/</link>
+      <link>http://0u812.github.io/sbnw/tutorials/articles/getting-started-win/</link>
       <pubDate>Sun, 26 Apr 2015 17:00:00 -0700</pubDate>
-      <guid isPermaLink="true">http://0u812.github.io/sbnw/tutorials//articles/getting-started-win/</guid>
+      <guid isPermaLink="true">http://0u812.github.io/sbnw/tutorials/articles/getting-started-win/</guid>
       <author></author>
       <description>&lt;p&gt;This video will show you how to launch Tellurium for Windows and load an SBML
 model with layout. The SBML model used in the tutorial is available &lt;a href=&quot;https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
@@ -20,9 +20,9 @@ model with layout. The SBML model used in the tutorial is available &lt;a href=&
     </item>
     <item>
       <title>Getting Started On Mac</title>
-      <link>http://0u812.github.io/sbnw/tutorials//articles/getting-started-mac/</link>
+      <link>http://0u812.github.io/sbnw/tutorials/articles/getting-started-mac/</link>
       <pubDate>Thu, 23 Apr 2015 17:00:00 -0700</pubDate>
-      <guid isPermaLink="true">http://0u812.github.io/sbnw/tutorials//articles/getting-started-mac/</guid>
+      <guid isPermaLink="true">http://0u812.github.io/sbnw/tutorials/articles/getting-started-mac/</guid>
       <author></author>
       <description>&lt;p&gt;This video will show you how to launch Tellurium for Mac OS X and load an SBML
 model with layout. SBML models are available &lt;a href=&quot;https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip&quot;&gt;here&lt;/a&gt;:&lt;/p&gt;
