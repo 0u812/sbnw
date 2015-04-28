@@ -17,7 +17,7 @@ The network viewer plugin is part of Tellurium, which can be downloaded for [Win
 
 ## Tellurium Video Tutorials
 
-Video tutorials are available [here](0u812.github.io/sbnw/tutorials) which demonstrate how to use the network viewer plugin in Tellurium.
+Video tutorials are available [here](http://0u812.github.io/sbnw/tutorials) which demonstrate how to use the network viewer plugin in Tellurium.
 
 ## Test Cases
 
