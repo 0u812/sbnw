@@ -15,6 +15,10 @@ The library is designed as a reusable implementation of a automatic layout for S
 
 The network viewer plugin is part of Tellurium, which can be downloaded for [Windows](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Windows/) and [Mac OS X](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Mac/). Seperate binaries for the libSBNW library are available from [SourceForge](https://sourceforge.net/projects/sbnw/files/).
 
+## Tellurium Video Tutorials
+
+Video tutorials are available [here](0u812.github.io/sbnw/tutorials) which demonstrate how to use the network viewer plugin in Tellurium.
+
 ## Test Cases
 
 The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) used in development of this tool are available for download from the releases page as well. The network viewer is frequently tested with these files (with the exception of EquilibRaw_wlayout.xml which is known to fail).
