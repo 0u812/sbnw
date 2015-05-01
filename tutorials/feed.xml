@@ -5,9 +5,19 @@
     <atom:link href="http://0u812.github.io/sbnw/tutorials/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://0u812.github.io/sbnw/tutorials</link>
     <description>Tutorials for the Tellurium Modeling Environment</description>
-    <pubDate>Wed, 29 Apr 2015 17:00:00 -0700</pubDate>
+    <pubDate>Thu, 30 Apr 2015 17:00:00 -0700</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
+    <item>
+      <title>Network Viewer Troubleshooting on Mac OS X</title>
+      <link>http://0u812.github.io/sbnw/tutorials/articles/troubleshooting-sbnw-mac/</link>
+      <pubDate>Thu, 30 Apr 2015 17:00:00 -0700</pubDate>
+      <guid isPermaLink="true">http://0u812.github.io/sbnw/tutorials/articles/troubleshooting-sbnw-mac/</guid>
+      <author></author>
+      <description>&lt;p&gt;This video explains what to do if the network viewer disappears or you need to
+reset Tellurium to factory defaults.&lt;/p&gt;
+</description>
+    </item>
     <item>
       <title>Network Viewer Troubleshooting on Windows</title>
       <link>http://0u812.github.io/sbnw/tutorials/articles/troubleshooting-sbnw-win/</link>
