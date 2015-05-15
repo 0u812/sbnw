@@ -1810,8 +1810,12 @@ namespace Graphfab {
                     c->c1.y = sr_bez->getBasePoint1()->y();
                     c->c2.x = sr_bez->getBasePoint2()->x();
                     c->c2.y = sr_bez->getBasePoint2()->y();
-                  } else{
+                  } else if (sr_line) {
                     std::cerr << "no sr_bez\n";
+                    c->c1.x = sr_line->getStart()->x();
+                    c->c1.y = sr_line->getStart()->y();
+                    c->c2.x = sr_line->getEnd()->x();
+                    c->c2.y = sr_line->getEnd()->y();
                   }
                 }
 
