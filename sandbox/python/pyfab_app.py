@@ -1014,7 +1014,7 @@ class LayoutFrame(FrameBaseClass):
             if self.parent().createNodeToolAct.isChecked():
                 self.addNode(mouse.x(), mouse.y())
             else:
-                for node in self.network.nodes:
+                for node in reversed(self.network.nodes):
                     x, y = self.getNodeScreenSpaceCentroid(node)
                     hemiwidth = node.width/2
                     hemiheight = node.height/2
@@ -1026,6 +1026,7 @@ class LayoutFrame(FrameBaseClass):
                             self.dragging = True
                             dragging_object = True
                             self.dragSource = mouse
+                            break
                         elif self.parent().lockToolAct.isChecked():
                             if not node.islocked():
                                 node.lock()
@@ -1036,20 +1037,22 @@ class LayoutFrame(FrameBaseClass):
                         elif self.parent().aliasToolAct.isChecked():
                             self.aliasNode(node)
 
-                for rxn in self.network.rxns:
-                    x, y = rxn.centroid
-                    hemiwidth = 10
-                    hemiheight = 10
+                if not dragging_object: # don't double-drag
+                  for rxn in reversed(self.network.rxns):
+                      x, y = rxn.centroid
+                      hemiwidth = 10
+                      hemiheight = 10
 
-                    if intervalContains(x - hemiwidth, x + hemiwidth, mouse.x()) and intervalContains(y - hemiheight, y + hemiheight, mouse.y()):
-                        if self.parent().selectToolAct.isChecked():
-                            if not hasattr(rxn, 'custom'):
-                                rxn.custom = NodeData()
-                            rxn.custom.isBeingDragged = True
-                            rxn.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(rxn))
-                            self.dragging = True
-                            dragging_object = True
-                            self.dragSource = mouse
+                      if intervalContains(x - hemiwidth, x + hemiwidth, mouse.x()) and intervalContains(y - hemiheight, y + hemiheight, mouse.y()):
+                          if self.parent().selectToolAct.isChecked():
+                              if not hasattr(rxn, 'custom'):
+                                  rxn.custom = NodeData()
+                              rxn.custom.isBeingDragged = True
+                              rxn.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(rxn))
+                              self.dragging = True
+                              dragging_object = True
+                              self.dragSource = mouse
+                              break
 
                 if not dragging_object:
                   mouse = QPoint((event.x(), event.y()))
