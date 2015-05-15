@@ -1796,6 +1796,25 @@ namespace Graphfab {
 
                 r->recalcCurveCPs();
 
+                // Try to fill in the CP data from layout info
+                for (unsigned int j = 0; j < rg->getNumSpeciesReferenceGlyphs(); ++j) {
+                  SpeciesReferenceGlyph const* srg = rg->getSpeciesReferenceGlyph(j);
+                  RxnBezier* c = r->getCurve(j);
+                  // use the first curve segment
+                  ::Curve const* sr_curve = srg->getCurve();
+                  ::LineSegment const* sr_line = sr_curve->getCurveSegment(0);
+                  ::CubicBezier const* sr_bez = dynamic_cast< ::CubicBezier const* >(sr_line);
+                  if (sr_bez) {
+                    std::cerr << "sr_bez\n";
+                    c->c1.x = sr_bez->getBasePoint1()->x();
+                    c->c1.y = sr_bez->getBasePoint1()->y();
+                    c->c2.x = sr_bez->getBasePoint2()->x();
+                    c->c2.y = sr_bez->getBasePoint2()->y();
+                  } else{
+                    std::cerr << "no sr_bez\n";
+                  }
+                }
+
                 r->clearDirtyFlag();
             } else {
                 // poor results
