@@ -318,6 +318,9 @@ class Autolayout(MainWindowBaseClass):
         self.homepageAct = QAction(QtGui.QIcon(self.getIconPath('32x32/homepage.png')), '&Homepage', self)
         self.homepageAct.triggered.connect(self.openhomepageEvent)
 
+        self.videosAct = QAction(QtGui.QIcon(self.getIconPath('32x32/applications-multimedia-3.png')), '&Video Tutorials', self)
+        self.videosAct.triggered.connect(self.openvideosEvent)
+
         self.aboutAct = QAction(QtGui.QIcon(self.getIconPath('32x32/help-about-2.png')), '&About/License', self)
         self.aboutAct.triggered.connect(self.openAboutBoxEvent)
 
@@ -384,6 +387,7 @@ class Autolayout(MainWindowBaseClass):
 
         self.helpmenu = menu.addMenu('&Help')
         self.helpmenu.addAction(self.homepageAct)
+        self.helpmenu.addAction(self.videosAct)
         self.helpmenu.addSeparator()
         self.helpmenu.addAction(self.aboutAct)
 
@@ -678,6 +682,9 @@ class Autolayout(MainWindowBaseClass):
 
     def openhomepageEvent(self, event):
         QtGui.QDesktopServices.openUrl(QtCore.QUrl('https://github.com/0u812/sbnw'))
+
+    def openvideosEvent(self, event):
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl('http://0u812.github.io/sbnw/tutorials/'))
 
     def openAboutBoxEvent(self, event):
       box = QMessageBox.about(self, 'SBNW: SBML Network Viewer',
