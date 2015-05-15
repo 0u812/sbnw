@@ -1805,17 +1805,21 @@ namespace Graphfab {
                   ::LineSegment const* sr_line = sr_curve->getCurveSegment(0);
                   ::CubicBezier const* sr_bez = dynamic_cast< ::CubicBezier const* >(sr_line);
                   if (sr_bez) {
-                    std::cerr << "sr_bez\n";
+                    //std::cerr << "sr_bez\n";
                     c->c1.x = sr_bez->getBasePoint1()->x();
                     c->c1.y = sr_bez->getBasePoint1()->y();
                     c->c2.x = sr_bez->getBasePoint2()->x();
                     c->c2.y = sr_bez->getBasePoint2()->y();
                   } else if (sr_line) {
-                    std::cerr << "no sr_bez\n";
+                    //std::cerr << "no sr_bez\n";
                     c->c1.x = sr_line->getStart()->x();
                     c->c1.y = sr_line->getStart()->y();
                     c->c2.x = sr_line->getEnd()->x();
                     c->c2.y = sr_line->getEnd()->y();
+                    //  CPs should be separated from endpoints for endcap orientation
+                    Point ctmp = c->c1;
+                    c->c1 = 0.9*c->c1 + 0.1*c->c2;
+                    c->c2 = 0.9*c->c2 + 0.1*ctmp;
                   }
                 }
 
