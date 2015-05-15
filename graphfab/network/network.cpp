@@ -1796,6 +1796,8 @@ namespace Graphfab {
 
                 r->recalcCurveCPs();
 
+                r->clearDirtyFlag();
+
                 // Try to fill in the CP data from layout info
                 for (unsigned int j = 0; j < rg->getNumSpeciesReferenceGlyphs(); ++j) {
                   SpeciesReferenceGlyph const* srg = rg->getSpeciesReferenceGlyph(j);
@@ -1806,12 +1808,22 @@ namespace Graphfab {
                   ::CubicBezier const* sr_bez = dynamic_cast< ::CubicBezier const* >(sr_line);
                   if (sr_bez) {
                     //std::cerr << "sr_bez\n";
+                    c->s.x = sr_bez->getStart()->x();
+                    c->s.y = sr_bez->getStart()->y();
+                    c->e.x = sr_bez->getEnd()->x();
+                    c->e.y = sr_bez->getEnd()->y();
+
                     c->c1.x = sr_bez->getBasePoint1()->x();
                     c->c1.y = sr_bez->getBasePoint1()->y();
                     c->c2.x = sr_bez->getBasePoint2()->x();
                     c->c2.y = sr_bez->getBasePoint2()->y();
                   } else if (sr_line) {
                     //std::cerr << "no sr_bez\n";
+                    c->s.x = sr_line->getStart()->x();
+                    c->s.y = sr_line->getStart()->y();
+                    c->e.x = sr_line->getEnd()->x();
+                    c->e.y = sr_line->getEnd()->y();
+
                     c->c1.x = sr_line->getStart()->x();
                     c->c1.y = sr_line->getStart()->y();
                     c->c2.x = sr_line->getEnd()->x();
@@ -1822,8 +1834,6 @@ namespace Graphfab {
                     c->c2 = 0.9*c->c2 + 0.1*ctmp;
                   }
                 }
-
-                r->clearDirtyFlag();
             } else {
                 // poor results
                 if (false) {
