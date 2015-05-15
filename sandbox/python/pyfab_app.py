@@ -90,27 +90,6 @@ import platform
 
 #print('imported platform')
 
-if is_pyqt5():
-  import PyQt5
-  from PyQt5 import QtCore, QtGui, QtWidgets
-  from PyQt5.QtCore import pyqtSignal
-
-  pyfab_getSaveFileName = QFileDialog.getSaveFileName
-
-elif is_pyqt4() and inspyder:
-  import spyderlib
-  from spyderlib.qt import QtCore, QtGui
-  QWidget = QtGui.QWidget
-  from spyderlib.utils.qthelpers import qapplication
-  from spyderlib.plugins import SpyderPluginWidget, PluginConfigPage
-
-  def pyfab_getSaveFileName(parent, filter=None):
-    if filter is not None:
-      return spyderlib.qt.compat.getsavefilename(parent, filters=filter)
-    else:
-      return spyderlib.qt.compat.getsavefilename(parent)
-
-
 defaultfile = None
 
 if __name__ == '__main__':
@@ -150,6 +129,10 @@ def fixNodes(network):
 #print('is pyqt5?')
 
 if is_pyqt5():
+  import PyQt5
+  from PyQt5 import QtCore, QtGui, QtWidgets
+  from PyQt5.QtCore import pyqtSignal
+
   MainWindowBaseClass = QtWidgets.QMainWindow
   from PyQt5.QtGui import (QPainter,
     QPen, QColor, QLinearGradient,
@@ -165,7 +148,22 @@ if is_pyqt5():
                                QCheckBox, QSpinBox)
   from PyQt5.QtCore import (Qt, QRectF, QSize)
   from PyQt5.QtSvg import QSvgGenerator
+
+  pyfab_getSaveFileName = QFileDialog.getSaveFileName
 elif is_pyqt4():
+  if inspyder:
+    import spyderlib
+    from spyderlib.qt import QtCore, QtGui
+    QWidget = QtGui.QWidget
+    from spyderlib.utils.qthelpers import qapplication
+    from spyderlib.plugins import SpyderPluginWidget, PluginConfigPage
+
+    def pyfab_getSaveFileName(parent, filter=None):
+      if filter is not None:
+        return spyderlib.qt.compat.getsavefilename(parent, filters=filter)
+      else:
+        return spyderlib.qt.compat.getsavefilename(parent)
+
   MainWindowBaseClass = SpyderPluginWidget
   QAction = QtGui.QAction
   QActionGroup = QtGui.QActionGroup
