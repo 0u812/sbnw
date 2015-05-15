@@ -745,6 +745,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
     return doc;
 }
 
+// DEPRECATED
 gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r) {
 	r=(gf_SBMLModel*)malloc(sizeof(gf_SBMLModel));
     SBMLReader reader;

@@ -149,7 +149,9 @@ _GraphfabExport void gf_freeModelAndLayout(gf_SBMLModel* mod, gf_layoutInfo* l);
  */
 _GraphfabExport gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo);
 
-/** @brief Load SBML document from memory buffer and process
+/**
+ *  @deprecated
+ *  @brief [DEPRECATED] Load SBML document from memory buffer and process
  *  @param[in] buf The buffer containing the SBML file; used to create the SBML model
  *  @param[in] r A pointer to an empty SBML model; the model will be created from the buffer and used to build the layout
  *  @param[out] l The layout info; pointer to the layout info generated from SBML is returned 
