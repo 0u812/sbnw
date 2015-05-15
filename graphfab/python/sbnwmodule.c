@@ -487,7 +487,7 @@ typedef struct {
 
 static void gfp_Compartment_dealloc(gfp_Compartment* self) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("Compartment dealloc\n");
+//     printf("Compartment dealloc\n");
     #endif
     if(self->owning)
       gf_releaseCompartment(&self->c);
