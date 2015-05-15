@@ -492,50 +492,6 @@
                 </speciesReferenceGlyph>
               </listOfSpeciesReferenceGlyphs>
             </reactionGlyph>
-            <reactionGlyph id="rg_frame">
-              <curve>
-                <listOfCurveSegments>
-                  <curveSegment xsi:type="LineSegment">
-                    <start x="1470" y="30"/>
-                    <end x="2290" y="30"/>
-                  </curveSegment>
-                  <curveSegment xsi:type="LineSegment">
-                    <start x="2290" y="30"/>
-                    <end x="2290" y="566"/>
-                  </curveSegment>
-                  <curveSegment xsi:type="LineSegment">
-                    <start x="2290" y="566"/>
-                    <end x="1470" y="566"/>
-                  </curveSegment>
-                  <curveSegment xsi:type="LineSegment">
-                    <start x="1470" y="566"/>
-                    <end x="1470" y="30"/>
-                  </curveSegment>
-                </listOfCurveSegments>
-              </curve>
-              <listOfSpeciesReferenceGlyphs>
-                <speciesReferenceGlyph id="srg_line_1">
-                  <curve>
-                    <listOfCurveSegments>
-                      <curveSegment xsi:type="LineSegment">
-                        <start x="1000" y="800"/>
-                        <end x="1470" y="30"/>
-                      </curveSegment>
-                    </listOfCurveSegments>
-                  </curve>
-                </speciesReferenceGlyph>
-                <speciesReferenceGlyph id="srg_line_2">
-                  <curve>
-                    <listOfCurveSegments>
-                      <curveSegment xsi:type="LineSegment">
-                        <start x="1300" y="900"/>
-                        <end x="2290" y="566"/>
-                      </curveSegment>
-                    </listOfCurveSegments>
-                  </curve>
-                </speciesReferenceGlyph>
-              </listOfSpeciesReferenceGlyphs>
-            </reactionGlyph>
           </listOfReactionGlyphs>
           <listOfTextGlyphs>
             <textGlyph id="TextGlyph_Hepatocyte" graphicalObject="CompartmentGlyph_1" originOfText="Hepatocyte">
