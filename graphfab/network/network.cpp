@@ -1681,6 +1681,20 @@ namespace Graphfab {
             
             c->setRestExtents(Box(Point(bbox->x(), bbox->y()), Point(bbox->x()+bbox->width(), bbox->y()+bbox->height())));
         }
+
+        // place elements inside parent compartments
+        for(Network::NodeIt z=net->NodesBegin(); z!=net->NodesEnd(); ++z) {
+          Node* n = *z;
+          Compartment* c = net->findContainingCompartment(n);
+          if (c)
+            n->setCentroid(c->getCentroid());
+        }
+        for(Network::RxnIt z=net->RxnsBegin(); z!=net->RxnsEnd(); ++z) {
+          Reaction* r = *z;
+          Compartment* c = net->findContainingCompartment(r);
+          if (c)
+            r->setCentroid(c->getCentroid());
+        }
         
         // for nodes
         for(int i=0; i<lay.getNumSpeciesGlyphs(); ++i) {
@@ -1948,6 +1962,12 @@ namespace Graphfab {
             r->setId(rxn->getId());
             
             AN(rxn, "Failed to get reaction");
+
+            // associate compartment (if one exists)
+            Graphfab::Compartment* c = net->findCompById(rxn->getCompartment());
+            if(c) {
+                c->addElt(r);
+            }
             
             // get reactants
             for(int i_spc=0; i_spc<rxn->getNumReactants(); ++i_spc) {

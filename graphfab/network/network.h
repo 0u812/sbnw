@@ -900,6 +900,8 @@ namespace Graphfab {
             
             void setMin(const Point& p) { _ext.setMin(p); }
             void setMax(const Point& p) { _ext.setMax(p); }
+
+            virtual Point getCentroid(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { return getExtents(coord).getCenter(); }
             
             // Layout engine:
             
