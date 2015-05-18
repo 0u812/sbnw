@@ -13,7 +13,7 @@ The library is designed as a reusable implementation of a automatic layout for S
 
 ## Download
 
-The network viewer plugin is part of Tellurium, which can be downloaded for [Windows](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Windows/) and [Mac OS X](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Mac/). Seperate binaries for the libSBNW library are available from [SourceForge](https://sourceforge.net/projects/sbnw/files/).
+The network viewer plugin is part of Tellurium, which can be downloaded for [Windows](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Windows/) and [Mac OS X](http://sourceforge.net/projects/pytellurium/files/tellurium-1.1/Mac/). Separate binaries for the libSBNW library are available from [SourceForge](https://sourceforge.net/projects/sbnw/files/).
 
 ## Tellurium Video Tutorials
 
