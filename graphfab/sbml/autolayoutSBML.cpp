@@ -45,13 +45,9 @@ void gf_freeSBMLModel(gf_SBMLModel* lo) {
 }
 
 extern "C" gf_SBMLModel* gf_loadSBMLbuf(const char* buf) {
-//     std::cerr << "gf_loadSBMLbuf: start\n";
     gf_SBMLModel* r=(gf_SBMLModel*)malloc(sizeof(gf_SBMLModel));
-//     std::cerr << "gf_loadSBMLbuf: allocated model\n";
     SBMLReader reader;
-//     std::cerr << "gf_loadSBMLbuf: created reader\n";
     SBMLDocument* doc = reader.readSBMLFromString(buf);
-//     std::cerr << "gf_loadSBMLbuf: Read SBML\n";
     
     AN(doc, "Failed to parse SBML"); //not libSBML's documented way of failing, but just in case...
     
@@ -68,7 +64,11 @@ extern "C" gf_SBMLModel* gf_loadSBMLbuf(const char* buf) {
         }
         gf_setError(ss.str().c_str());
         #endif
-        return NULL;
+        // if all are warnings, continue - else abort
+        for(unsigned int i=0; i<doc->getNumErrors(); ++i) {
+          if (!doc->getError(i)->isWarning())
+            return NULL;
+        }
     }
     
     r->pdoc = doc;
