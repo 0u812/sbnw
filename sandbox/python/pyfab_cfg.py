@@ -65,6 +65,8 @@ def get_default_options():
       'activator_edge_dashed': True,
       'inhibitor_edge_dashed': True,
       'modifier_edge_dashed':  True,
+      # text
+      'text_halo_enabled': True,
       # endcaps
       'substrate_arrowhead': 0,
       'product_arrowhead': 1,

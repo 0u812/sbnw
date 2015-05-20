@@ -826,21 +826,22 @@ class LayoutFrame(FrameBaseClass):
             if enable_matplotlib2tikz:
               self.pypltrender.drawNode(node, x-hemiwidth, y-hemiheight, x+hemiwidth, y+hemiheight, screentx)
 
-        #glowtextpainter = QtGui.QPainter(self)
-        glowtextpainter = painter
-        text_halo_pen = QtGui.QPen(QtGui.QBrush(QtGui.QColor(255,255,255,15)), 4., QtCore.Qt.SolidLine)
-        glowtextpainter.setPen(text_halo_pen)
+        if config.state.text_halo_enabled:
+            #glowtextpainter = QtGui.QPainter(self)
+            glowtextpainter = painter
+            text_halo_pen = QtGui.QPen(QtGui.QBrush(QtGui.QColor(255,255,255,15)), 4., QtCore.Qt.SolidLine)
+            glowtextpainter.setPen(text_halo_pen)
 
-        #glowtextpainter.setTransform(self.qtf)
+            #glowtextpainter.setTransform(self.qtf)
 
-        glowtextpainter.setFont(QtGui.QFont('sans', 9))
+            glowtextpainter.setFont(QtGui.QFont('sans', 9))
 
-        for node in self.network.nodes:
-            x0, y0 = self.getNodeScreenSpaceCentroid(node)
-            for x in range(int(x0)-2,int(x0)+2):
-                for y in range(int(y0)-2,int(y0)+2):
-                    glowtextpainter.drawText(QtCore.QRectF(x-node.width/2, y-node.height/2, node.width, node.height),
-                        QtCore.Qt.AlignCenter, node.name)
+            for node in self.network.nodes:
+                x0, y0 = self.getNodeScreenSpaceCentroid(node)
+                for x in range(int(x0)-2,int(x0)+2):
+                    for y in range(int(y0)-2,int(y0)+2):
+                        glowtextpainter.drawText(QtCore.QRectF(x-node.width/2, y-node.height/2, node.width, node.height),
+                          QtCore.Qt.AlignCenter, node.name)
 
         #textpainter = QtGui.QPainter(self)
         textpainter = painter
@@ -1516,6 +1517,12 @@ class ColorCfgPage(QWidget):
       self.text_color.clicked.connect(self.choose_text_color)
       row += 1
 
+      # text_halo_enabled
+      self.text_halo_enabled = QCheckBox('Text Halo')
+      self.color_selector_layout.addWidget(self.text_halo_enabled, row, 0)
+      self.text_halo_enabled.stateChanged.connect(self.set_text_halo_enabled)
+      row += 1
+
       # substrate_edge_color
       self.substrate_edge_color_label = QLabel('Substrate Edge Color')
       self.color_selector_layout.addWidget(self.substrate_edge_color_label, row, 0)
@@ -1632,6 +1639,10 @@ class ColorCfgPage(QWidget):
       else:
         self.centroid_outline_color_label.setEnabled(True)
         self.centroid_outline_width.setEnabled(True)
+      if self.config.state.text_halo_enabled:
+        self.text_halo_enabled.setCheckState(Qt.Checked)
+      else:
+        self.text_halo_enabled.setCheckState(Qt.Unchecked)
       self.centroid_outline_width.setValue(self.config.state.centroid_outline_width)
       self.substrate_edge_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.substrate_edge_color).name() + ';}')
       self.product_edge_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.product_edge_color).name() + ';}')
@@ -1763,6 +1774,12 @@ class ColorCfgPage(QWidget):
     def set_centroid_outline_width(self, val):
       self.config.state.centroid_outline_width = val
       #self.sync_widgets()
+
+    def set_text_halo_enabled(self, state):
+      if self.text_halo_enabled.checkState() == Qt.Unchecked:
+        self.config.state.text_halo_enabled = False
+      else:
+        self.config.state.text_halo_enabled = True
 
     def set_preset_default(self):
       defaults = get_default_options()
