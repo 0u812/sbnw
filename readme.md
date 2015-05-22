@@ -21,7 +21,7 @@ Video tutorials are available [here](http://0u812.github.io/sbnw/tutorials) whic
 
 ## Test Cases
 
-The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.2.4/testcases.zip) used in development of this tool are available for download from the releases page as well. The network viewer is frequently tested with these files (with the exception of EquilibRaw_wlayout.xml which is known to fail).
+The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.3.2/testcases.zip) used in development of this tool are available for download from the releases page as well. The network viewer is frequently tested with these files.
 
 ## Online Documentation
 
