@@ -7,7 +7,6 @@ install(FILES AntimonyPowerLaw.xml BorisEJB.xml ConservedCycles.xml
 
 # Official examples are from http://otto.bioquant.uni-heidelberg.de/sbml/#examples
 install(FILES official/example1.xml official/example2.xml official/example3.xml
-  official/example4.xml official/example5.xml official/example6.xml
   DESTINATION testcases)
 
 # Used internally / expected failures
