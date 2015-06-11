@@ -59,6 +59,7 @@ def get_default_options():
       'node_outline_width': 1.,
       'centroid_outline_width': 1.,
       'centroid_outline_enabled': True,
+      'centroid_fill_enabled': True,
 
       'substrate_edge_dashed': False,
       'product_edge_dashed':   False,

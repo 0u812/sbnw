@@ -137,5 +137,7 @@ class PyQtRenderer(pyfab_app.PyfabRenderer):
       painter.setPen(outlinepen)
     else:
       painter.setPen(pyfab_app.Qt.NoPen)
-    painter.setBrush(brush)
-    painter.drawEllipse(point.x-10, point.y-10, 20, 20)
+
+    if config.state.centroid_fill_enabled:
+      painter.setBrush(brush)
+      painter.drawEllipse(point.x-10, point.y-10, 20, 20)
