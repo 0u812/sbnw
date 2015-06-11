@@ -34,11 +34,16 @@ def get_default_options():
   return {
       # dialog
       'active_config_section': 'render_effect', # values: render_effect, draw_style, sbml_options
+      # global
+      'centroid_enabled': True,
+      'compartment_enabled': True,
       # colors
       'node_effect': 'advanced', # values: advanced, basic
       'node_color1': make_color_rgba(0.8, 0.9, 0.95, 1.),
       'node_color2': make_color_rgba(0.1, 0.4, 0.9, 1.),
       'node_outline_color': make_color_rgba(0., 0., 0., 1.),
+      'compartment_color': make_color_rgba(0.6, 0.3, 0.8, 0.3),
+      'compartment_outline_color': make_color_rgba(0., 0., 0., 1.),
       'edge_color': make_color_rgba(0., 0., 0., 1.), # deprecated
       'substrate_edge_color': make_color_rgba(0., 0., 0., 1.),
       'product_edge_color': make_color_rgba(0., 0., 0., 1.),
@@ -57,9 +62,10 @@ def get_default_options():
       'modifier_edge_width': 1.,
 
       'node_outline_width': 1.,
+      'compartment_outline_width': 1.,
+      'compartment_outline_enabled': True,
       'centroid_outline_width': 1.,
       'centroid_outline_enabled': True,
-      'centroid_enabled': True,
 
       'substrate_edge_dashed': False,
       'product_edge_dashed':   False,

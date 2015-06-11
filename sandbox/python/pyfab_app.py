@@ -791,7 +791,7 @@ class LayoutFrame(FrameBaseClass):
 
         # draw compartments
         for comp in self.network.compartments:
-            self.drawComp(comp, painter)
+            self.drawComp(comp, painter, config)
 
         #print('Centroids:')
         # draw curves
@@ -948,22 +948,22 @@ class LayoutFrame(FrameBaseClass):
 
 
 
-    def drawComp(self, comp, painter):
+    def drawComp(self, comp, painter, config):
+        if not config.state.compartment_enabled:
+          return
         x, y = comp.min.x, comp.min.y
         width, height = comp.width, comp.height
         cornerrad = 10.
 
-        linearbright = QtGui.QColor(0xc07edc)
-        linearbright.setAlpha(100)
-        dark = QtGui.QColor(0x2e0041)
-        dark.setAlpha(100)
-
-        gradient = QtGui.QLinearGradient(QPoint((x+width/2,y)), QPoint((x+width/2,y)))
-        gradient.setColorAt(0, linearbright)
-        gradient.setColorAt(1, dark)
-
-        brush = QtGui.QBrush(gradient)
+        compcolor = tuple2QColor(config.state.compartment_color)
+        brush = QtGui.QBrush(compcolor)
         painter.setBrush(brush)
+
+        if config.state.compartment_outline_enabled:
+          outlinepen = QPen(tuple2QColor(config.state.compartment_outline_color), config.state.compartment_outline_width, Qt.SolidLine)
+          painter.setPen(outlinepen)
+        else:
+          painter.setPen(Qt.NoPen)
 
         painter.drawRoundedRect(QtCore.QRectF(x, y, width,
             height), cornerrad, cornerrad)
@@ -1475,6 +1475,42 @@ class ColorCfgPage(QWidget):
       self.node_outline_color.clicked.connect(self.choose_node_outline_color)
       row += 1
 
+      # compartment_enabled
+      self.compartment_enabled = QCheckBox('Compartment Enabled')
+      self.color_selector_layout.addWidget(self.compartment_enabled, row, 0)
+      self.compartment_enabled.stateChanged.connect(self.set_compartment_enabled)
+      row += 1
+
+      # compartment_outline_enabled
+      self.compartment_outline_enabled = QCheckBox('Compartment Outline Enabled')
+      self.color_selector_layout.addWidget(self.compartment_outline_enabled, row, 0)
+      self.compartment_outline_enabled.stateChanged.connect(self.set_compartment_outline_enabled)
+      row += 1
+
+      # compartment_color
+      self.compartment_color_label = QLabel('Compartment Color')
+      self.color_selector_layout.addWidget(self.compartment_color_label, row, 0)
+      self.compartment_color = QPushButton()
+      self.color_selector_layout.addWidget(self.compartment_color, row, 1)
+      self.compartment_color.clicked.connect(self.choose_compartment_color)
+      row += 1
+
+      # compartment_outline_color
+      self.compartment_outline_color_label = QLabel('Compartment Outline Color')
+      self.color_selector_layout.addWidget(self.compartment_outline_color_label, row, 0)
+      self.compartment_outline_color = QPushButton()
+      self.color_selector_layout.addWidget(self.compartment_outline_color, row, 1)
+      self.compartment_outline_color.clicked.connect(self.choose_compartment_outline_color)
+      row += 1
+
+      # compartment_outline_width
+      self.compartment_outline_width_label = QLabel('Compartment Outline Width')
+      self.color_selector_layout.addWidget(self.compartment_outline_width_label, row, 0)
+      self.compartment_outline_width = QDoubleSpinBox()
+      self.compartment_outline_width.valueChanged.connect(self.set_compartment_outline_width)
+      self.color_selector_layout.addWidget(self.compartment_outline_width, row, 1)
+      row += 1
+
       # centroid_color
       self.centroid_color_label = QLabel('Centroid Color')
       self.color_selector_layout.addWidget(self.centroid_color_label, row, 0)
@@ -1632,10 +1668,54 @@ class ColorCfgPage(QWidget):
       self.node_color1.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.node_color1).name() + ';}')
       self.node_color2.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.node_color2).name() + ';}')
       self.node_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.node_outline_color).name() + ';}')
+      self.compartment_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_color).name() + ';}')
+      self.compartment_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_outline_color).name() + ';}')
       #self.edge_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.edge_color).name() + ';}')
       self.text_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.text_color).name() + ';}')
+
+      self.compartment_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_color).name() + ';}')
+      self.compartment_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_outline_color).name() + ';}')
+      self.compartment_outline_width.setValue(self.config.state.compartment_outline_width)
+
+      # set compartment enabled state
+      if self.config.state.compartment_enabled:
+        self.compartment_enabled.setCheckState(Qt.Checked)
+      else:
+        self.compartment_enabled.setCheckState(Qt.Unchecked)
+
+      # set compartment outline enabled state
+      if self.config.state.compartment_outline_enabled:
+        self.compartment_outline_enabled.setCheckState(Qt.Checked)
+      else:
+        self.compartment_outline_enabled.setCheckState(Qt.Unchecked)
+
+      if self.compartment_outline_enabled.checkState() == Qt.Unchecked:
+        self.compartment_outline_color_label.setEnabled(False)
+        self.compartment_outline_color.setEnabled(False)
+        self.compartment_outline_width_label.setEnabled(False)
+        self.compartment_outline_width.setEnabled(False)
+      else:
+        self.compartment_outline_color_label.setEnabled(True)
+        self.compartment_outline_color.setEnabled(True)
+        self.compartment_outline_width_label.setEnabled(True)
+        self.compartment_outline_width.setEnabled(True)
+
+      if self.compartment_enabled.checkState() == Qt.Unchecked:
+        self.compartment_color_label.setEnabled(False)
+        self.compartment_color.setEnabled(False)
+        self.compartment_outline_enabled.setEnabled(False)
+        self.compartment_outline_color_label.setEnabled(False)
+        self.compartment_outline_color.setEnabled(False)
+        self.compartment_outline_width_label.setEnabled(False)
+        self.compartment_outline_width.setEnabled(False)
+      else:
+        self.compartment_color_label.setEnabled(True)
+        self.compartment_color.setEnabled(True)
+        self.compartment_outline_enabled.setEnabled(True)
+
       self.centroid_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.centroid_color).name() + ';}')
       self.centroid_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.centroid_outline_color).name() + ';}')
+      self.centroid_outline_width.setValue(self.config.state.centroid_outline_width)
 
       # set centroid enabled state
       if self.config.state.centroid_enabled:
@@ -1726,6 +1806,18 @@ class ColorCfgPage(QWidget):
         self.config.state.node_outline_color = QColor2tuple(result)
       self.node_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.node_outline_color).name() + ';}')
 
+    def choose_compartment_color(self):
+      result = QColorDialog.getColor(tuple2QColor(self.config.state.compartment_color), self, 'Select Color', QColorDialog.ShowAlphaChannel)
+      if result.isValid():
+        self.config.state.compartment_color = QColor2tuple(result)
+      self.compartment_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_color).name() + ';}')
+
+    def choose_compartment_outline_color(self):
+      result = QColorDialog.getColor(tuple2QColor(self.config.state.compartment_outline_color), self, 'Select Color', QColorDialog.ShowAlphaChannel)
+      if result.isValid():
+        self.config.state.compartment_outline_color = QColor2tuple(result)
+      self.compartment_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_outline_color).name() + ';}')
+
     #def choose_edge_color(self):
       #result = QColorDialog.getColor(tuple2QColor(self.config.state.edge_color), self, 'Select Color', QColorDialog.ShowAlphaChannel)
       #if result.isValid():
@@ -1772,6 +1864,9 @@ class ColorCfgPage(QWidget):
       #print('set_substrate_edge_width')
       self.config.state.node_outline_width = val
 
+    def set_compartment_outline_width(self, val):
+      self.config.state.compartment_outline_width = val
+
     def set_centroid_outline_width(self, val):
       #print('set_substrate_edge_width')
       self.config.state.centroid_outline_width = val
@@ -1791,6 +1886,59 @@ class ColorCfgPage(QWidget):
 
     def set_modifier_edge_width(self, val):
       self.config.state.modifier_edge_width = val
+
+    def set_compartment_enabled(self, state):
+      if self.compartment_enabled.checkState() == Qt.Unchecked:
+        self.config.state.compartment_enabled = False
+
+        self.compartment_color_label.setEnabled(False)
+        self.compartment_color.setEnabled(False)
+
+        self.compartment_outline_color_label.setEnabled(False)
+        self.compartment_outline_color.setEnabled(False)
+
+        self.compartment_outline_enabled.setEnabled(False)
+        self.compartment_outline_width_label.setEnabled(False)
+        self.compartment_outline_width.setEnabled(False)
+      else:
+        self.config.state.compartment_enabled = True
+
+        self.compartment_color_label.setEnabled(True)
+        self.compartment_color.setEnabled(True)
+
+        if self.compartment_outline_enabled.checkState() != Qt.Unchecked:
+          self.compartment_outline_color_label.setEnabled(True)
+          self.compartment_outline_color.setEnabled(True)
+
+          self.compartment_outline_enabled.setEnabled(True)
+          self.compartment_outline_width_label.setEnabled(True)
+          self.compartment_outline_width.setEnabled(True)
+        else:
+          self.compartment_outline_color_label.setEnabled(False)
+          self.compartment_outline_color.setEnabled(False)
+
+          self.compartment_outline_enabled.setEnabled(True)
+          self.compartment_outline_width_label.setEnabled(False)
+          self.compartment_outline_width.setEnabled(False)
+
+    def set_compartment_outline_enabled(self, state):
+      if self.compartment_outline_enabled.checkState() == Qt.Unchecked:
+        self.config.state.compartment_outline_enabled = False
+
+        self.compartment_outline_color_label.setEnabled(False)
+        self.compartment_outline_color.setEnabled(False)
+
+        self.compartment_outline_width_label.setEnabled(False)
+        self.compartment_outline_width.setEnabled(False)
+      else:
+        self.config.state.compartment_outline_enabled = True
+
+        self.compartment_outline_color_label.setEnabled(True)
+        self.compartment_outline_color.setEnabled(True)
+
+        self.compartment_outline_width_label.setEnabled(True)
+        self.compartment_outline_width.setEnabled(True)
+      #self.sync_widgets()
 
     def set_centroid_enabled(self, state):
       if self.centroid_enabled.checkState() == Qt.Unchecked:
@@ -1854,6 +2002,8 @@ class ColorCfgPage(QWidget):
         'node_color1': make_color_rgba(0.1, 0.4, 0.9, 1.),
         'node_color2': make_color_rgba(0.8, 0.9, 0.95, 1.),
         'node_outline_color': make_color_rgba(0., 0., 0., 1.),
+        'compartment_color': make_color_rgba(0.6, 0.3, 0.8, 0.3),
+        'compartment_outline_color': make_color_rgba(0., 0., 0., 1.),
         'substrate_edge_color': make_color_rgba(0., 0., 0., 1.),
         'product_edge_color': make_color_rgba(0., 0., 0., 1.),
         'activator_edge_color': make_color_rgba(0.2, 0.2, 0.4, 1.),
@@ -1866,6 +2016,7 @@ class ColorCfgPage(QWidget):
         'centroid_enabled': True,
 
         'node_outline_width': 1.,
+        'compartment_outline_width': 1.,
         'centroid_outline_width': 1.,
         'substrate_edge_width': 1.,
         'product_edge_width': 1.,
@@ -1873,6 +2024,8 @@ class ColorCfgPage(QWidget):
         'inhibitor_edge_width': 1.,
 
         'node_corner_radius': 4.,
+        'compartment_enabled': True,
+        'compartment_outline_enabled': True,
         }):
         setattr(self.config.state, k, v)
 
@@ -1884,6 +2037,8 @@ class ColorCfgPage(QWidget):
         'node_color1': make_color_rgba(1., 1., 1., 1.),
         'node_color2': make_color_rgba(1., 209./255., 160./255., 1.),
         'node_outline_color': make_color_rgba(1., 101./255., 0., 1.),
+        'compartment_color': make_color_rgba(1., 1., 1., 1.),
+        'compartment_outline_color': make_color_rgba(0., 166./255., 1., 1.),
         'substrate_edge_color': make_color_rgba(50./255., 154./255., 100./255., 1.),
         'product_edge_color': make_color_rgba(50./255., 154./255., 100./255., 1.),
         'activator_edge_color': make_color_rgba(0.2, 0.2, 0.4, 1.),
@@ -1896,6 +2051,7 @@ class ColorCfgPage(QWidget):
         'centroid_enabled': False,
 
         'node_outline_width': 2.,
+        'compartment_outline_width': 4.,
         'centroid_outline_width': 1.,
         'substrate_edge_width': 2.,
         'product_edge_width': 2.,
@@ -1903,6 +2059,8 @@ class ColorCfgPage(QWidget):
         'inhibitor_edge_width': 2.,
 
         'node_corner_radius': 12.,
+        'compartment_enabled': True,
+        'compartment_outline_enabled': True,
         }):
         setattr(self.config.state, k, v)
 
