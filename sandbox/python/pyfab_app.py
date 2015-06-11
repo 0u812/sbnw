@@ -1418,6 +1418,8 @@ class ColorCfgPage(QWidget):
       self.color_effect_selector_layout.addWidget(self.basic)
       self.basic.clicked.connect(self.set_effect_icky)
 
+      self.color_effect_selector_layout.addStretch()
+
       # color_selector
       self.color_selector = QScrollArea(self.colorgroup)
       self.color_group_layout.addWidget(self.color_selector)
