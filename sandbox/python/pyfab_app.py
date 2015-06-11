@@ -1481,6 +1481,12 @@ class ColorCfgPage(QWidget):
       self.centroid_color.clicked.connect(self.choose_centroid_color)
       row += 1
 
+      # centroid_enabled
+      self.centroid_enabled = QCheckBox('Centroid Enabled')
+      self.color_selector_layout.addWidget(self.centroid_enabled, row, 0)
+      self.centroid_enabled.stateChanged.connect(self.set_centroid_enabled)
+      row += 1
+
       # centroid_outline_enabled
       self.centroid_outline_enabled = QCheckBox('Centroid Outline Enabled')
       self.color_selector_layout.addWidget(self.centroid_outline_enabled, row, 0)
@@ -1628,10 +1634,19 @@ class ColorCfgPage(QWidget):
       self.text_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.text_color).name() + ';}')
       self.centroid_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.centroid_color).name() + ';}')
       self.centroid_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.centroid_outline_color).name() + ';}')
+
+      # set centroid enabled state
+      if self.config.state.centroid_enabled:
+        self.centroid_enabled.setCheckState(Qt.Checked)
+      else:
+        self.centroid_enabled.setCheckState(Qt.Unchecked)
+
+      # set centroid outline enabled state
       if self.config.state.centroid_outline_enabled:
         self.centroid_outline_enabled.setCheckState(Qt.Checked)
       else:
         self.centroid_outline_enabled.setCheckState(Qt.Unchecked)
+
       if self.centroid_outline_enabled.checkState() == Qt.Unchecked:
         self.centroid_outline_color_label.setEnabled(False)
         self.centroid_outline_color.setEnabled(False)
@@ -1639,7 +1654,19 @@ class ColorCfgPage(QWidget):
         self.centroid_outline_width.setEnabled(False)
       else:
         self.centroid_outline_color_label.setEnabled(True)
+        self.centroid_outline_color.setEnabled(True)
+        self.centroid_outline_width_label.setEnabled(True)
         self.centroid_outline_width.setEnabled(True)
+
+      if self.centroid_enabled.checkState() == Qt.Unchecked:
+        self.centroid_outline_enabled.setEnabled(False)
+        self.centroid_outline_color_label.setEnabled(False)
+        self.centroid_outline_color.setEnabled(False)
+        self.centroid_outline_width_label.setEnabled(False)
+        self.centroid_outline_width.setEnabled(False)
+      else:
+        self.centroid_outline_enabled.setEnabled(True)
+
       if self.config.state.text_halo_enabled:
         self.text_halo_enabled.setCheckState(Qt.Checked)
       else:
@@ -1763,13 +1790,50 @@ class ColorCfgPage(QWidget):
     def set_modifier_edge_width(self, val):
       self.config.state.modifier_edge_width = val
 
+    def set_centroid_enabled(self, state):
+      if self.centroid_enabled.checkState() == Qt.Unchecked:
+        self.config.state.centroid_enabled = False
+
+        self.centroid_outline_color_label.setEnabled(False)
+        self.centroid_outline_color.setEnabled(False)
+
+        self.centroid_outline_enabled.setEnabled(False)
+        self.centroid_outline_width_label.setEnabled(False)
+        self.centroid_outline_width.setEnabled(False)
+      else:
+        self.config.state.centroid_enabled = True
+        if self.centroid_outline_enabled.checkState() != Qt.Unchecked:
+          self.centroid_outline_color_label.setEnabled(True)
+          self.centroid_outline_color.setEnabled(True)
+
+          self.centroid_outline_enabled.setEnabled(True)
+          self.centroid_outline_width_label.setEnabled(True)
+          self.centroid_outline_width.setEnabled(True)
+        else:
+          self.centroid_outline_color_label.setEnabled(False)
+          self.centroid_outline_color.setEnabled(False)
+
+          self.centroid_outline_enabled.setEnabled(True)
+          self.centroid_outline_width_label.setEnabled(False)
+          self.centroid_outline_width.setEnabled(False)
+
     def set_centroid_outline_enabled(self, state):
       if self.centroid_outline_enabled.checkState() == Qt.Unchecked:
         self.config.state.centroid_outline_enabled = False
+
+        self.centroid_outline_color_label.setEnabled(False)
         self.centroid_outline_color.setEnabled(False)
+
+        self.centroid_outline_width_label.setEnabled(False)
+        self.centroid_outline_width.setEnabled(False)
       else:
         self.config.state.centroid_outline_enabled = True
+
+        self.centroid_outline_color_label.setEnabled(True)
         self.centroid_outline_color.setEnabled(True)
+
+        self.centroid_outline_width_label.setEnabled(True)
+        self.centroid_outline_width.setEnabled(True)
       #self.sync_widgets()
 
     def set_centroid_outline_width(self, val):
