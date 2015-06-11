@@ -34,7 +34,7 @@ def get_default_options():
   return {
       # dialog
       'active_config_section': 'render_effect', # values: render_effect, draw_style, sbml_options
-      # rendering effects
+      # colors
       'node_effect': 'advanced', # values: advanced, basic
       'node_color1': make_color_rgba(0.8, 0.9, 0.95, 1.),
       'node_color2': make_color_rgba(0.1, 0.4, 0.9, 1.),
@@ -59,13 +59,15 @@ def get_default_options():
       'node_outline_width': 1.,
       'centroid_outline_width': 1.,
       'centroid_outline_enabled': True,
-      'centroid_fill_enabled': True,
+      'centroid_enabled': True,
 
       'substrate_edge_dashed': False,
       'product_edge_dashed':   False,
       'activator_edge_dashed': True,
       'inhibitor_edge_dashed': True,
       'modifier_edge_dashed':  True,
+      # effects
+      'node_corner_radius': 4.,
       # text
       'text_halo_enabled': True,
       # endcaps

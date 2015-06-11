@@ -15,7 +15,7 @@ class PyQtRenderer(pyfab_app.PyfabRenderer):
     painter.setTransform(self.frame.qtf)
 
     width, height = x1-x0, y1-y0
-    cornerrad = 4.
+    cornerrad = config.state.node_corner_radius
 
     if config.state.node_effect == 'advanced':
 
@@ -108,7 +108,7 @@ class PyQtRenderer(pyfab_app.PyfabRenderer):
       painter.setBrush(brush)
 
       #painter.setBrush(pyfab_app.Qt.NoBrush)
-      outlinepen = pyfab_app.QPen(pyfab_app.QBrush(pyfab_app.tuple2QColor(config.state.node_outline_color)), config.state.edge_width, pyfab_app.Qt.SolidLine)
+      outlinepen = pyfab_app.QPen(pyfab_app.QBrush(pyfab_app.tuple2QColor(config.state.node_outline_color)), config.state.node_outline_width, pyfab_app.Qt.SolidLine)
       painter.setPen(outlinepen)
 
       painter.drawRoundedRect(pyfab_app.QRectF(x0, y0, width,
@@ -138,6 +138,6 @@ class PyQtRenderer(pyfab_app.PyfabRenderer):
     else:
       painter.setPen(pyfab_app.Qt.NoPen)
 
-    if config.state.centroid_fill_enabled:
+    if config.state.centroid_enabled:
       painter.setBrush(brush)
       painter.drawEllipse(point.x-10, point.y-10, 20, 20)

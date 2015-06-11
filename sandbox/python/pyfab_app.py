@@ -1797,7 +1797,7 @@ class ColorCfgPage(QWidget):
         'centroid_color': make_color_rgba(0.5, 0.9, 0.5, 0.5),
         'centroid_outline_color': make_color_rgba(0., 0., 0., 1.),
         'centroid_outline_enabled': True,
-        'centroid_fill_enabled': True,
+        'centroid_enabled': True,
 
         'node_outline_width': 1.,
         'centroid_outline_width': 1.,
@@ -1805,6 +1805,8 @@ class ColorCfgPage(QWidget):
         'product_edge_width': 1.,
         'activator_edge_width': 1.,
         'inhibitor_edge_width': 1.,
+
+        'node_corner_radius': 4.,
         }):
         setattr(self.config.state, k, v)
 
@@ -1813,8 +1815,8 @@ class ColorCfgPage(QWidget):
     def set_preset_jd(self):
       defaults = get_default_options()
       for k,v in dict_iteritems({
-        'node_color1': make_color_rgba(1., 209./255., 160./255., 1.),
-        'node_color2': make_color_rgba(1., 1., 1., 1.),
+        'node_color1': make_color_rgba(1., 1., 1., 1.),
+        'node_color2': make_color_rgba(1., 209./255., 160./255., 1.),
         'node_outline_color': make_color_rgba(1., 101./255., 0., 1.),
         'substrate_edge_color': make_color_rgba(50./255., 154./255., 100./255., 1.),
         'product_edge_color': make_color_rgba(50./255., 154./255., 100./255., 1.),
@@ -1825,14 +1827,16 @@ class ColorCfgPage(QWidget):
         'centroid_color': make_color_rgba(0.5, 0.9, 0.5, 0.5),
         'centroid_outline_color': make_color_rgba(0., 0., 0., 1.),
         'centroid_outline_enabled': False,
-        'centroid_fill_enabled': False,
+        'centroid_enabled': False,
 
-        'node_outline_width': 1.,
+        'node_outline_width': 2.,
         'centroid_outline_width': 1.,
         'substrate_edge_width': 2.,
         'product_edge_width': 2.,
         'activator_edge_width': 2.,
         'inhibitor_edge_width': 2.,
+
+        'node_corner_radius': 12.,
         }):
         setattr(self.config.state, k, v)
 
