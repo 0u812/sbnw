@@ -2006,17 +2006,17 @@ class PrefDialog(QDialog):
       self.buttonframe.setLayout(self.cghlayout)
       self.buttonframe.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
 
-      self.cancel = QPushButton(self.buttonframe)
-      self.cancel.setText('Cancel')
-      self.cghlayout.addWidget(self.cancel)
-      self.cancel.clicked.connect(self.reject)
-
-      self.cghlayout.addStretch()
-
       self.reset_btn = QPushButton(self.buttonframe)
       self.reset_btn.setText('Reset')
       self.cghlayout.addWidget(self.reset_btn)
       self.reset_btn.clicked.connect(self.reset)
+
+      self.cghlayout.addStretch()
+
+      self.cancel = QPushButton(self.buttonframe)
+      self.cancel.setText('Cancel')
+      self.cghlayout.addWidget(self.cancel)
+      self.cancel.clicked.connect(self.reject)
 
       #self.apply_btn = QPushButton(self.buttonframe)
       #self.apply_btn.setText('Apply')
