@@ -1149,7 +1149,7 @@ class SBMLOptsCfgPage(QWidget):
       self.sbml_opts_layout.addWidget(self.override, 0, 0)
 
       self.sbml_ns_group = QGroupBox(self)
-      self.sbml_ns_group.setTitle('SBML Namespace')
+      self.sbml_ns_group.setTitle(' SBML Namespace ')
       self.sbml_opts_layout.addWidget(self.sbml_ns_group, 1, 0)
 
       self.sbml_ns_layout = QGridLayout()
@@ -1275,7 +1275,7 @@ class DrawStyleCfgPage(QWidget):
 
     # arrowheads
     self.arrowhead_group = QGroupBox(self)
-    self.arrowhead_group.setTitle('Arrowhead Styles')
+    self.arrowhead_group.setTitle(' Arrowhead Styles ')
     self.mainlayout.addWidget(self.arrowhead_group)
 
     self.arrowhead_group_layout = QHBoxLayout()
@@ -1393,7 +1393,7 @@ class ColorCfgPage(QWidget):
 
       # colorgroup
       self.colorgroup = QGroupBox(self)
-      self.colorgroup.setTitle('Effect')
+      self.colorgroup.setTitle(' Effect ')
       self.mainlayout.addWidget(self.colorgroup)
       self.colorgroup.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
