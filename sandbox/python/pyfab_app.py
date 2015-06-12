@@ -1428,7 +1428,7 @@ class ColorCfgPage(QWidget):
       self.color_selector_layout = QGridLayout()
       self.color_selector_inner.setLayout(self.color_selector_layout)
       self.color_selector.setWidget(self.color_selector_inner)
-      self.color_selector_inner.setMinimumSize(300,500)
+      self.color_selector_inner.setMinimumSize(300,700)
 
       row = 0
 
