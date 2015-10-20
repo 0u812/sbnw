@@ -884,6 +884,15 @@ class LayoutFrame(FrameBaseClass):
                 return n
         raise RuntimeError('No node with id {}'.format(nodeid))
 
+    def findReactionById(self, rxnid):
+        '''
+        Returns a reaction with the given id, throws RuntimeError if no such reaction exists
+        '''
+        for r in self.network.reactions:
+            if r.id == rxnid:
+                return r
+        raise RuntimeError('No node with id {}'.format(rxnid))
+
     # Mouse wheel
     def wheelEvent(self, event):
         if is_pyqt5():
