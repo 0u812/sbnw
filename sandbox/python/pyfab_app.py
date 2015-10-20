@@ -878,6 +878,9 @@ class LayoutFrame(FrameBaseClass):
         self.network.aliasnode(node)
 
     def findNodeById(self, nodeid):
+        '''
+        Returns a node with the given id, throws RuntimeError if no such node exists
+        '''
         for n in self.network.nodes:
             if n.id == nodeid:
                 return n
