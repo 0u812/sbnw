@@ -527,7 +527,6 @@ class Autolayout(MainWindowBaseClass):
     def openfile(self, filepath):
         self.openfilepath = filepath
         self.readsbml(str(filepath), str(filepath))
-        self.mainframe.setReactionColor('J0', (1.0, 0.0, 0.0, 1.0))
 
     def notify_config_changed(self):
         self.sliderwidget.setValue(self.openconfig().state.stiffness)
@@ -985,6 +984,9 @@ class LayoutFrame(FrameBaseClass):
                               self.dragging = True
                               dragging_object = True
                               self.dragSource = mouse
+
+                              # highlight curves
+                              self.setReactionColor(rxn.id, (1.0, 0.0, 0.0, 1.0))
                               break
 
                 if not dragging_object:
@@ -1011,6 +1013,7 @@ class LayoutFrame(FrameBaseClass):
               for rxn in self.network.rxns:
                   if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
                       rxn.custom.isBeingDragged = False
+                      rxn.clearCustomizations()
               self.update()
         if(event.button() == 4):
             self.panning = False
