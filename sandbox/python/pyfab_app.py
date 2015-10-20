@@ -84,6 +84,8 @@ def intervalContains(a, b, x):
 class NodeData:
     def __init__(self):
         self.isBeingDragged = False
+        self.customColor = None
+        self.customWeight = None
 
 def QPoint(p):
     return QtCore.QPoint(int(p[0]), int(p[1]))
@@ -874,6 +876,12 @@ class LayoutFrame(FrameBaseClass):
 
     def aliasNode(self, node):
         self.network.aliasnode(node)
+
+    def findNodeById(self, nodeid):
+        for n in self.network.nodes:
+            if n.id == nodeid:
+                return n
+        raise RuntimeError('No node with id {}'.format(nodeid))
 
     # Mouse wheel
     def wheelEvent(self, event):
