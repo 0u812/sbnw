@@ -836,8 +836,6 @@ class LayoutFrame(FrameBaseClass):
     def makeQColorAlpha(self, rgb, alpha):
         return QtGui.QColor((rgb & 0xFF0000) >> 16, (rgb & 0x00FF00) >> 8, rgb & 0x0000FF, alpha)
 
-
-
     def drawComp(self, comp, painter, config):
         if not config.state.compartment_enabled:
           return
