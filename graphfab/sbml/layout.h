@@ -121,6 +121,13 @@ typedef enum {
     GF_ROLE_INHIBITOR
 } gf_specRole;
 
+typedef struct {
+    Real a;
+    Real r;
+    Real g;
+    Real b;
+} gf_color;
+
 /** @brief Call to clean up an instance of @ref gf_layoutInfo when it is no longer needed
  *  @param[in] l The layout info; Entire layout is freed
  *  \ingroup C_API
@@ -558,6 +565,56 @@ _GraphfabExport void gf_releaseCurve(const gf_curve* c);
  *  \ingroup C_API
  */
 _GraphfabExport gf_specRole gf_curve_getRole(gf_curve* c);
+
+/**
+ * @brief Return true if the curve has color / weight customizations
+ * @param[in] c Curve
+ * @return True if @ref c has customizations
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_curve_hasCustomizations(gf_curve* c);
+
+/**
+ * @brief Set whether customizations are enabled on this curve
+ * @param[out] c Curve
+ * @param[in] v True if customizations enabled
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_curve_setHasCustomizations(gf_curve* c, int v);
+
+/**
+ * @brief Get the color of this curve
+ * @param[in] c Curve
+ * @return The color of @ref c
+ * @note Call @ref gf_curve_hasCustomizations first to make sure customizations are active for this curve.
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_color gf_curve_getColor(gf_curve* c);
+
+/**
+ * @brief Set the color of this curve
+ * @param[out] c Curve
+ * @param[in] color The color
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_curve_setColor(gf_curve* c, gf_color color);
+
+/**
+ * @brief Get the line weight of this curve
+ * @param[in] c Curve
+ * @return The line weight of @ref c
+ * @note Call @ref gf_curve_hasCustomizations first to make sure customizations are active for this curve.
+ *  \ingroup C_API
+ */
+_GraphfabExport double gf_curve_getWeight(gf_curve* c);
+
+/**
+ * @brief Set the line weight of this curve
+ * @param[in] c Curve
+ * @param[in] weight The line weight
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_curve_setWeight(gf_curve* c, double weight);
 
 /** @brief Get the CPs for the curve
  *  @param[in] c Curve

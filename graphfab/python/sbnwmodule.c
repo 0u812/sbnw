@@ -721,6 +721,10 @@ static PyMemberDef gfp_Rxn_members[] = {
     {NULL}  /* Sentinel */
 };
 
+static PyObject* gf_makeCustomColorTuple(gf_color c) {
+    return Py_BuildValue("dddd", c.r, c.g, c.b, c.a);
+}
+
 static PyObject *
 gfp_Rxn_getCurves(gfp_Rxn *self, void *closure) {
     size_t numcurv = gf_reaction_getNumCurves(&self->r);
@@ -729,13 +733,24 @@ gfp_Rxn_getCurves(gfp_Rxn *self, void *closure) {
     unsigned int arrow_n, k;
     gf_point* arrow_v;
     PyObject* arrow;
+    PyObject* tmp_crv;
+    PyObject* customizations_dict;
+
 
     
     for(i=0; i<numcurv; ++i) {
         gf_curve c = gf_reaction_getCurve(&self->r, i);
         gf_curveCP cp = gf_getCurveCPs(&c);
 //         printf("cp %f,%f %f,%f %f,%f %f,%f\n", cp.s.x, cp.s.y, cp.c1.x, cp.c1.y, cp.c2.x, cp.c2.y, cp.e.x, cp.e.y);
-        
+
+        // customizations
+        if(gf_curve_hasCustomizations(&c)) {
+            customizations_dict = PyDict_New();
+            PyDict_SetItem(customizations_dict, gfp_PyString_FromString("color"), gf_makeCustomColorTuple(gf_curve_getColor(&c)));
+            PyDict_SetItem(customizations_dict, gfp_PyString_FromString("weight"), PyFloat_FromDouble(gf_curve_getWeight(&c)));
+        } else {
+            customizations_dict = Py_None;
+        }
         // role
         const char* role = gf_roleToStr(gf_curve_getRole(&c));
 //         fprintf(stderr, "gfp_Rxn_getCurves, role = %s\n", role);
@@ -752,7 +767,7 @@ gfp_Rxn_getCurves(gfp_Rxn *self, void *closure) {
 
           gf_free(arrow_v);
 
-          PyList_SetItem(curv, i, Py_BuildValue("OOOO O O",
+          tmp_crv = Py_BuildValue("OOOO O O O",
               gfp_PointToPyPoint(cp.s),
               gfp_PointToPyPoint(cp.c1),
               gfp_PointToPyPoint(cp.c2),
@@ -760,17 +775,27 @@ gfp_Rxn_getCurves(gfp_Rxn *self, void *closure) {
               // role
               gfp_PyString_FromString(role),
               // arrowhead verts
-              arrow
-          ));
+              arrow,
+              // customizations
+              customizations_dict
+              );
+
+          PyList_SetItem(curv, i, tmp_crv);
         } else {
-          PyList_SetItem(curv, i, Py_BuildValue("OOOO O",
+          tmp_crv = Py_BuildValue("OOOO O O O",
               gfp_PointToPyPoint(cp.s),
               gfp_PointToPyPoint(cp.c1),
               gfp_PointToPyPoint(cp.c2),
               gfp_PointToPyPoint(cp.e),
               // role
-              gfp_PyString_FromString(role)
-          ));
+              gfp_PyString_FromString(role),
+              // arrowhead verts placeholder
+              Py_None,
+              // customizations
+              customizations_dict
+              );
+
+          PyList_SetItem(curv, i, tmp_crv);
         }
     }
     
@@ -818,6 +843,55 @@ static PyObject* gfp_Rxn_recalccps(gfp_Rxn *self, PyObject *args, PyObject *kwds
     Py_RETURN_NONE;
 }
 
+static PyObject* gfp_Rxn_setCurveColor(gfp_Rxn *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"n", "color", NULL};
+    int n;
+    gf_color color;
+    PyObject* color_tuple;
+    gf_curve curve;
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "iO", kwlist,
+        &n, &color_tuple
+    )) {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
+
+    PyArg_ParseTuple(color_tuple, "dddd", &color.r, &color.g, &color.b, &color.a);
+
+//     fprintf(stderr, "set color of curve %d to (%f, %f, %f, %f)\n", n, color.r, color.g, color.b, color.a);
+
+    curve = gf_reaction_getCurve(&self->r, n);
+
+    gf_curve_setColor(&curve, color);
+
+    Py_RETURN_NONE;
+}
+
+static PyObject* gfp_Rxn_setCurveWeight(gfp_Rxn *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"n", "color", NULL};
+    int n;
+    double weight;
+    gf_curve curve;
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "id", kwlist,
+        &n, &weight
+    )) {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
+
+//     fprintf(stderr, "set color of curve %d to %f\n", n, weight);
+
+    curve = gf_reaction_getCurve(&self->r, n);
+
+    gf_curve_setWeight(&curve, weight);
+
+    Py_RETURN_NONE;
+}
+
 /// Defined after node
 static PyObject* gfp_Rxn_has(gfp_Rxn *self, PyObject *args, PyObject *kwds);
 
@@ -849,6 +923,16 @@ static PyMethodDef gfp_Rxn_methods[] = {
     {"has", (PyCFunction)gfp_Rxn_has, METH_VARARGS | METH_KEYWORDS,
      "Return true if a given node is in this reaction\n\n"
      ":param node: A node\n"
+    },
+    {"setCurveColor", (PyCFunction)gfp_Rxn_setCurveColor, METH_VARARGS | METH_KEYWORDS,
+     "Set the color of a reaction curve\n\n"
+     ":param n: The curve index\n"
+     ":param color: A 4-tuple with the rgba color on a scale of 0-1\n"
+    },
+    {"setCurveWeight", (PyCFunction)gfp_Rxn_setCurveWeight, METH_VARARGS | METH_KEYWORDS,
+     "Set the line weight of a reaction curve\n\n"
+     ":param n: The curve index\n"
+     ":param color: A 4-tuple with the rgba color on a scale of 0-1\n"
     },
     {NULL}  /* Sentinel */
 };

@@ -1457,6 +1457,57 @@ gf_specRole gf_curve_getRole(gf_curve* c) {
   return GF_ROLE_SUBSTRATE;
 }
 
+int gf_curve_hasCustomizations(gf_curve* c) {
+  RxnBezier* curve = (RxnBezier*)c->c;
+  AN(curve, "No curve");
+
+  return curve->customizationsEnabled();
+}
+
+void gf_curve_setHasCustomizations(gf_curve* c, int v) {
+  RxnBezier* curve = (RxnBezier*)c->c;
+  AN(curve, "No curve");
+
+  curve->setCustomizationsEnabled(v);
+}
+
+gf_color gf_curve_getColor(gf_curve* c) {
+  RxnBezier* curve = (RxnBezier*)c->c;
+  AN(curve, "No curve");
+
+  gf_color r;
+  r.a = curve->getColorA();
+  r.r = curve->getColorR();
+  r.g = curve->getColorG();
+  r.b = curve->getColorB();
+
+  return r;
+}
+
+void gf_curve_setColor(gf_curve* c, gf_color color) {
+  RxnBezier* curve = (RxnBezier*)c->c;
+  AN(curve, "No curve");
+
+  curve->setColorA(color.a);
+  curve->setColorR(color.r);
+  curve->setColorG(color.g);
+  curve->setColorB(color.b);
+}
+
+double gf_curve_getWeight(gf_curve* c) {
+  RxnBezier* curve = (RxnBezier*)c->c;
+  AN(curve, "No curve");
+
+  return curve->getLineWeight();
+}
+
+void gf_curve_setWeight(gf_curve* c, double weight) {
+  RxnBezier* curve = (RxnBezier*)c->c;
+  AN(curve, "No curve");
+
+  curve->setLineWeight(weight);
+}
+
 gf_curveCP gf_getCurveCPs(const gf_curve* c) {
     return gf_getGlobalCurveCPs(c);
 }

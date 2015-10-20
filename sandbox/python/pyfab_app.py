@@ -527,6 +527,7 @@ class Autolayout(MainWindowBaseClass):
     def openfile(self, filepath):
         self.openfilepath = filepath
         self.readsbml(str(filepath), str(filepath))
+        self.mainframe.setReactionColor('J0', (1.0, 0.0, 0.0, 1.0))
 
     def notify_config_changed(self):
         self.sliderwidget.setValue(self.openconfig().state.stiffness)
@@ -812,6 +813,14 @@ class LayoutFrame(FrameBaseClass):
           width = config.state.modifier_edge_width
           dashed = config.state.modifier_edge_dashed
 
+        # custom color and weight
+        if len(curve) > 6 and curve[6] is not None:
+            customizations = curve[6]
+            if 'color' in customizations:
+                color = tuple2QColor(customizations['color'])
+            if 'weight' in customizations:
+                width = customizations['weight']
+
         if dashed:
           pen = QPen(color, width, QtCore.Qt.DashLine)
         else:
@@ -819,10 +828,11 @@ class LayoutFrame(FrameBaseClass):
         brush = QBrush(color)
 
         painter.strokePath(path, pen) # normalpen
+
         path = QtGui.QPainterPath()
 
         # arrowhead
-        if len(curve) > 5 and len(curve[5]) > 0:
+        if len(curve) > 5 and curve[5] is not None and len(curve[5]) > 0:
           arrowhead = curve[5]
           path.moveTo(QPoint(arrowhead[0]))
           for v in arrowhead[1:]:
@@ -888,10 +898,34 @@ class LayoutFrame(FrameBaseClass):
         '''
         Returns a reaction with the given id, throws RuntimeError if no such reaction exists
         '''
-        for r in self.network.reactions:
+        for r in self.network.rxns:
             if r.id == rxnid:
                 return r
         raise RuntimeError('No node with id {}'.format(rxnid))
+
+    def setCurveColor(self, rxn, k, color):
+        rxn.setCurveColor(k, color)
+
+    def setCurveWeight(self, rxn, k, weight):
+        rxn.setCurveWeight(k, weight)
+
+    # https://github.com/0u812/sbnw/issues/37
+    def setReactionColor(self, rxnid, color):
+        r = self.findReactionById(rxnid)
+        k = 0
+        for curve in r.curves:
+            if curve[4] == 'SUBSTRATE' or curve[4] == 'PRODUCT':
+                self.setCurveColor(r, k, color)
+            k += 1
+
+    # https://github.com/0u812/sbnw/issues/37
+    def setRegulatorColor(self, rxnid, color):
+        r = self.findReactionById(rxnid)
+        k = 0
+        for curve in r.curves:
+            if not (curve[4] == 'SUBSTRATE' or curve[4] == 'PRODUCT'):
+                self.setCurveColor(r, k, color)
+            k += 1
 
     # Mouse wheel
     def wheelEvent(self, event):

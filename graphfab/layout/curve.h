@@ -73,6 +73,7 @@ namespace Graphfab {
         public:
             RxnBezier() {
               ns = ne = NULL;
+              customized_ = false;
             }
 
             virtual ~RxnBezier() {
@@ -201,13 +202,32 @@ namespace Graphfab {
             void setInverseTransform(const Affine2d& itf, bool recurse = true) { itf_ = itf; }
 
             virtual ArrowheadStyle getArrowheadStyle() const = 0;
-            
+
+            // * Customizations *
+
+            bool customizationsEnabled() const { return customized_; }
+            void setCustomizationsEnabled(bool v) { customized_ = v; }
+
+            double getColorA() const { return color_a_; }
+            void setColorA(double v) { customized_ = true; color_a_ = v; }
+            double getColorR() const { return color_r_; }
+            void setColorR(double v) { customized_ = true; color_r_ = v; }
+            double getColorG() const { return color_g_; }
+            void setColorG(double v) { customized_ = true; color_g_ = v; }
+            double getColorB() const { return color_b_; }
+            void setColorB(double v) { customized_ = true; color_b_ = v; }
+
+            bool getLineWeight() const { return weight_; }
+            void setLineWeight(bool v) { customized_ = true; weight_ = v; }
             
             /// Transform
             Affine2d tf_;
             /// Inverse transform
             Affine2d itf_;
         protected:
+          bool customized_;
+          double color_a_, color_r_, color_g_, color_b_;
+          double weight_;
     };
     
     inline std::ostream& operator<< (std::ostream& os, const RxnBezier& b) {
