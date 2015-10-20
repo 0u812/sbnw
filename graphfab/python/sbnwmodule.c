@@ -792,6 +792,20 @@ static int gfp_Rxn_setCentroid(gfp_Rxn *self, PyObject *value, void *closure) {
     return 0;
 }
 
+// reaction.id
+static PyObject *gfp_Rxn_getId(gfp_Rxn *self, void *closure) {
+#if PYTHON_API_VER == 3
+    return PyUnicode_FromString(gf_reaction_getID(&self->r));
+#else
+    return PyString_FromString(gf_reaction_getID(&self->r));
+#endif
+}
+
+static int gfp_Rxn_setId(gfp_Rxn *self, PyObject *value, void *closure) {
+    printf("Cannot set id\n");
+    return 0;
+}
+
 static PyObject* gfp_Rxn_recenter(gfp_Rxn *self, PyObject *args, PyObject *kwds) {
     gf_reaction_recenter(&self->r);
 
@@ -817,6 +831,10 @@ static PyGetSetDef gfp_Rxn_getseters[] = {
     {"centroid",
      (getter)gfp_Rxn_getCentroid, (setter)gfp_Rxn_setCentroid,
      "Reaction centroid",
+     NULL},
+    {"id",
+     (getter)gfp_Rxn_getId, (setter)gfp_Rxn_setId,
+     "Reaction id",
      NULL},
     {NULL}  /* Sentinel */
 };
