@@ -1009,7 +1009,7 @@ static int gfp_Node_setHeight(gfp_Node *self, PyObject *value, void *closure) {
 
 // node.name
 static PyObject *gfp_Node_getName(gfp_Node *self, void *closure) {
-    #if PYTHON_API_VER == 3
+#if PYTHON_API_VER == 3
     return PyUnicode_FromString(gf_node_getName(&self->n));
 #else
     return PyString_FromString(gf_node_getName(&self->n));
@@ -1018,6 +1018,20 @@ static PyObject *gfp_Node_getName(gfp_Node *self, void *closure) {
 
 static int gfp_Node_setName(gfp_Node *self, PyObject *value, void *closure) {
     printf("Cannot set name\n");
+    return 0;
+}
+
+// node.id
+static PyObject *gfp_Node_getId(gfp_Node *self, void *closure) {
+#if PYTHON_API_VER == 3
+    return PyUnicode_FromString(gf_node_getID(&self->n));
+#else
+    return PyString_FromString(gf_node_getID(&self->n));
+#endif
+}
+
+static int gfp_Node_setId(gfp_Node *self, PyObject *value, void *closure) {
+    printf("Cannot set id\n");
     return 0;
 }
 
@@ -1053,6 +1067,10 @@ static PyGetSetDef gfp_Node_getseters[] = {
     {"name",
      (getter)gfp_Node_getName, (setter)gfp_Node_setName,
      "Node name",
+     NULL},
+    {"id",
+     (getter)gfp_Node_getId, (setter)gfp_Node_setId,
+     "Node id",
      NULL},
     {NULL}  /* Sentinel */
 };
