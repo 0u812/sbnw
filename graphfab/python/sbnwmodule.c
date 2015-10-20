@@ -892,6 +892,35 @@ static PyObject* gfp_Rxn_setCurveWeight(gfp_Rxn *self, PyObject *args, PyObject 
     Py_RETURN_NONE;
 }
 
+static PyObject* gfp_Rxn_areCustomizationsEnabled(gfp_Rxn *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"n", NULL};
+    int n;
+    gf_curve curve;
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "i", kwlist,
+        &n
+    )) {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
+
+    curve = gf_reaction_getCurve(&self->r, n);;
+
+    return PyBool_FromLong(gf_curve_hasCustomizations(&curve));
+}
+
+static PyObject* gfp_Rxn_clearCustomizations(gfp_Rxn *self, PyObject *args, PyObject *kwds) {
+    int k=0;
+
+    for(k=0; k<gf_reaction_getNumCurves(&self->r); ++k) {
+        gf_curve curve = gf_reaction_getCurve(&self->r, k);
+        gf_curve_setHasCustomizations(&curve, 0);
+    }
+
+    Py_RETURN_NONE;
+}
+
 /// Defined after node
 static PyObject* gfp_Rxn_has(gfp_Rxn *self, PyObject *args, PyObject *kwds);
 
@@ -933,6 +962,13 @@ static PyMethodDef gfp_Rxn_methods[] = {
      "Set the line weight of a reaction curve\n\n"
      ":param n: The curve index\n"
      ":param color: A 4-tuple with the rgba color on a scale of 0-1\n"
+    },
+    {"areCustomizationsEnabled", (PyCFunction)gfp_Rxn_areCustomizationsEnabled, METH_NOARGS,
+     "Return true if customizations are enabled\n\n"
+    },
+    {"clearCustomizations", (PyCFunction)gfp_Rxn_clearCustomizations, METH_VARARGS | METH_KEYWORDS,
+     ":param n: The curve index\n"
+     "Clear all customizations\n\n"
     },
     {NULL}  /* Sentinel */
 };
