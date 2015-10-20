@@ -1,20 +1,10 @@
 #!/usr/bin/python
 
-#print('pyfab start')
-
 import os
-#print('this file: {}'.format(__file__))
 localpath = os.path.dirname(os.path.realpath(__file__))
-#print('local path: {}'.format(localpath))
 newpath = os.path.abspath(os.path.join(localpath, '..', '..', 'bin'))
-#print('newpath: {}'.format(newpath))
-#os.chdir(newpath)
-#print('not changing dir')
 
-#print('pre import sbnw')
 import sbnw
-
-#print('post import sbnw')
 
 import sys
 if sys.version_info[0] < 3:
@@ -29,10 +19,6 @@ else:
     inspyder = True
   else:
     inspyder = False
-
-#inspyder = True
-#inspyder = False
-#print('inspyder: {}'.format(inspyder))
 
 if inspyder:
   # disable keyboard shortcuts
@@ -70,14 +56,6 @@ def dict_iteritems(d):
   else:
     return iter(d.items())
 
-#print(__builtins__)
-#if 'p_pyfab' in sys.modules:
-  #print('p_pyfab in sys.modules')
-#else:
-  #print('p_pyfab not in sys.modules')
-
-# pyqt_layout.py
-
 
 wndwidth, wndheight = 740,480
 pad = 30
@@ -88,8 +66,6 @@ import random
 import math
 import platform
 
-#print('imported platform')
-
 defaultfile = None
 
 if __name__ == '__main__':
@@ -98,8 +74,6 @@ if __name__ == '__main__':
     optparser.add_option('-o', '--open', action='store', type='string', dest='openfile')
     optparser.parse_args()
     defaultfile = optparser.values.openfile
-
-#print('after option parser')
 
 def intervalContains(a, b, x):
     if a <= x <= b:
@@ -125,8 +99,6 @@ def fixNode(node):
 def fixNodes(network):
     for node in network.nodes:
         fixNode(node)
-
-#print('is pyqt5?')
 
 if is_pyqt5():
   import PyQt5
@@ -195,12 +167,6 @@ elif is_pyqt4():
 class PyfabRenderer:
   pass
 
-#print('after is pyqt5')
-
-#os.chdir(localpath)
-
-#import pyfab_cfg
-
 if not inspyder:
   from pyfab_cfg import PyfabConfigStandalone as ConfigCls, get_default_options, make_color_rgba
 else:
@@ -209,8 +175,6 @@ else:
 import pyfab_qt_render
 #if enable_matplotlib2tikz:
   #import pyfab_matplotlib_render
-
-#os.chdir(newpath)
 
 def tuple2QColor(t):
     return QColor(t[0]*255, t[1]*255, t[2]*255, t[3]*255)
@@ -331,14 +295,9 @@ class Autolayout(MainWindowBaseClass):
         self.setGeometry(300, 300, wndwidth, wndheight)
         self.setWindowTitle('Pyfab SBNW')
         self.mainframe = LayoutFrame(self)
-        #self.prefframe = PrefFrame(self)
 
         if not inspyder:
           self.setCentralWidget(self.mainframe)
-
-          #self.statusbar = self.statusBar()
-          #self.connect(self.mainframe, QtCore.SIGNAL("messageToStatusbar(QString)"),
-              #self.statusbar, QtCore.SLOT("showMessage(QString)"))
 
           self.center((0,100))
         else:
@@ -357,11 +316,9 @@ class Autolayout(MainWindowBaseClass):
           menu.setNativeMenuBar(True)
 
         self.filemenu = menu.addMenu('&File')
-        #self.filemenu.addAction(self.newAct)
         self.filemenu.addAction(self.openAct)
         self.filemenu.addAction(self.saveAct)
         self.filemenu.addAction(self.saveasAct)
-        #self.filemenu.addAction(self.getobjAct)
         self.filemenu.addSeparator()
         self.filemenu.addAction(self.savePNGAct)
         self.filemenu.addAction(self.saveSVGAct)
@@ -375,8 +332,6 @@ class Autolayout(MainWindowBaseClass):
           self.filemenu.addAction(self.exitAct)
 
         self.editmenu = menu.addMenu('&Edit')
-        #self.editmenu.addAction(self.selectAllAct)
-        #self.editmenu.addAction(self.selectNoneAct)
         self.editmenu.addAction(self.copySBMLCbAct)
         self.editmenu.addAction(self.layoutAct)
 
@@ -399,20 +354,12 @@ class Autolayout(MainWindowBaseClass):
           toolbarlayout.setContentsMargins(0, 0, 0, 0)
           layout.addLayout(toolbarlayout)
 
-          #splitter = QSplitter(QtCore.Qt.Horizontal)
-          #splitter.setContentsMargins(0, 0, 0, 0)
-          #policy = QSizePolicy()
-          #policy.setVerticalPolicy(QSizePolicy.Minimum)
-          #splitter.setSizePolicy(policy)
-          #toolbarlayout.addWidget(splitter)
-
         def addToolBar(name):
           if not inspyder:
             return self.addToolBar(name)
           else:
             qtbar = QToolBar(name)
             toolbarlayout.addWidget(qtbar)
-            #splitter.addWidget(qtbar)
             return qtbar
 
         def addToolBarSeparator():
@@ -425,12 +372,10 @@ class Autolayout(MainWindowBaseClass):
 
         # File
         self.filetoolbar = addToolBar('File')
-        #self.filetoolbar.addAction(self.newAct)
         self.filetoolbar.addAction(self.openAct)
         self.filetoolbar.addAction(self.saveAct)
         self.filetoolbar.addAction(self.saveasAct)
         self.filetoolbar.addAction(self.prefsAct)
-        #addToolBarSeparator()
 
         # Edit
         self.edittoolbar = addToolBar('Edit')
@@ -447,7 +392,6 @@ class Autolayout(MainWindowBaseClass):
         self.sliderwidget = QSlider(QtCore.Qt.Horizontal)
         self.sliderwidget.setMaximum(100)
         self.sliderwidget.setMinimum(1)
-        #self.sliderwidget.setValue(50)
         self.sliderwidget.setValue(self.openconfig().state.stiffness)
         self.sliderwidget.sliderReleased.connect(self.stiffness_changed_via_slider)
 
@@ -470,7 +414,6 @@ class Autolayout(MainWindowBaseClass):
     # proxy - this function is overridden by the Spyder plugin to rebind the asset path
     def getIconPath(self, p):
       result = str(os.path.join(localpath, '..', '..', 'icons', p))
-      #print('icon path: {}'.format(result))
       return result
 
     def center(self, offset=(0,0)):
@@ -483,7 +426,8 @@ class Autolayout(MainWindowBaseClass):
         print('New')
 
     def launchOpenDialog(self):
-        if not inspyder:
+        if is_pyqt5():
+          # Qt5
           return QFileDialog.getOpenFileName(self)[0]
         else:
           # Qt4
@@ -514,7 +458,6 @@ class Autolayout(MainWindowBaseClass):
           filename = pyfab_getSaveFileName(self, filter=filt)[0]
         if filename:
           self.mainframe.renderSVG(str(filename))
-        #self.mainframe.renderSVG('tmp/pyfab.svg')
 
     def savePNG(self, event):
         filt = 'Portable Network Graphics (*.png);; All Files(*.*)'
@@ -524,7 +467,6 @@ class Autolayout(MainWindowBaseClass):
           filename = pyfab_getSaveFileName(self, filter=filt)[0]
         if filename:
           self.mainframe.renderPNG(str(filename))
-        #self.mainframe.renderPNG('/tmp/pyfab.png')
 
     def saveTikZ(self, event):
         filt = 'TikZ (*.tikz);; All Files(*.*)'
@@ -542,7 +484,6 @@ class Autolayout(MainWindowBaseClass):
       dlg = PrefDialog(self)
       dlg.setWindowTitle('Preferences')
       dlg.resize(680,450)
-      #dlg.setWindowFlags(dlg.windowFlags() | Qt.CustomizeWindowHint | Qt.WindowCloseButtonHint)
       dlg.show()
 
     def savetikz(self, filepath):
@@ -571,21 +512,13 @@ class Autolayout(MainWindowBaseClass):
         # Fit to frame
         framewidth = self.mainframe.frameRect().width()
         frameheight = self.mainframe.frameRect().height()
-        #print('frame width, height = {}'.format((framewidth, frameheight)))
-        #self.layout.fitwindow(-framewidth/2 + pad,-frameheight/2 + pad,framewidth/2 - pad,frameheight/2 - pad)
-        #self.mainframe.tf = self.layout.tf_fitwindow(-framewidth/2 + pad,-frameheight/2 + pad,framewidth/2 - pad,frameheight/2 - pad)
         self.mainframe.tf = self.layout.tf_fitwindow(pad,pad,framewidth - pad,frameheight - pad)
-        #print('  scale: {}'.format(self.mainframe.tf.scale.x))
         self.mainframe.scale = self.mainframe.tf.scale.x
         self.mainframe.translateBase = QPoint(self.mainframe.tf.disp)
-        #self.mainframe.translateBase = QPoint((0,0))
         self.mainframe.setScale(self.mainframe.scale)
 
         # Update translation in viewer
-        #self.mainframe.translateBase += QPoint((framewidth/2., frameheight/2.))
         self.mainframe.translate = self.mainframe.translateBase
-
-        #fixNodes(self.network)
 
         self.update()
 
@@ -594,7 +527,6 @@ class Autolayout(MainWindowBaseClass):
         self.readsbml(str(filepath), str(filepath))
 
     def notify_config_changed(self):
-        #print('notify_config_changed')
         self.sliderwidget.setValue(self.openconfig().state.stiffness)
         self.update()
 
@@ -613,8 +545,8 @@ class Autolayout(MainWindowBaseClass):
                 errorstr = 'Failed to read SBML file ' + filepath
 
             msg = QMessageBox(QMessageBox.Critical, title,
-            errorstr, QMessageBox.Ok, self,
-            QtCore.Qt.Dialog or QtCore.Qt.MSWindowsFixedSizeDialogHint or QtCore.Qt.Sheet)
+                errorstr, QMessageBox.Ok, self,
+                QtCore.Qt.Dialog or QtCore.Qt.MSWindowsFixedSizeDialogHint or QtCore.Qt.Sheet)
             get_exec(msg)()
             return
         self.layout = self.model.layout
@@ -631,14 +563,12 @@ class Autolayout(MainWindowBaseClass):
     def savefile(self, filepath):
         if self.model is None:
             return
-        #print(self.model.gattr)
         self.openfilepath = filepath
         config = self.openconfig()
         if config.state.override_sbml_ns:
           self.model.level = config.state.sbml_level
           self.model.version = config.state.sbml_version
         self.model.save(filepath)
-        #print('saved file ' + filepath)
 
     def getsbml(self):
         if self.model is None:
@@ -647,26 +577,20 @@ class Autolayout(MainWindowBaseClass):
 
     def openconfig(self):
       if not hasattr(self, 'config') or self.config is None:
-        #print('** constructing config cls')
         self.config = self.configCls()
         self.config.install_listener(self.notify_config_changed)
       config = self.configCls(self.config)
-      #print('openconfig set_substrate_edge_width = {}'.format(config.state.substrate_edge_width))
       return config
 
     def pushconfig(self, config):
-      #print('pushconfig')
       if not hasattr(self, 'configs') or self.configs is None:
-        #print('reset configs')
         self.configs = []
       self.configs.append(self.config)
       self.config = config
-      #print('pushconfig len(self.configs) {}'.format(len(self.configs)))
       self.config.updateArrowStyles()
       assert( len(self.configs) > 0 )
 
     def popconfig(self):
-      #print('popconfig len(self.configs) {}'.format(len(self.configs)))
       self.config = self.configs.pop()
       self.config.updateArrowStyles()
 
@@ -674,8 +598,6 @@ class Autolayout(MainWindowBaseClass):
       '''
       Makes current config permanent
       '''
-      #self.configs = []
-      #self.config = config
       config.finalize()
       self.config = self.configs.pop()
       self.config.updateArrowStyles()
@@ -707,7 +629,6 @@ if not inspyder:
   FrameBaseClass = QtWidgets.QFrame
 else:
   FrameBaseClass = QtGui.QFrame
-  #FrameBaseClass = QWidget
 
 class LayoutFrame(FrameBaseClass):
     def __init__(self, parent):
@@ -722,7 +643,6 @@ class LayoutFrame(FrameBaseClass):
         self.translate = self.translateBase
 
         self.postTranslateBase = QPoint((0., 0.))
-        #self.postTranslateBase = QPoint((wndwidth/2., wndheight/2.))
         self.postTranslate = self.postTranslateBase
 
         self.qtf = QtGui.QTransform()
@@ -758,7 +678,6 @@ class LayoutFrame(FrameBaseClass):
           painter = QtGui.QPainter(self)
         path = QtGui.QPainterPath()
         rect = self.contentsRect()
-        #painter.drawText(0, QtCore.Qt.AlignCenter, 'name')
 
         painter.setRenderHints(QtGui.QPainter.Antialiasing)
         painter.setRenderHints(QtGui.QPainter.HighQualityAntialiasing)
@@ -777,11 +696,8 @@ class LayoutFrame(FrameBaseClass):
         self.qtf.scale(self.scale, self.scale)
 
         config = self.parent().openconfig()
-        #if hasattr(self.parent(), 'configs'):
-          #assert( len(self.parent().configs) > 0 )
-          #print('render len(self.parent().configs) = {}'.format(len(self.parent().configs)))
 
-        # needs backref
+        # renderer needs backref to self
         self.qtrender.frame = self
 
         painter.setTransform(self.qtf)
@@ -793,24 +709,13 @@ class LayoutFrame(FrameBaseClass):
         for comp in self.network.compartments:
             self.drawComp(comp, painter, config)
 
-        #print('Centroids:')
-        # draw curves
-        #if config.state.node_effect == 'advanced':
-          #rxnpen = QtGui.QPen(QtGui.QBrush(QtGui.QColor(0,0,0,255)), config.state.edge_width, QtCore.Qt.SolidLine)
-          #modpen = QtGui.QPen(QtGui.QBrush(QtGui.QColor(50,50,100,255)), config.state.edge_width, QtCore.Qt.DashLine)
-        #else:
-          #rxnpen = QtGui.QPen(QtGui.QBrush(tuple2QColor(config.state.edge_color)), config.state.edge_width, QtCore.Qt.SolidLine)
-          #modpen = QtGui.QPen(QtGui.QBrush(tuple2QColor(config.state.edge_color)), config.state.edge_width, QtCore.Qt.DashLine)
         for reaction in self.network.rxns:
             for curve in reaction.curves:
                 self.drawCurve(path, painter, curve, config)
                 if enable_matplotlib2tikz:
                     self.pypltrender.drawCurve(curve, screentx)
-            # mark
-            #print('reaction centroid {}, {}'.format(reaction.centroid.x, reaction.centroid.y))
+            # centroid mark
             self.qtrender.drawRxnCentroid(path, painter, reaction.centroid, config)
-            #painter.strokePath(path, rxnpen)
-
 
 
         # draw nodes
@@ -827,12 +732,9 @@ class LayoutFrame(FrameBaseClass):
               self.pypltrender.drawNode(node, x-hemiwidth, y-hemiheight, x+hemiwidth, y+hemiheight, screentx)
 
         if config.state.text_halo_enabled:
-            #glowtextpainter = QtGui.QPainter(self)
             glowtextpainter = painter
             text_halo_pen = QtGui.QPen(QtGui.QBrush(QtGui.QColor(255,255,255,15)), 4., QtCore.Qt.SolidLine)
             glowtextpainter.setPen(text_halo_pen)
-
-            #glowtextpainter.setTransform(self.qtf)
 
             glowtextpainter.setFont(QtGui.QFont('sans', 9))
 
@@ -843,12 +745,9 @@ class LayoutFrame(FrameBaseClass):
                         glowtextpainter.drawText(QtCore.QRectF(x-node.width/2, y-node.height/2, node.width, node.height),
                           QtCore.Qt.AlignCenter, node.name)
 
-        #textpainter = QtGui.QPainter(self)
         textpainter = painter
         textpen = QPen(QBrush(tuple2QColor(config.state.text_color)), 1., Qt.SolidLine)
         painter.setPen(textpen)
-
-        #textpainter.setTransform(self.qtf)
 
         textpainter.setFont(QtGui.QFont('sans', 9))
 
@@ -863,7 +762,6 @@ class LayoutFrame(FrameBaseClass):
         generator.setFileName(filename)
 
         painter = QtGui.QPainter(generator)
-        #painter.begin(generator)
         self.render(painter, horizonEnabled=False)
 
         painter.end()
@@ -874,7 +772,6 @@ class LayoutFrame(FrameBaseClass):
         pixmap.fill(Qt.transparent)
 
         painter = QtGui.QPainter(pixmap)
-        #painter.begin(pixmap)
         self.render(painter, horizonEnabled=True)
 
         painter.end()
@@ -889,11 +786,9 @@ class LayoutFrame(FrameBaseClass):
 
     def drawCurve(self, pathx, painter, curve, config):
         path = QtGui.QPainterPath()
-        #print('  curve: begin {}, end {}'.format(curve[0],curve[3]))
         path.moveTo(QPoint(curve[0]))
         path.cubicTo(QPoint(curve[1]), QPoint(curve[2]), QPoint(curve[3]))
 
-        #print(curve[4])
         if curve[4] == 'SUBSTRATE':
           color = tuple2QColor(config.state.substrate_edge_color)
           width = config.state.substrate_edge_width
@@ -924,19 +819,12 @@ class LayoutFrame(FrameBaseClass):
         painter.strokePath(path, pen) # normalpen
         path = QtGui.QPainterPath()
 
-        #if curve[4] == 'MODIFIER':
-          #print('MOD curve len: {}'.format(len(curve)))
-          #if len(curve) > 5:
-            #print('len(curve[5]) = {}'.format(len(curve[5])))
-            #print('curve[5] = {}'.format(curve[5]))
         # arrowhead
         if len(curve) > 5 and len(curve[5]) > 0:
           arrowhead = curve[5]
           path.moveTo(QPoint(arrowhead[0]))
           for v in arrowhead[1:]:
             path.lineTo(QPoint(v))
-          # closed poly
-          #path.lineTo(QPoint(arrowhead[0]))
 
         if sbnw.arrowpoly_filled(sbnw.get_arrow_style(curve[4])):
           painter.fillPath(path, brush)
@@ -989,25 +877,17 @@ class LayoutFrame(FrameBaseClass):
 
     # Mouse wheel
     def wheelEvent(self, event):
-        #print('Wheel event ' + repr(dir(event)))
-        #print('Pixel delta ' + repr(event.pixelDelta().y()))
-        #print('Angle delta ' + repr(event.angleDelta().y()))
         if is_pyqt5():
           self.postScale *= math.exp(event.angleDelta().y() / 600.)
         else:
           self.postScale *= math.exp(event.delta() / 600.)
         if self.postScale < 0.01: self.postScale = 0.01
         if self.postScale > 40.: self.postScale = 40.
-        #print('postScale: {}'.format(self.postScale))
-        #self.postScale =
-        #self.sigScaleChg.emit()
         self.setScale(self.postScale)
 
     # Mouse press
     def mousePressEvent(self, event):
         if event.button() == 1:
-            ##mouse = QPoint(((event.x() - self.translate.x())/self.scale,
-                #(event.y() - self.translate.y())/self.scale))
             qtfi = self.qtf.inverted()[0]
             mouse = qtfi.map(QPoint((event.x(), event.y())))
             dragging_object = False
@@ -1090,8 +970,6 @@ class LayoutFrame(FrameBaseClass):
 
     def mouseMoveEvent(self, event):
         if self.dragging:
-            #mouse = QPoint(((event.x() - self.translate.x())/self.scale,
-                #(event.y() - self.translate.y())/self.scale))
             qtfi = self.qtf.inverted()[0]
             mouse = qtfi.map(QPoint((event.x(), event.y())))
 
@@ -1114,7 +992,6 @@ class LayoutFrame(FrameBaseClass):
                         rxn.recenter()
                     else:
                         rxn.recalccps()
-            #self.network.recenterjunct()
             self.update()
         elif self.panning:
             mouse = QPoint((event.x(), event.y()))
@@ -1138,7 +1015,6 @@ class SBMLOptsCfgPage(QWidget):
 
       # sbmlgroup
       self.sbmlgroup = QFrame(self)
-      #self.sbmlgroup.setTitle('SBML Options')
       self.mainlayout.addWidget(self.sbmlgroup)
 
       self.sbml_opts_layout = QGridLayout()
@@ -1207,11 +1083,6 @@ class SBMLOptsCfgPage(QWidget):
     def set_sbml_version(self, val):
       self.config.state.sbml_version = val
       self.sync_widgets()
-
-#def makeAnImage():
-  #pixmap = QPixmap(250, 250)
-  #pixmap.fill(Qt.red)
-  #return pixmap
 
 def makeArrowImage(style):
   pixmap = QPixmap(256, 256)
@@ -1362,7 +1233,6 @@ class DrawStyleCfgPage(QWidget):
       print('set style for {} to {}'.format(role, style))
       button.setIcon(self.icons[style])
       setattr(self.config.state, translateRoleToConfigArrowOpt(role), style)
-      #sbnw.set_arrow_style(role, style)
     return setc
 
   def makeArrowMenu(self, role, button):
@@ -1547,13 +1417,6 @@ class ColorCfgPage(QWidget):
       self.color_selector_layout.addWidget(self.centroid_outline_width, row, 1)
       row += 1
 
-      # edge_color
-      #self.edge_color_label = QLabel('Edge Color')
-      #self.color_selector_layout.addWidget(self.edge_color_label, 4, 0)
-      #self.edge_color = QPushButton()
-      #self.color_selector_layout.addWidget(self.edge_color, 4, 1)
-      #self.edge_color.clicked.connect(self.choose_edge_color)
-
       # text_color
       self.text_color_label = QLabel('Text Color')
       self.color_selector_layout.addWidget(self.text_color_label, row, 0)
@@ -1670,7 +1533,6 @@ class ColorCfgPage(QWidget):
       self.node_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.node_outline_color).name() + ';}')
       self.compartment_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_color).name() + ';}')
       self.compartment_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_outline_color).name() + ';}')
-      #self.edge_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.edge_color).name() + ';}')
       self.text_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.text_color).name() + ';}')
 
       self.compartment_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_color).name() + ';}')
@@ -1774,7 +1636,6 @@ class ColorCfgPage(QWidget):
     def set_effect_icky(self):
       self.config.state.node_effect = 'basic'
       self.color_selector.setVisible(True)
-      #self.update_main_window()
 
     def choose_node_color1(self):
       result = QColorDialog.getColor(tuple2QColor(self.config.state.node_color1), self, 'Select Color', QColorDialog.ShowAlphaChannel)
@@ -1818,12 +1679,6 @@ class ColorCfgPage(QWidget):
         self.config.state.compartment_outline_color = QColor2tuple(result)
       self.compartment_outline_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.compartment_outline_color).name() + ';}')
 
-    #def choose_edge_color(self):
-      #result = QColorDialog.getColor(tuple2QColor(self.config.state.edge_color), self, 'Select Color', QColorDialog.ShowAlphaChannel)
-      #if result.isValid():
-        #self.config.state.edge_color = QColor2tuple(result)
-      #self.edge_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.edge_color).name() + ';}')
-
     def choose_text_color(self):
       result = QColorDialog.getColor(tuple2QColor(self.config.state.text_color), self, 'Select Color', QColorDialog.ShowAlphaChannel)
       if result.isValid():
@@ -1861,18 +1716,15 @@ class ColorCfgPage(QWidget):
       self.modifier_edge_color.setStyleSheet('QPushButton {background-color: ' + tuple2QColor(self.config.state.modifier_edge_color).name() + ';}')
 
     def set_node_outline_width(self, val):
-      #print('set_substrate_edge_width')
       self.config.state.node_outline_width = val
 
     def set_compartment_outline_width(self, val):
       self.config.state.compartment_outline_width = val
 
     def set_centroid_outline_width(self, val):
-      #print('set_substrate_edge_width')
       self.config.state.centroid_outline_width = val
 
     def set_substrate_edge_width(self, val):
-      #print('set_substrate_edge_width')
       self.config.state.substrate_edge_width = val
 
     def set_product_edge_width(self, val):
@@ -2066,21 +1918,6 @@ class ColorCfgPage(QWidget):
 
       self.sync_widgets()
 
-    #def update_main_window(self):
-      #self.get_main_window().update()
-
-    #def get_main_window(self):
-      ## problem?
-      ##print('self.parent() {}'.format(self.parent()))
-      ##print('self.parent().parent() {}'.format(self.parent().parent()))
-      ##print('self.parent().mainwindow {}'.format(self.parent().parent()))
-
-      ##print('self.parent().parent().parent() {}'.format(self.parent().parent().parent()))
-      ##print('self.parent().parent().parent().parent() {}'.format(self.parent().parent().parent().parent()))
-      #return self.parent().mainwindow
-
-
-
 class PrefDialog(QDialog):
     def __init__(self, parent):
       QDialog.__init__(self, parent)
@@ -2099,10 +1936,6 @@ class PrefDialog(QDialog):
       self.cfgbrowser = QListWidget()
       self.cfgpagelayout.addWidget(self.cfgbrowser)
       self.cfgbrowser.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
-      #self.cfgbrowser.resize(100, self.cfgbrowser.height())
-      #self.cfgpagelayout.setMovement(QListWidget.Static)
-      #self.cfgbrowser.setMinimumSize(100,100)
-      #self.cfgbrowser.setMaximumSize(150,150)
 
       # List of config pages
 
@@ -2134,13 +1967,11 @@ class PrefDialog(QDialog):
 
       self.color_cfg_page = ColorCfgPage(self, self.config)
       self.pages.addWidget(self.color_cfg_page)
-      #self.color_cfg_page.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
       # draw style config page
 
       self.draw_style_page = DrawStyleCfgPage(self, self.config)
       self.pages.addWidget(self.draw_style_page)
-      #self.draw_style_page.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
       # SBML options config page
 
@@ -2178,18 +2009,12 @@ class PrefDialog(QDialog):
       self.cghlayout.addWidget(self.cancel)
       self.cancel.clicked.connect(self.reject)
 
-      #self.apply_btn = QPushButton(self.buttonframe)
-      #self.apply_btn.setText('Apply')
-      #self.cghlayout.addWidget(self.apply_btn)
-      #self.apply_btn.clicked.connect(self.apply_)
-
       self.confirm_btn = QPushButton(self.buttonframe)
       self.confirm_btn.setText('Ok')
       self.cghlayout.addWidget(self.confirm_btn)
       self.confirm_btn.clicked.connect(self.confirm)
 
     def page_changed(self, current, prev):
-      #print('page changed {} -> {}'.format(prev.text(), current.text()))
       self.pages.setCurrentIndex(self.cfgbrowser.row(current))
       if current is self.color_page_item:
         self.config.state.active_config_section = 'render_effect'
@@ -2199,36 +2024,26 @@ class PrefDialog(QDialog):
         self.config.state.active_config_section = 'sbml_options'
 
     def reset(self):
-      #print('reset btn')
       self.config.reset_defaults()
-      #self.color_cfg_page.sync_widgets()
 
     def apply_(self):
-      #self.config.finalize()
       self.parent().confirmconfig(self.config)
       self.parent().update()
 
     def confirm(self):
-      #print('dlg confirm')
       self.apply_()
       self.accept()
 
     def reject(self):
-      #print('reject')
       self.parent().popconfig()
-      #self.close()
       self.parent().update()
       super(PrefDialog, self).reject()
 
 def start():
-  #print('create QApplication')
   if not inspyder:
-    #app = QtWidgets.QApplication(sys.argv)
     app = QtWidgets.QApplication([])
   else:
     app = qapplication()
-  #app.setAttribute(Qt.AA_UseHighDpiPixmaps)
-  #print('post create QApplication')
 
   layoutapp = Autolayout()
 
@@ -2237,12 +2052,10 @@ def start():
   else:
     layoutapp.AppCls = qapplication
 
-  #layoutapp.setWindowModality(QtCore.Qt.ApplicationModal)
   layoutapp.show()
   if(defaultfile):
     layoutapp.openfile(defaultfile)
   sys.exit(get_exec(app)())
-  #print('post show')
 
 if __name__ == '__main__':
   start()
