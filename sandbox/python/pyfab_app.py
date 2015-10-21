@@ -26,6 +26,44 @@ if inspyder:
 else:
   handsfree = False
 
+# holds the last loaded model
+global currentModel
+currentModel = None
+
+def findReactionById(rxnid):
+    '''
+    Returns a reaction with the given id, throws RuntimeError if no such reaction exists
+    '''
+    global currentModel
+    for r in currentModel.layout.network.rxns:
+        if r.id == rxnid:
+            return r
+    raise RuntimeError('No node with id {}'.format(rxnid))
+
+def setCurveColor(rxn, k, color):
+    rxn.setCurveColor(k, color)
+
+def setCurveWeight(rxn, k, weight):
+    rxn.setCurveWeight(k, weight)
+
+# https://github.com/0u812/sbnw/issues/37
+def setReactionColor(rxnid, color):
+    r = findReactionById(rxnid)
+    k = 0
+    for curve in r.curves:
+        if curve[4] == 'SUBSTRATE' or curve[4] == 'PRODUCT':
+            setCurveColor(r, k, color)
+        k += 1
+
+# https://github.com/0u812/sbnw/issues/37
+def setRegulatorColor(rxnid, color):
+    r = findReactionById(rxnid)
+    k = 0
+    for curve in r.curves:
+        if not (curve[4] == 'SUBSTRATE' or curve[4] == 'PRODUCT'):
+            setCurveColor(r, k, color)
+        k += 1
+
 if not inspyder:
   enable_matplotlib2tikz = True
 else:
@@ -562,6 +600,9 @@ class Autolayout(MainWindowBaseClass):
         self.fitLayoutToWindow()
         self.mainframe.network = self.network
 
+        global currentModel
+        currentModel = self.model
+
     def savefile(self, filepath):
         if self.model is None:
             return
@@ -986,7 +1027,7 @@ class LayoutFrame(FrameBaseClass):
                               self.dragSource = mouse
 
                               # highlight curves
-                              self.setReactionColor(rxn.id, (1.0, 0.0, 0.0, 1.0))
+                              setReactionColor(rxn.id, (1.0, 0.0, 0.0, 1.0))
                               break
 
                 if not dragging_object:
