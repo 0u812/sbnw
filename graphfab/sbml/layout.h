@@ -641,6 +641,8 @@ _GraphfabExport size_t gf_compartment_getNumElt(gf_compartment* c);
 // Transform
 
 /** @brief Fit to the specified window
+ *  @details Given a network layout and a window, constructs a 2D affine transform
+ *  to fit the network within the window. The 2D affine transform is applied directly to the network.
  *  @param[in] l Layout
  *  @param[in] left Left edge of screen (other args similar)
  *  \ingroup C_API
@@ -648,6 +650,10 @@ _GraphfabExport size_t gf_compartment_getNumElt(gf_compartment* c);
 _GraphfabExport void gf_fit_to_window(gf_layoutInfo* l, double left, double top, double right, double bottom);
 
 /** @brief Fit to the specified window (do not apply transform)
+ *  @details Given a network layout and a window, constructs a 2D affine transform
+ *  to fit the network within the window. The 2D affine transform is returned from this function
+ *  (to be used by e.g. client-side rendering code)
+ *  and the layout coordinates of the network are unaffected.
  *  @param[in] l Layout
  *  @param[in] left Left edge of screen (other args similar)
  *  @return The new transform (not applied)
@@ -669,12 +675,16 @@ _GraphfabExport CPoint gf_tf_apply_to_point(gf_transform* tf, CPoint p);
 _GraphfabExport gf_point gf_tf_getScale(gf_transform* tf);
 
 /** @brief Get the displacement of the transform
+ *  @details Gets just the displacement component of a 2D affine transform,
+ *  ignoring the rotation and scaling.
  *  @param[in] tf Transform
  *  \ingroup C_API
  */
 _GraphfabExport gf_point gf_tf_getDisplacement(gf_transform* tf);
 
-/** @brief Get the displacement of the transform
+/** @brief Get the displacement component of the transform.
+ *  @details Like @ref gf_tf_getDisplacement, but applies the inverse of the
+ *  linear portion of the original transform to the output.
  *  @param[in] tf Transform
  *  @return The displacement with the transform applied
  *  \ingroup C_API
