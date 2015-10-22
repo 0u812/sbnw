@@ -38,31 +38,44 @@
 const char* gf_renderTikZ(gf_layoutInfo* l) {
   using namespace Graphfab;
 
-  Network* net = (Network*)l->net;
-  AN(net, "No network");
-  Canvas* can = (Canvas*)l->canv;
-  AN(can, "No canvas");
+  try {
+    Network* net = (Network*)l->net;
+    if (!net)
+      SBNW_THROW(InternalCheckFailureException, "No network set", "gf_renderTikZ");
+    Canvas* can = (Canvas*)l->canv;
+    if (!can)
+      SBNW_THROW(InternalCheckFailureException, "No canvas set", "gf_renderTikZ");
 
-  Graphfab::Real cmscale = 50.;
-  TikZRenderer renderer(can->getBox(), can->getWidth()/cmscale, can->getHeight()/cmscale);
-  return gf_strclone(renderer.str(net, can).c_str());
+    Graphfab::Real cmscale = 50.;
+    TikZRenderer renderer(can->getBox(), can->getWidth()/cmscale, can->getHeight()/cmscale);
+    return gf_strclone(renderer.str(net, can).c_str());
+  } catch (const Exception& e) {
+    gf_setError( e.getReport() );
+    return NULL;
+  }
 }
 
 int gf_renderTikZFile(gf_layoutInfo* l, const char* filename) {
+  try {
 //   fprintf(stderr, "Saving to TikZ file %s\n", filename);
-  FILE* f = fopen(filename, "w");
-  if (!f)
+    FILE* f = fopen(filename, "w");
+    if (!f)
+      SBNW_THROW(InternalCheckFailureException, "Could not open file " + ( filename ? std::string(filename) : std::string("") ), "gf_renderTikZFile");
+
+    const char* buf = gf_renderTikZ(l);
+    if (!buf)
+      SBNW_THROW(InternalCheckFailureException, "Could not create buffer", "gf_renderTikZFile");
+
+    fprintf(f, "%s", buf);
+
+    fclose(f);
+
+    return 0;
+
+  } catch (const Exception& e) {
+    gf_setError( e.getReport() );
     return 1;
-
-  const char* buf = gf_renderTikZ(l);
-  if (!buf)
-    return 1;
-
-  fprintf(f, "%s", buf);
-
-  fclose(f);
-
-  return 0;
+  }
 }
 
 namespace Graphfab {
