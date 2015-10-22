@@ -199,7 +199,8 @@ _GraphfabExport void gf_clearNetwork(gf_network* n);
  */
 _GraphfabExport void gf_releaseNetwork(gf_network* n);
 
-/** @brief Get the id, user frees memory
+/** @brief Get the id of the network (via the SBML Model object)
+ *  @note Memory must be freed by caller
  *  @param[in] n Network
  *  \ingroup C_API
  */

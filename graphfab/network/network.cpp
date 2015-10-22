@@ -1890,6 +1890,9 @@ namespace Graphfab {
 
     Network* networkFromModel(const Model& mod) {
         Network* net = new Network();
+
+        if( mod.isSetId() )
+            net->setId(mod.getId());
         
         // add compartments
         for(int i=0; i<mod.getNumCompartments(); ++i) {
