@@ -327,7 +327,7 @@ _GraphfabExport void gf_node_setCompartment(gf_node* n, gf_compartment* c);
 
 /** @brief Clear the node - does not deallocate
  *  @param[in] n Node
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport void gf_clearNode(gf_node* n);
 

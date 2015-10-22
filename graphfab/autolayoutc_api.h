@@ -107,7 +107,9 @@
 // * Installation documentation is provided at https://github.com/0u812/sbnw.
 
 
-// \defgroup C_API All C Methods
+// \defgroup C_API All external C Methods
+
+// \defgroup C_Internal Internal C Methods
 
 //
 //*/
