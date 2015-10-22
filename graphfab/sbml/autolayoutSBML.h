@@ -63,8 +63,8 @@ _GraphfabExport void gf_freeSBMLModel(gf_SBMLModel* lo);
  */
 _GraphfabExport gf_SBMLModel* gf_loadSBMLbuf(const char* buf);
 
-/** @brief Load SBML from memory buffer. Struct contains a pointer to the document.
- *  @param[in] buf The buffer containing the SBML file
+/** @brief Load SBML from a file. Returns a pointer to a struct that contains a pointer to the document.
+ *  @param[in] buf A pointer to a string that hold the name of the file containing the SBML
  *  @param[out] r The SBML model; the model that contains the SBML info from the buffer
  *  \ingroup C_API
  */
