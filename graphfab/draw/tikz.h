@@ -52,14 +52,14 @@
 extern "C" {
 #endif
 
-/** @brief Render the model as a TikZ image
+/** @brief Render the model as a TikZ text script and return a pointer to the TikZ script.
  *  @param[in] l The model/layout infor
  *  \ingroup C_API
  */
 _GraphfabExport const char* gf_renderTikZ(gf_layoutInfo* l);
 
-/** @brief Render the model as a TikZ image
- *  @param[in] l The model/layout infor
+/** @brief Render the model as a TikZ text script and save the script to the indicated file name
+ *  @param[in] l The model/layout info
  *  \ingroup C_API
  */
 _GraphfabExport int gf_renderTikZFile(gf_layoutInfo* l, const char* filename);
