@@ -155,7 +155,7 @@ _GraphfabExport gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo);
  *  @param[in] buf The buffer containing the SBML file; used to create the SBML model
  *  @param[in] r A pointer to an empty SBML model; the model will be created from the buffer and used to build the layout
  *  @param[out] l The layout info; pointer to the layout info generated from SBML is returned 
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r);
 
