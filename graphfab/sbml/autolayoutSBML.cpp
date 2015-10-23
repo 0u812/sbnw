@@ -85,7 +85,7 @@ extern "C" gf_SBMLModel* gf_loadSBMLfile(const char* path) {
 
     file = fopen(path, "rb");
     if(!file)
-      SBNW_THROW(InternalCheckFailureException, "Failed to open file", "gf_loadSBMLfile");
+      SBNW_THROW(Graphfab::InternalCheckFailureException, "Failed to open file", "gf_loadSBMLfile");
 
     //get t3h s!z3
     fseek(file, 0, SEEK_END);
@@ -98,18 +98,18 @@ extern "C" gf_SBMLModel* gf_loadSBMLfile(const char* path) {
 
     //allocated buffer
     if (sizeof(char) != 1)
-      SBNW_THROW(InternalCheckFailureException, "char must be one byte wide", "gf_loadSBMLfile");
+      SBNW_THROW(Graphfab::InternalCheckFailureException, "char must be one byte wide", "gf_loadSBMLfile");
     buf=(char*)malloc(size+1); //one extra byte for null char
     if (!buf)
-      SBNW_THROW(InternalCheckFailureException, "Failed to allocate buffer", "gf_loadSBMLfile");
+      SBNW_THROW(Graphfab::InternalCheckFailureException, "Failed to allocate buffer", "gf_loadSBMLfile");
     //read the whole file at once
     bytes_read = fread(buf, 1, size, file);
     if (bytes_read != size)
-      SBNW_THROW(InternalCheckFailureException, "Failed to read whole file (wrong size specified?)", "gf_loadSBMLfile");
+      SBNW_THROW(Graphfab::InternalCheckFailureException, "Failed to read whole file (wrong size specified?)", "gf_loadSBMLfile");
     //trip EOF indicator
     fgetc(file);
     if (!feof(file))
-      SBNW_THROW(InternalCheckFailureException, "EOF Expected", "gf_loadSBMLfile");
+      SBNW_THROW(Graphfab::InternalCheckFailureException, "EOF Expected", "gf_loadSBMLfile");
     buf[size] = '\0'; //terminating null char
 
     /*close*/
@@ -121,7 +121,7 @@ extern "C" gf_SBMLModel* gf_loadSBMLfile(const char* path) {
 
     return mod;
 
-  } catch (const Exception& e) {
+  } catch (const Graphfab::Exception& e) {
     gf_setError( e.getReport().c_str() );
     return NULL;
   }
