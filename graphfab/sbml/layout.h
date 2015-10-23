@@ -377,8 +377,10 @@ _GraphfabExport gf_compartment gf_nw_getCompartment(gf_network* n, size_t i);
  */
 _GraphfabExport gf_compartment* gf_nw_getCompartmentp(gf_network* n, size_t i);
 
-/** @brief Rebuild the curves
- *  @param[in] n The network object
+/** @brief Rebuild all curves in the network
+ *  @details Rebuild all curves in each reaction, connecting substrates,
+ *  products, modifiers, etc. Automatically calculate control points.
+ *  @param[in,out] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_nw_rebuildCurves(gf_network* n);
