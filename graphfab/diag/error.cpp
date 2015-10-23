@@ -56,6 +56,10 @@ char* gf_getLastError() {
     return gf_strclone("");
 }
 
+int gf_haveError() {
+  return lastError_.size();
+}
+
 void gf_clearError() {
   lastError_ = "";
 }

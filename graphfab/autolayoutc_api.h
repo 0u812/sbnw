@@ -102,6 +102,22 @@
 //
 // \endcode
 //
+// * \section error_handling_sec Error handling
+// *
+// * Errors can be read by gf_getLastError. gf_haveError can be called
+// * to determine if there is an error or not.
+//
+// \code
+//
+//       if ( gf_haveError() ) {
+//         /* Print the error message */
+//         fprintf(stderr, "Error message: %s\n", gf_getLastError());
+//         /* Clear the error so that future calls to gf_haveError return false */
+//         gf_clearError();
+//       }
+//
+// \endcode
+//
 // * \section install_sec Installation
 // *
 // * Installation documentation is provided at https://github.com/0u812/sbnw.

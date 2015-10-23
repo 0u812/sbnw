@@ -70,6 +70,12 @@ _GraphfabExport void gf_registerErrorListener(void (*)(const char* msg));
  */
 _GraphfabExport char* gf_getLastError();
 
+/** @brief Gets whether an error occurred
+ *  @return True if an error has been set
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_haveError();
+
 /** @brief Clears the last error
  *  \ingroup C_API
  */

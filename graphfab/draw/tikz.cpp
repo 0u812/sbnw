@@ -50,7 +50,7 @@ const char* gf_renderTikZ(gf_layoutInfo* l) {
     TikZRenderer renderer(can->getBox(), can->getWidth()/cmscale, can->getHeight()/cmscale);
     return gf_strclone(renderer.str(net, can).c_str());
   } catch (const Exception& e) {
-    gf_setError( e.getReport() );
+    gf_setError( e.getReport().c_str() );
     return NULL;
   }
 }
@@ -60,11 +60,11 @@ int gf_renderTikZFile(gf_layoutInfo* l, const char* filename) {
 //   fprintf(stderr, "Saving to TikZ file %s\n", filename);
     FILE* f = fopen(filename, "w");
     if (!f)
-      SBNW_THROW(InternalCheckFailureException, "Could not open file " + ( filename ? std::string(filename) : std::string("") ), "gf_renderTikZFile");
+      SBNW_THROW(Graphfab::InternalCheckFailureException, "Could not open file " + ( filename ? std::string(filename) : std::string("") ), "gf_renderTikZFile");
 
     const char* buf = gf_renderTikZ(l);
     if (!buf)
-      SBNW_THROW(InternalCheckFailureException, "Could not create buffer", "gf_renderTikZFile");
+      SBNW_THROW(Graphfab::InternalCheckFailureException, "Could not create buffer", "gf_renderTikZFile");
 
     fprintf(f, "%s", buf);
 
@@ -72,8 +72,8 @@ int gf_renderTikZFile(gf_layoutInfo* l, const char* filename) {
 
     return 0;
 
-  } catch (const Exception& e) {
-    gf_setError( e.getReport() );
+  } catch (const Graphfab::Exception& e) {
+    gf_setError( e.getReport().c_str() );
     return 1;
   }
 }
