@@ -68,7 +68,10 @@ typedef struct __fr_options {
     int prerandomize;
 } fr_options;
 
-/** @brief Run the autolayout (Fruchterman-Reingold) algorithm on a given layout structure
+/**
+ *  @author JKM
+ *  @brief Run the autolayout (Fruchterman-Reingold) algorithm on a given layout structure
+ *  @note @ref l should be a layout info object obtained from a call to @ref gf_processLayout.
  *  @param[in] opt The options controlling the layout algorithm
  *  @param[in/out] l The layout info
  *  \ingroup C_API

@@ -253,6 +253,9 @@ _GraphfabExport void gf_freeModelAndLayout(gf_SBMLModel* mod, gf_layoutInfo* l);
  *  If the SBML model has layout information, the returned @ref gf_layoutInfo will preserve
  *  this information. Otherwise, it will generate it automatically using the Fruchterman-Reingold
  *  algorithm.
+ *
+ *  gf_processLayout should be called only once for a loaded model (subsequent calls will have no
+ *  effect). To manually re-run the Fruchterman-Reingold algorithm, call @ref gf_doLayoutAlgorithm.
  *  @param[in] lo The SBML model; the layout info is generated from the SBML model
  *  @param[out] l The layout info; pointer to the layout info generated from SBML model is returned
  *  \ingroup C_API
@@ -387,7 +390,7 @@ _GraphfabExport gf_compartment* gf_nw_getCompartmentp(gf_network* n, size_t i);
 /** @brief Rebuild all curves in the network
  *  @details Rebuild all curves in each reaction, connecting substrates,
  *  products, modifiers, etc. Automatically calculate control points.
- *  @param[in,out] n The network object
+ *  @param[in/out] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_nw_rebuildCurves(gf_network* n);
