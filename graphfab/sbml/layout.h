@@ -48,31 +48,93 @@
 extern "C" {
 #endif
 
+/**
+ *  @author JKM
+ *  @brief A reaction network
+ *  @details Represents a graph of a (biochemical) reaction network, including
+ *  species (nodes) and reactions (edges).
+ *  @sa gf_node gf_reaction
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// @private
     void* n;
 } gf_network;
 
+/**
+ *  @author JKM
+ *  @brief A species in a model
+ *  @details Represents an SBML species. Species are drawn as nodes in the
+ *  network graph and are connected by reactions.
+ *  @sa gf_reaction
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// @private
     void* n;
 } gf_node;
 
+/**
+ *  @author JKM
+ *  @brief A reaction in a model
+ *  @details Represents an SBML reaction involving species (nodes) within
+ *  the model.
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// @private
     void* r;
 } gf_reaction;
 
+/**
+ *  @author JKM
+ *  @brief A 2D cubic Bezier curve
+ *  @details Represents a 2D cubic Bezier reaction curve used to
+ *  join nodes and reaction centroids.
+ *  @sa gf_getCurveCPs
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// @private
     void* c;
 } gf_curve;
 
+/**
+ *  @author JKM
+ *  @brief A compartment in a model
+ *  @details Represents an SBML compartment, which can contain
+ *  species (nodes) and reactions.
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// @private
     void* c;
 } gf_compartment;
 
+/**
+ *  @author JKM
+ *  @brief Drawing canvas
+ *  @details Specifies a window which can be used by client-side
+ *  applications as a suggestion for how to size the drawing area.
+ *  @sa gf_canvGetWidth gf_canvGetHeight gf_canvSetWidth gf_canvSetHeight
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// @private
     void* canv;
 } gf_canvas;
     
+/**
+ *  @author JKM
+ *  @brief Type which holds layout info
+ *  @details This type holds layout info (encoded by the SBML Layout
+ *  Extension), and consists of a network (with node/reaction coordinates etc.),
+ *  a canvas (for drawing bounds) and SBML level and version information.
+ *  @sa gf_processLayout
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// @privatesection
     /// Network*
     void* net;
     /// Canvas*
@@ -85,21 +147,55 @@ typedef struct {
     int version;
 } gf_layoutInfo;
 
+/**
+ *  @author JKM
+ *  @deprecated Use @ref gf_point
+ *  @brief A point in 2D space
+ *  \ingroup C_Internal
+ */
 //DEPRECATED: rename to gf_point
 typedef struct {
+    /// @privatesection
     Real x;
     Real y;
 } CPoint;
 
+/**
+ *  @author JKM
+ *  @brief A point in 2D space
+ *  @details Returned by all functions which need to specify a pair of 2D
+ *  coordinates.
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// x coordinate
     Real x;
+    /// y coordinate
     Real y;
 } gf_point;
 
+/**
+ *  @author JKM
+ *  @brief A 2D affine transform
+ *  @details 2D affine transforms can be used to rotate, scale, and translate
+ *  the coordinates of the network elements.
+ *  @sa gf_tf_fitToWindow.
+ *  \ingroup C_API
+ */
 typedef struct {
+    /// @private
     void* tf;
 } gf_transform;
 
+/**
+ *  @author JKM
+ *  @brief A curve control points
+ *  @details This type stores the four points which define a cubic
+ *  Bezier curve. The curve touches the start (@ref s) and end (@ref e)
+ *  points and is guided by the beginning control point (@ref c1)
+ *  and end control point (@ref c2)
+ *  \ingroup C_API
+ */
 typedef struct {
     /// Start
     gf_point s;
@@ -111,6 +207,13 @@ typedef struct {
     gf_point e;
 } gf_curveCP;
 
+/**
+ *  @author JKM
+ *  @brief Species role in a reaction
+ *  @details Represents the SBML species role in a reaction.
+ *  Species can be reactants, products, modifiers, etc.
+ *  \ingroup C_API
+ */
 typedef enum {
     GF_ROLE_SUBSTRATE,
     GF_ROLE_PRODUCT,
@@ -150,7 +253,7 @@ _GraphfabExport void gf_freeModelAndLayout(gf_SBMLModel* mod, gf_layoutInfo* l);
 _GraphfabExport gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo);
 
 /**
- *  @deprecated
+ *  @deprecated DEPRECATED
  *  @brief [DEPRECATED] Load SBML document from memory buffer and process
  *  @param[in] buf The buffer containing the SBML file; used to create the SBML model
  *  @param[in] r A pointer to an empty SBML model; the model will be created from the buffer and used to build the layout
@@ -188,51 +291,51 @@ _GraphfabExport gf_network gf_getNetwork(gf_layoutInfo* l);
 _GraphfabExport gf_network* gf_getNetworkp(gf_layoutInfo* l);
 
 /** @brief Clear the network - does not deallocate
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_clearNetwork(gf_network* n);
 
 /** @brief Release the network
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_releaseNetwork(gf_network* n);
 
 /** @brief Get the id of the network (via the SBML Model object)
  *  @note Memory must be freed by caller
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport char* gf_nw_getID(gf_network* n);
 
 /** @brief Get the number of nodes
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport size_t gf_nw_getNumNodes(const gf_network* n);
 
 /** @brief Get the number of reactions
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport size_t gf_nw_getNumRxns(const gf_network* n);
 
 /** @brief Get the number of compartments
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport size_t gf_nw_getNumComps(const gf_network* n);
 
 /** @brief Get the node at index i
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_Internal
  */
 _GraphfabExport gf_node gf_nw_getNode(gf_network* n, size_t i);
 
 /** @brief Get the node at index i
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  @param[in] i Node index
  *  @return A pointer to the node
  *  \ingroup C_API
@@ -240,54 +343,54 @@ _GraphfabExport gf_node gf_nw_getNode(gf_network* n, size_t i);
 _GraphfabExport gf_node* gf_nw_getNodep(gf_network* n, size_t i);
 
 /** @brief Get the node at index i
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_Internal
  */
 _GraphfabExport gf_reaction gf_nw_getRxn(gf_network* n, size_t i);
 
 /** @brief Get the node at index i
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_API
  */
 _GraphfabExport gf_reaction* gf_nw_getRxnp(gf_network* n, size_t i);
 
 /** @brief Remove the given reaction
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_API
  */
 _GraphfabExport void gf_nw_removeRxn(gf_network* n, gf_reaction* r);
 
 /** @brief Get the compartment at index i
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_Internal
  */
 _GraphfabExport gf_compartment gf_nw_getCompartment(gf_network* n, size_t i);
 
 /** @brief Get the node at index i
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_API
  */
 _GraphfabExport gf_compartment* gf_nw_getCompartmentp(gf_network* n, size_t i);
 
 /** @brief Rebuild the curves
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_nw_rebuildCurves(gf_network* n);
 
 /** @brief Recenter reaction junctions
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_nw_recenterJunctions(gf_network* n);
 
 /** @brief Add a new node to the network
- *  @param[in] nw Network
+ *  @param[in] nw The network object
  *  @param[in] id The node's requested ID (or null to determine it automatically)
  *  @param[in] name The node's name
  *  @param[in] compartment The compartment to place the node in (may be NULL for no compartment)
@@ -296,7 +399,7 @@ _GraphfabExport void gf_nw_recenterJunctions(gf_network* n);
 _GraphfabExport gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compartment* compartment);
 
 /** @brief Add a new node to the network
- *  @param[in] nw Network
+ *  @param[in] nw The network object
  *  @param[in] id The node's requested ID (or null to determine it automatically)
  *  @param[in] name The node's name
  *  @param[in] compartment The compartment to place the node in (may be NULL for no compartment)
@@ -305,14 +408,14 @@ _GraphfabExport gf_node gf_nw_newNode(gf_network* nw, const char* id, const char
 _GraphfabExport gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_compartment* compartment);
 
 /** @brief Remove a node from the network
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport int gf_nw_removeNode(gf_network* nw, gf_node* node);
 
 /** @brief Did the SBML model include layout?
  *  @return 1 for yes, 0 for no
- *  @param[in] n Network
+ *  @param[in] n The network object
  *  \ingroup C_API
  */
 _GraphfabExport int gf_nw_isLayoutSpecified(gf_network* nw);
@@ -321,37 +424,37 @@ _GraphfabExport int gf_nw_isLayoutSpecified(gf_network* nw);
 
 /** @brief Add a node to a compartment
  *  @param[in] c Compartment
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_node_setCompartment(gf_node* n, gf_compartment* c);
 
 /** @brief Clear the node - does not deallocate
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_Internal
  */
 _GraphfabExport void gf_clearNode(gf_node* n);
 
 /** @brief Release the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_releaseNode(const gf_node* n);
 
 /** @brief Is the node locked?
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport int gf_node_isLocked(gf_node* n);
 
 /** @brief Lock the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_node_lock(gf_node* n);
 
 /** @brief Unlock the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_node_unlock(gf_node* n);
@@ -363,19 +466,19 @@ _GraphfabExport void gf_node_unlock(gf_node* n);
 _GraphfabExport int gf_node_alias(gf_node* n, gf_network* m);
 
 /** @brief Is the node aliased?
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport int gf_node_isAliased(gf_node* n);
 
 /** @brief Get the centroid of the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport gf_point gf_node_getCentroid(gf_node* n);
 
 /** @brief Get the centroid of the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  @param[out] x X coord of centroid
  *  @param[out] y Y coord of centroid
  *  \ingroup C_API
@@ -383,49 +486,49 @@ _GraphfabExport gf_point gf_node_getCentroid(gf_node* n);
 _GraphfabExport void gf_node_getCentroidXY(gf_node* n, double* x, double* y);
 
 /** @brief Set the centroid of the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_node_setCentroid(gf_node* n, gf_point p);
 
 /** @brief Get the width of the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport double gf_node_getWidth(gf_node* n);
 
 /** @brief Set the width of the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_node_setWidth(gf_node* n, double width);
 
 /** @brief Get the height of the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport double gf_node_getHeight(gf_node* n);
 
 /** @brief Set the height of the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_node_setHeight(gf_node* n, double height);
 
 /** @brief Get the id, user frees memory
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport char* gf_node_getID(gf_node* n);
 
 /** @brief Get the name
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport const char* gf_node_getName(gf_node* n);
 
 /** @brief Get a list of all reactions connected to the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  @param[out] num The number of reactions
  *  @param[out] rxns The reaction array (callee must free with @ref gf_free)
  *  @return Reserved
@@ -434,7 +537,7 @@ _GraphfabExport const char* gf_node_getName(gf_node* n);
 _GraphfabExport int gf_node_getConnectedReactions(gf_node* n, gf_network* m, unsigned int* num, gf_reaction** rxns);
 
 /** @brief Get a list of all curves connected to the node
- *  @param[in] n Node
+ *  @param[in] n The node object
  *  @param[out] num The number of curves
  *  @param[out] rxns The curve array (callee must free with @ref gf_free)
  *  @return Reserved
@@ -445,43 +548,43 @@ _GraphfabExport int gf_node_getAttachedCurves(gf_node* n, gf_network* m, unsigne
 // Reaction
 
 /** @brief Release the reaction
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_releaseRxn(const gf_reaction* r);
 
 /** @brief Get the id, user frees memory
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport char* gf_reaction_getID(gf_reaction* r);
 
 /** @brief Get the centroid of the reaction
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport gf_point gf_reaction_getCentroid(gf_reaction* r);
 
 /** @brief Set the centroid of the reaction
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_reaction_setCentroid(gf_reaction* r, gf_point p);
 
 /** @brief Get the number of species in the reaction
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport size_t gf_reaction_getNumSpec(const gf_reaction* r);
 
 /** @brief Return true if the reaction has the given species
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport int gf_reaction_hasSpec(const gf_reaction* r, const gf_node* n);
 
 /** @brief Get the role for spec i
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport gf_specRole gf_reaction_getSpecRole(const gf_reaction* r, size_t i);
@@ -503,37 +606,37 @@ _GraphfabExport const char* gf_roleToStr(gf_specRole role);
 _GraphfabExport gf_specRole gf_strToRole(const char* str);
 
 /** @brief Get the index of the species in the network
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport size_t gf_reaction_specGeti(const gf_reaction* r, size_t i);
 
 /** @brief Get the number of curves in the reaction
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport size_t gf_reaction_getNumCurves(const gf_reaction* r);
 
 /** @brief Get the curve i
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_Internal
  */
 _GraphfabExport gf_curve gf_reaction_getCurve(const gf_reaction* r, size_t i);
 
 /** @brief Get the curve i
- *  @param[in] r Reaction
+ *  @param[in] r The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport gf_curve* gf_reaction_getCurvep(const gf_reaction* r, size_t i);
 
 /** @brief Recenter reaction centroid
- *  @param[in] n Reaction
+ *  @param[in] n The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_reaction_recenter(gf_reaction* r);
 
 /** @brief Recalculate the curve CPs, don't recenter
- *  @param[in] n Reaction
+ *  @param[in] n The reaction object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_reaction_recalcCurveCPs(gf_reaction* r);
@@ -541,40 +644,40 @@ _GraphfabExport void gf_reaction_recalcCurveCPs(gf_reaction* r);
 // Curve
 
 /** @brief Release the curve
- *  @param[in] c Curve
+ *  @param[in] c The curve
  *  \ingroup C_API
  */
 _GraphfabExport void gf_releaseCurve(const gf_curve* c);
 
 /** @brief Get the id, user frees memory
- *  @param[in] c Curve
+ *  @param[in] c The curve
  *  \ingroup C_API
  */
 // _GraphfabExport char* gf_curve_getID(gf_curve* c);
 
 /**
  * @brief Get the role of the species with the given curve
- * @param[in] c Curve
+ * @param[in] c The curve
  * @return The index of the matching species in the reaction
  *  \ingroup C_API
  */
 _GraphfabExport gf_specRole gf_curve_getRole(gf_curve* c);
 
 /** @brief Get the CPs for the curve
- *  @param[in] c Curve
+ *  @param[in] c The curve
  *  \ingroup C_API
  */
 _GraphfabExport gf_curveCP gf_getCurveCPs(const gf_curve* c);
 
 /** @brief Returns true if the given curve should be drawn with an arrowhead
- *  @param[in] c Curve
+ *  @param[in] c The curve
  *  \ingroup C_API
  */
 _GraphfabExport int gf_curve_hasArrowhead(const gf_curve* c);
 
 
 /** @brief Get the vertices for the curve's arrowhead
- *  @param[in] c Curve
+ *  @param[in] c The curve
  *  @param[out] n Number of arrowhead verts
  *  @param[out] v The vertices (new arrow, callee owns)
  *  \ingroup C_API
@@ -583,14 +686,14 @@ _GraphfabExport int gf_curve_getArrowheadVerts(const gf_curve* c, unsigned int* 
 
 // Comparment
 
-/** @brief Release the comp
- *  @param[in] c Comp
+/** @brief Release a compartment object
+ *  @param[in] c The compartment object
  *  \ingroup C_API
  */
 _GraphfabExport void gf_releaseCompartment(const gf_compartment* c);
 
 /** @brief Get the id, user frees memory
- *  @param[in] c Compartment
+ *  @param[in] c The compartment object
  *  \ingroup C_API
  */
 _GraphfabExport char* gf_compartment_getID(gf_compartment* c);
@@ -602,39 +705,39 @@ _GraphfabExport char* gf_compartment_getID(gf_compartment* c);
 _GraphfabExport gf_point gf_compartment_getMinCorner(gf_compartment* c);
 
 /** @brief Set the "upper left" corner
- *  @param[in] c Compartment
+ *  @param[in] c The compartment object
  *  @param[in] p Corner
  *  \ingroup C_API
  */
 _GraphfabExport void gf_compartment_setMinCorner(gf_compartment* c, gf_point p);
 
 /** @brief Get the "lower right" corner
- *  @param[in] c Compartment
+ *  @param[in] c The compartment object
  *  \ingroup C_API
  */
 _GraphfabExport gf_point gf_compartment_getMaxCorner(gf_compartment* c);
 
 /** @brief Set the "lower right" corner
- *  @param[in] c Compartment
+ *  @param[in] c The compartment object
  *  @param[in] p Corner
  *  \ingroup C_API
  */
 _GraphfabExport void gf_compartment_setMaxCorner(gf_compartment* c, gf_point p);
 
 /** @brief Get the width of the compartment
- *  @param[in] c Compartment
+ *  @param[in] c The compartment object
  *  \ingroup C_API
  */
 _GraphfabExport double gf_compartment_getWidth(gf_compartment* c);
 
 /** @brief Get the height of the compartment
- *  @param[in] c Compartment
+ *  @param[in] c The compartment object
  *  \ingroup C_API
  */
 _GraphfabExport double gf_compartment_getHeight(gf_compartment* c);
 
 /** @brief Get the number of species in the compartment
- *  @param[in] c Compartment
+ *  @param[in] c The compartment object
  *  \ingroup C_API
  */
 _GraphfabExport size_t gf_compartment_getNumElt(gf_compartment* c);
@@ -644,7 +747,7 @@ _GraphfabExport size_t gf_compartment_getNumElt(gf_compartment* c);
 /** @brief Fit to the specified window
  *  @details Given a network layout and a window, constructs a 2D affine transform
  *  to fit the network within the window. The 2D affine transform is applied directly to the network.
- *  @param[in] l Layout
+ *  @param[in] l The layout info object
  *  @param[in] left Left edge of screen (other args similar)
  *  \ingroup C_API
  */
@@ -655,7 +758,7 @@ _GraphfabExport void gf_fit_to_window(gf_layoutInfo* l, double left, double top,
  *  to fit the network within the window. The 2D affine transform is returned from this function
  *  (to be used by e.g. client-side rendering code)
  *  and the layout coordinates of the network are unaffected.
- *  @param[in] l Layout
+ *  @param[in] l The layout info object
  *  @param[in] left Left edge of screen (other args similar)
  *  @return The new transform (not applied)
  *  \ingroup C_API
