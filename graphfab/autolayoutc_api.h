@@ -77,7 +77,7 @@
 //       l = gf_processLayout(mod);
 //
 //
-//       // randomize node positions
+//       /* randomize node positions */
 //       gf_randomizeLayout(l);
 //
 //       // do layout algo
@@ -104,11 +104,20 @@
 //
 // * \section error_handling_sec Error handling
 // *
+// * The library has several functions in the C API for error handling:
+// * @ref gf_haveError, @ref gf_getLastError, and @ref gf_clearError,
 // * Errors can be read by gf_getLastError. gf_haveError can be called
 // * to determine if there is an error or not.
 //
 // \code
 //
+//       /* Clear any previous errors */
+//       gf_clearError();
+//
+//       /* Load a model from disk */
+//       gf_SBMLModel* mod = gf_loadSBMLfile("mymodel.xml");
+//
+//       /* Did an error occur? */
 //       if ( gf_haveError() ) {
 //         /* Print the error message */
 //         fprintf(stderr, "Error message: %s\n", gf_getLastError());
