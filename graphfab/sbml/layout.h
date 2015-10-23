@@ -245,7 +245,14 @@ _GraphfabExport void gf_freeModelAndLayout(gf_SBMLModel* mod, gf_layoutInfo* l);
 
 // -- Input --
 
-/** @brief Process the layout info from a document. The layout info holds the network (nodes, reactions, etc.), canvas, and SBML content.
+/**
+ *  @author JKM
+ *  @brief Process the layout info from a document.
+ *  @details The layout info holds the network (nodes, reactions, etc.), canvas, and SBML content.
+ *  gf_processLayout should be called after loading a network (via e.g. @ref gf_loadSBMLfile).
+ *  If the SBML model has layout information, the returned @ref gf_layoutInfo will preserve
+ *  this information. Otherwise, it will generate it automatically using the Fruchterman-Reingold
+ *  algorithm.
  *  @param[in] lo The SBML model; the layout info is generated from the SBML model
  *  @param[out] l The layout info; pointer to the layout info generated from SBML model is returned
  *  \ingroup C_API
