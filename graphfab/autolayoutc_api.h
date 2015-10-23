@@ -59,21 +59,21 @@
 //
 //       #include "autolayoutc_api.h"
 //
-//       //...
+//       /* ... */
 //
-//       // type to store layout info
+//       /* type to store layout info */
 //       gf_layoutInfo* l;
 //
 //
-//       // load the model
+//       /* load the model */
 //       gf_SBMLModel* mod = gf_loadSBMLbuf(buf);
 // 
 //
-//       // options for layout algo
+//       /* options for layout algo */
 //       fr_options opt;
 //
 //
-//       // read layout info from the model
+//       /* read layout info from the model */
 //       l = gf_processLayout(mod);
 //
 //
@@ -89,15 +89,15 @@
 //       opt.autobary = 1;
 //       gf_doLayoutAlgorithm(opt, l);
 //
-//       // save layout information to new SBML file
+//       /* save layout information to new SBML file */
 //       gf_writeSBMLwithLayout(outfile, mod, l);
 //
 //
-//       // run destructors on the model
+//       /* run destructors on the model */
 //       gf_freeSBMLModel(mod);
 //
 //
-//       // run destructors on the layout
+//       /* run destructors on the layout */
 //       gf_freeLayoutInfo(l);
 //
 // \endcode
