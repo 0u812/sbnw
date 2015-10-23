@@ -76,51 +76,55 @@ extern "C" gf_SBMLModel* gf_loadSBMLbuf(const char* buf) {
 }
 
 extern "C" gf_SBMLModel* gf_loadSBMLfile(const char* path) {
-    char* buf;
-    size_t size=0;
-    FILE* file=NULL;
-    size_t bytes_read;
-    
-    #if SAGITTARIUS_DEBUG_LEVEL >= 2
-//     fprintf(stderr, "Specified file is %s\n", path);
-    #endif
+  char* buf;
+  size_t size=0;
+  FILE* file=NULL;
+  size_t bytes_read;
+
+  try {
+
     file = fopen(path, "rb");
     if(!file)
-    {
-        #if SAGITTARIUS_DEBUG_LEVEL >= 2
-        fprintf(stderr, "Failed to open file\n"); // Assert elided on release build, which we have to use thanks to libsbml
-        #endif
-        return NULL;
-    }
+      SBNW_THROW(InternalCheckFailureException, "Failed to open file", "gf_loadSBMLfile");
+
     //get t3h s!z3
     fseek(file, 0, SEEK_END);
     size = ftell(file);
     rewind(file);
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-//     fprintf(stderr, "File size is %lu\n", size);
+  //     fprintf(stderr, "File size is %lu\n", size);
     #endif
     assert(size > 0);
-    
+
     //allocated buffer
-    assert(sizeof(char) == 1 && "char must be one byte wide");
+    if (sizeof(char) != 1)
+      SBNW_THROW(InternalCheckFailureException, "char must be one byte wide", "gf_loadSBMLfile");
     buf=(char*)malloc(size+1); //one extra byte for null char
-    assert(buf && "Failed to allocate buffer");
+    if (!buf)
+      SBNW_THROW(InternalCheckFailureException, "Failed to allocate buffer", "gf_loadSBMLfile");
     //read the whole file at once
     bytes_read = fread(buf, 1, size, file);
-    assert(bytes_read == size && "Failed to read whole file (wrong size specified?)");
+    if (bytes_read != size)
+      SBNW_THROW(InternalCheckFailureException, "Failed to read whole file (wrong size specified?)", "gf_loadSBMLfile");
     //trip EOF indicator
     fgetc(file);
-    assert(feof(file) && "EOF Expected");
+    if (!feof(file))
+      SBNW_THROW(InternalCheckFailureException, "EOF Expected", "gf_loadSBMLfile");
     buf[size] = '\0'; //terminating null char
-    
+
     /*close*/
     fclose(file);
-    
+
     gf_SBMLModel* mod = gf_loadSBMLbuf(buf);
-    
+
     free(buf);
-    
+
     return mod;
+
+  } catch (const Exception& e) {
+    gf_setError( e.getReport().c_str() );
+    return NULL;
+  }
 }
 
 
