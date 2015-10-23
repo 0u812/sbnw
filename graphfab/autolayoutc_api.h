@@ -120,12 +120,12 @@
 //
 // * \section install_sec Installation
 // *
-// * Installation documentation is provided at https://github.com/0u812/sbnw.
+// * Installation documentation is provided at https://github.com/sys-bio/sbnw.
 
 
-// \defgroup C_API All external C Methods
+// \defgroup C_API External C API
 
-// \defgroup C_Internal Internal C Methods
+// \defgroup C_Internal Internal C API (do not use)
 
 //
 //*/
