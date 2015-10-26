@@ -402,12 +402,27 @@ class Autolayout(MainWindowBaseClass):
 
         self.toolbar.addWidget(self.sliderwidget)
 
+        self.gravslider = QSlider(QtCore.Qt.Horizontal)
+        self.gravslider.setMaximum(100)
+        self.gravslider.setMinimum(1)
+        self.gravslider.setValue(self.openconfig().state.gravity)
+        self.gravslider.sliderReleased.connect(self.gravity_changed_via_slider)
+
+        self.grav_label = QLabel('Gravity:')
+        self.toolbar.addWidget(self.grav_label)
+
+        self.toolbar.addWidget(self.gravslider)
+
         self.model = None
 
 
     def stiffness_changed_via_slider(self):
         with self.openconfig() as config:
             config.state.stiffness = float(self.sliderwidget.value())
+
+    def gravity_changed_via_slider(self):
+        with self.openconfig() as config:
+            config.state.gravity = float(self.gravslider.value())
 
     # marker for Spyder plugin detection
     def pyfabMarker():
@@ -498,7 +513,7 @@ class Autolayout(MainWindowBaseClass):
 
     def autolayout(self):
         self.network.randomize(self.canvas)
-        self.network.autolayout(k=self.sliderwidget.value())
+        self.network.autolayout(k=self.sliderwidget.value(), grav=self.gravslider.value())
         self.fitLayoutToWindow()
 
     def copySBMLCb(self, event):
@@ -530,6 +545,7 @@ class Autolayout(MainWindowBaseClass):
 
     def notify_config_changed(self):
         self.sliderwidget.setValue(self.openconfig().state.stiffness)
+        self.gravslider.setValue(self.openconfig().state.gravity)
         self.update()
 
     def opensbml(self, sbml):
