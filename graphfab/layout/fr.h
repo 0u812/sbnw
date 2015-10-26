@@ -49,20 +49,34 @@
 extern "C" {
 #endif
 
+  /**
+ *  @author JKM
+ *  @brief Options passed to the Fruchterman-Reingold algorithm
+ *  @details This structure holds the settings used by the Fruchterman-Reingold algorithm.
+ *  \ingroup C_API
+ */
 typedef struct __fr_options {
-    /// Algorithm constant
+    /// Stiffness
     Real k;
-    /// Constrain to boundary?
+    /**
+     * @brief Constrain network elements to boundary (i.e. the drawing canvas?
+     * @note It should never be necessary to use this option, as @ref gf_tf_fitToWindow or
+     * @ref gf_fit_to_window can be used to achieve the same effect but with more robustness.
+     */
     int boundary;
-    /// Use magnetism? (forces bridge reactions)
+    /**
+     * @brief Use magnetism?
+     * @details When "magnetism" is enabled, forces can bridge reactions
+     * (i.e. nodes can exert attractive forces on each other if connected by a reaction).
+     */
     int mag;
-    /// Amount of gravity
+    /// Strength of gravity
     Real grav;
     /// Center of gravitational force
     Real baryx, baryy;
     /// Should the barycenter be set automatically from layout info?
     int autobary;
-    /// Enable compartment force calc?
+    /// Enable compartment-compartment and compartment-node interaction?
     int enable_comps;
     /// Randomize node positions before doing layout algo (library code DOES NOT call srand for reproducibility reasons)
     int prerandomize;
