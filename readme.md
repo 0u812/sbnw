@@ -26,7 +26,7 @@ The SBML [test models](https://github.com/0u812/sbnw/releases/download/1.3.2/tes
 
 ## Online Documentation
 
-Online C API documentation (via Doxygen) can be found at http://0u812.github.io/sbnw/docs. Python documentation can be found at http://0u812.github.io/sbnw/sphinx.
+Online C API documentation (via Doxygen) can be found at http://sys-bio.github.io/sbnw/docs. Python documentation can be found at http://sys-bio.github.io/sbnw/sphinx.
 
 ## Using the Python bindings
 
