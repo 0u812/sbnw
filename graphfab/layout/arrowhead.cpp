@@ -212,9 +212,9 @@ namespace Graphfab {
 
   ArrowheadStyle sub_arrow_style_ = 0;
   ArrowheadStyle prod_arrow_style_ = 1;
-  ArrowheadStyle act_arrow_style_ = 0;
-  ArrowheadStyle inh_arrow_style_ = 0;
-  ArrowheadStyle mod_arrow_style_ = 0;
+  ArrowheadStyle act_arrow_style_ = 4;
+  ArrowheadStyle inh_arrow_style_ = 5;
+  ArrowheadStyle mod_arrow_style_ = 7;
 
 }
 
