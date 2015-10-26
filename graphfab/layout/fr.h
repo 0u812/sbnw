@@ -70,7 +70,7 @@ typedef struct __fr_options {
      * (i.e. nodes can exert attractive forces on each other if connected by a reaction).
      */
     int mag;
-    /// Strength of gravity
+    /// Strength of gravity (must be greater than 5 to have an effect)
     Real grav;
     /// Center of gravitational force
     Real baryx, baryy;

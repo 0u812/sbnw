@@ -194,6 +194,17 @@ namespace Graphfab {
             v.addDelta( delta * calc_fa(v.getType() == NET_ELT_TYPE_RXN ? k : adjk, d));
         }
     }
+
+    // apply "gravitational" force
+    void do_gravity(NetworkElement& u, Point bary, Real strength, Real k) {
+      Point delta = u.getCentroid() - bary;
+
+      if (delta.mag() < 1e-2)
+        return;
+
+      Real adjk = strength / k;
+      u.addDelta( -delta * adjk );
+    }
     
     // single interation
     void FRSingle(fr_options& opt, Network& net, Box bound, Real T, Real k, uint64 num) {
@@ -252,6 +263,15 @@ namespace Graphfab {
                 Node* v = j->first;
                 do_attForce(*u, *v, k);
             }
+        }
+
+        if (opt.grav >= 5.) {
+          for(uint64 i=0; i<net.getNElts(); ++i) {
+            NetworkElement* u = net.getElt(i);;
+            if (u->getType() == NET_ELT_TYPE_SPEC) {
+              do_gravity(*u, Point(opt.baryx, opt.baryy), opt.grav, k);
+            }
+          }
         }
         
         net.capDeltas(T);
