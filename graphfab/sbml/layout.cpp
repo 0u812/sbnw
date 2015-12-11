@@ -922,7 +922,7 @@ gf_node *gf_nw_getNodepFromId(gf_network *nw, const char* id) {
   }
 
   for(k = 0; k< gf_nw_getNumNodes(nw); ++k) {
-    if( !strcmp(gf_node_getID(gf_nw_getNodep(nw)) , id) ) {
+    if( !strcmp(gf_node_getID(gf_nw_getNodep(nw, k)) , id) ) {
       return gf_nw_getNodep(nw, k);
     }
   }
