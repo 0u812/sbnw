@@ -352,6 +352,14 @@ _GraphfabExport gf_node gf_nw_getNode(gf_network* n, size_t i);
  */
 _GraphfabExport gf_node* gf_nw_getNodep(gf_network* n, size_t i);
 
+/** @brief Get the node with the given id
+ *  @param[in] nw The network object
+ *  @param[in] id The node id
+ *  @return A pointer to the node with the given id; returns NULL if no such node exists
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_node* gf_nw_getNodepFromId(gf_network* nw, const char* id);
+
 /** @brief Get the node at index i
  *  @param[in] n The network object
  *  @param[in] i Node index

@@ -914,6 +914,23 @@ gf_node* gf_nw_getNodep(gf_network* n, size_t i) {
     return node;
 }
 
+gf_node *gf_nw_getNodepFromId(gf_network *nw, const char* id) {
+  int k;
+  if(nw == NULL) {
+    gf_emitError("gf_nw_getNodeFromId: Unable to get layout information");
+    return NULL;
+  }
+
+  for(k = 0; k< gf_nw_getNumNodes(nw); ++k) {
+    if( !strcmp(gf_node_getID(gf_nw_getNodep(nw)) , id) ) {
+      return gf_nw_getNodep(nw, k);
+    }
+  }
+
+  gf_emitError("gf_nw_getNodeFromId: Cannot find node with given id");
+  return NULL;
+}
+
 gf_reaction gf_nw_getRxn(gf_network* n, size_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
