@@ -1617,6 +1617,15 @@ gf_transform* gf_tf_fitToWindow(gf_layoutInfo* l, double left, double top, doubl
     return t;
 }
 
+void gf_moveNetworkToFirstQuad(gf_layoutInfo* l, double x_disp, double y_disp) {
+    Network* net = (Network*)l->net;
+    AN(net, "No network");
+
+    Graphfab::Box bbox = net->getBoundingBox();
+
+    net->applyDisplacement(-bbox.getMin() + Graphfab::Point(x_disp, y_disp));
+}
+
 CPoint gf_tf_apply_to_point(gf_transform* tf, CPoint p) {
     Graphfab::Affine2d* t = (Graphfab::Affine2d*)tf->tf;
     AN(t, "No transform");

@@ -339,6 +339,11 @@ namespace Graphfab {
                 _ext = xformBox(_ext, t);
                 _p = xformPoint(_p, t);
             }
+
+            virtual void applyDisplacement(const Point& d) {
+                _ext.displace(d);
+                _p += d;
+            }
             
             /// Calculate the centroid based on the extents
             void recalcCentroid() { _p = (_ext.getMin() + _ext.getMax())*0.5; }
@@ -1111,6 +1116,8 @@ namespace Graphfab {
             void setTransform(const Affine2d& t, bool recurse = true);
             
             void setInverseTransform(const Affine2d& it, bool recurse = true);
+
+            void applyDisplacement(const Point& d);
             
             /// Discard any empty compartments
             void elideEmptyComps();

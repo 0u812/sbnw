@@ -1491,6 +1491,13 @@ namespace Graphfab {
             e->setInverseTransform(it, recurse);
         }
     }
+
+    void Network::applyDisplacement(const Point& d) {
+        for(EltIt i=EltsBegin(); i!=EltsEnd(); ++i) {
+            NetworkElement* e = *i;
+            e->applyDisplacement(d);
+        }
+    }
     
     void Network::resetActivity() {
         for(EltIt i=EltsBegin(); i!=EltsEnd(); ++i) {

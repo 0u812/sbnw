@@ -164,6 +164,11 @@ namespace Graphfab {
                 _min = Point::emin(_min, other._min);
                 _max = Point::emax(_max, other._max);
             }
+
+            void displace(const Point& d) {
+                _min += d;
+                _max += d;
+            }
             
             void dump(std::ostream& o) const {
                 o << "[" << getMin() << ", " << getMax() << "]";

@@ -785,6 +785,18 @@ _GraphfabExport void gf_fit_to_window(gf_layoutInfo* l, double left, double top,
  */
 _GraphfabExport gf_transform* gf_tf_fitToWindow(gf_layoutInfo* l, double left, double top, double right, double bottom);
 
+/** @brief Move the entire network to the first quadrant
+ *  @details Uses the network's bounding box to move all coordinates to the
+ *  first quadrant. @ref x_disp and @ref y_disp are an additional offset to
+ *  apply to the bounding box's minimum corner. If they are zero, the corner
+ *  will be at the origin.
+ *  @param[in] l The layout info object
+ *  @param[in] x_disp X displacement to post-apply to the bounding box
+ *  @param[in] y_disp Y displacement to post-apply to the bounding box
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_moveNetworkToFirstQuad(gf_layoutInfo* l, double x_disp, double y_disp);
+
 /** @brief Apply transform to point
  *  @param[in] tf Transform
  *  @param[in] p Point
@@ -817,7 +829,7 @@ _GraphfabExport gf_point gf_tf_getPostDisplacement(gf_transform* tf);
 
 /** @brief Dump transform
  *  @param[in] tf Transform
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport void gf_dump_transform(gf_transform* tf);
 
