@@ -61,7 +61,6 @@ namespace Graphfab {
       return alpha*t*t*t + beta*t*t + gamma*t + delta;
     }
     
-    /// In order to faithfully reproduce the output of the C# version, this function is translated ad verbatim (never mind, edited it)
     inline Point new2ndPos(const Point& first, const Point& second, const Real deg, const Real dist, const bool rel_dist) {
         Real h, o, a, x;
         Real hnew, onew, anew;
