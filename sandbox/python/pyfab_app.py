@@ -529,6 +529,7 @@ class Autolayout(MainWindowBaseClass):
         # Fit to frame
         framewidth = self.mainframe.frameRect().width()
         frameheight = self.mainframe.frameRect().height()
+        #self.layout.firstquad(0,0)
         self.mainframe.tf = self.layout.tf_fitwindow(pad,pad,framewidth - pad,frameheight - pad)
         self.mainframe.scale = self.mainframe.tf.scale.x
         self.mainframe.translateBase = QPoint(self.mainframe.tf.disp)

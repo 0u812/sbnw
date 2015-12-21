@@ -2062,6 +2062,27 @@ PyObject* gfp_Layout_TF_FitToWindow(gfp_Layout *self, PyObject *args, PyObject *
     return (PyObject*)t;
 }
 
+PyObject* gfp_Layout_FirstQuad(gfp_Layout *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"x_disp", "y_disp", NULL};
+    double x_disp, y_disp;
+    gf_transform* tf;
+    gfp_Transform* t;
+
+    // unnecessary?
+    if(!gfp_Layout_Check((PyObject*)self))
+        return NULL;
+
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "dd", kwlist, &x_disp, &y_disp)) {
+        return NULL;
+    }
+
+    t = (gfp_Transform*)PyObject_Call((PyObject*)&gfp_TransformType, PyTuple_New(0), NULL);
+
+    gf_moveNetworkToFirstQuad(self->l, x_disp, y_disp);
+
+    Py_RETURN_NONE;
+}
+
 static PyMethodDef gfp_Layout_methods[] = {
     {"fitwindow", (PyCFunction)gfp_Layout_FitToWindow, METH_VARARGS | METH_KEYWORDS,
      "Pan & scale the network so it fits in the given window\n\n"
@@ -2072,6 +2093,9 @@ static PyMethodDef gfp_Layout_methods[] = {
     },
     {"tf_fitwindow", (PyCFunction)gfp_Layout_TF_FitToWindow, METH_VARARGS | METH_KEYWORDS,
      "Like fitwindow but just returns the transformation, does not apply"
+    },
+    {"firstquad", (PyCFunction)gfp_Layout_FirstQuad, METH_VARARGS | METH_KEYWORDS,
+     "Translates the network so that it resides in the first quadrant"
     },
     {NULL}  /* Sentinel */
 };

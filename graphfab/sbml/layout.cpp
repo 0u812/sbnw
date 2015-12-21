@@ -1624,6 +1624,7 @@ void gf_moveNetworkToFirstQuad(gf_layoutInfo* l, double x_disp, double y_disp) {
     Graphfab::Box bbox = net->getBoundingBox();
 
     net->applyDisplacement(-bbox.getMin() + Graphfab::Point(x_disp, y_disp));
+    net->rebuildCurves();
 }
 
 CPoint gf_tf_apply_to_point(gf_transform* tf, CPoint p) {
