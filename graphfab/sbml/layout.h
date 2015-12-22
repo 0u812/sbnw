@@ -897,7 +897,7 @@ _GraphfabExport void gf_canvSetHeight(gf_canvas* c, unsigned long height);
  *  @param[in] l The layout info; contains the network that holds the list of nodes and their centroids
  *  @param[in] id The node id; used to find the correct node in the layout
  *  @param[in] p The point; used to store the coordinates of the node centroid
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport void gf_getNodeCentroid(gf_layoutInfo* l, const char* id, CPoint* p);
 

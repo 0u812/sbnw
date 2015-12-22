@@ -512,7 +512,7 @@ class Autolayout(MainWindowBaseClass):
         print('getobj')
 
     def autolayout(self):
-        self.network.randomize(self.canvas)
+        #self.network.randomize(self.canvas)
         self.network.autolayout(k=self.sliderwidget.value(), grav=self.gravslider.value())
         self.fitLayoutToWindow()
 

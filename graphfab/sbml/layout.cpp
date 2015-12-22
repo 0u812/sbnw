@@ -188,9 +188,11 @@ void gf_getNodeCentroid(gf_layoutInfo* l, const char* id, CPoint* p) {
     
     Graphfab::Point pp(0,0);
     Node* n = net->findNodeById(id);
-    if(!n)
+    if(!n) {
+        gf_emitError("gf_getNodeCentroid: unable to find a node with the given id");
         return;
-    pp = n->getCentroid();
+    }
+    pp = n->getCentroid(NetworkElement::COORD_SYSTEM_GLOBAL);
     
     p->x = pp.x;
     p->y = pp.y;
@@ -1447,6 +1449,8 @@ gf_curveCP gf_getGlobalCurveCPs(const gf_curve* c) {
     cp.e = Point2gf_point(curve->getTransformedE());
     cp.c1 = Point2gf_point(curve->getTransformedC1());
     cp.c2 = Point2gf_point(curve->getTransformedC2());
+
+//     std::cerr << "  cps:  " << curve->getTransformedS() << "-" << curve->getTransformedC1() << "-" << curve->getTransformedC2() << "-" << curve->getTransformedE() << "\n";
     
     return cp;
 }
