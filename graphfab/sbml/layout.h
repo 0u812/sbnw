@@ -481,6 +481,19 @@ _GraphfabExport void gf_node_unlock(gf_node* n);
 
 /** @brief Alias the node
  *  @param[in] n The node to alias
+ *  \ingroup C_Internal
+ */
+_GraphfabExport int gf_node_alias(gf_node* n, gf_network* m);
+
+/** @brief Create aliases of a given node
+ *  @details Creates alais nodes of a given node. One alias will be created for
+ *  each reaction the node participates in. The aliases will appear as separate
+ *  nodes in the network. The function @ref gf_node_isAliased may be called to
+ *  determine whether a given node is an alias or not.
+ *  @param[in/out] n The node to alias. Do not continue to use this pointer after
+ *  the call - it will be invalid
+ *  @param[in/out] m The network containing @ref n. The nodes and reactions in
+ *  this network may be modified by the call. The pointer @ref m will remain valid.
  *  \ingroup C_API
  */
 _GraphfabExport int gf_node_alias(gf_node* n, gf_network* m);
