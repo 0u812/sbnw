@@ -496,7 +496,7 @@ _GraphfabExport int gf_node_alias(gf_node* n, gf_network* m);
  *  this network may be modified by the call. The pointer @ref m will remain valid.
  *  \ingroup C_API
  */
-_GraphfabExport int gf_node_alias(gf_node* n, gf_network* m);
+_GraphfabExport int gf_node_make_alias(gf_node* n, gf_network* m);
 
 /** @brief Is the node aliased?
  *  @param[in] n The node object

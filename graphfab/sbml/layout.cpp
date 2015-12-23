@@ -1130,6 +1130,11 @@ int gf_node_alias(gf_node* n, gf_network* m) {
     return node->alias(net);
 }
 
+// alias a node
+int gf_node_make_alias(gf_node* n, gf_network* m) {
+    return gf_node_alias(n,m);
+}
+
 // is aliased?
 int gf_node_isAliased(gf_node* n) {
     Node* node = CastToNode(n->n);
