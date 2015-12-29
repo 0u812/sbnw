@@ -44,6 +44,8 @@
 #include <math.h>
 #include <stdlib.h> //rand
 
+static std::string default_comp_ = "";
+
 namespace Graphfab {
     
     std::string eltTypeToStr(const NetworkEltType t) {
@@ -1912,7 +1914,7 @@ namespace Graphfab {
             
             // assume a compartment with the id "default" or "compartment" represents
             // a default, non-visual compartment, so discard it from the model
-            if(comp->getId() != "default" && comp->getId() != "compartment" && comp->getId() != "graphfab_default_compartment") {
+            if(comp->getId() != "default" && comp->getId() != "compartment" && comp->getId() != "graphfab_default_compartment" && (!default_comp_.size() || default_comp_ !=  comp->getId())) {
                 Graphfab::Compartment* c = new Compartment();
                 
                 // set id

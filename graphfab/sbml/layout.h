@@ -283,6 +283,22 @@ _GraphfabExport gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_S
  */
 _GraphfabExport void gf_setModelNamespace(gf_layoutInfo* l, unsigned long level, unsigned long version);
 
+/**
+ * @brief Get the id of the default SBML compartment
+ * @note The default compartment is not rendered
+ * @return The id (memory owned by the library)
+ *  \ingroup C_API
+ */
+_GraphfabExport const char* gf_getDefaultCompartmentID();
+
+/**
+ * @brief Set the id of the default SBML compartment
+ * @note The default compartment is not rendered
+ * @param[in] id The id of the default compartment
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_setDefaultCompartmentID(const char* id);
+
 // -- Object API --
 
 // Network
