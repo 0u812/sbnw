@@ -289,7 +289,7 @@ _GraphfabExport void gf_setModelNamespace(gf_layoutInfo* l, unsigned long level,
  * @return The id (memory owned by the library)
  *  \ingroup C_API
  */
-_GraphfabExport const char* gf_getDefaultCompartmentID();
+_GraphfabExport const char* gf_getDefaultCompartmentId();
 
 /**
  * @brief Set the id of the default SBML compartment
@@ -297,7 +297,7 @@ _GraphfabExport const char* gf_getDefaultCompartmentID();
  * @param[in] id The id of the default compartment
  *  \ingroup C_API
  */
-_GraphfabExport void gf_setDefaultCompartmentID(const char* id);
+_GraphfabExport void gf_setDefaultCompartmentId(const char* id);
 
 // -- Object API --
 
@@ -328,12 +328,20 @@ _GraphfabExport void gf_clearNetwork(gf_network* n);
  */
 _GraphfabExport void gf_releaseNetwork(gf_network* n);
 
-/** @brief Get the id of the network (via the SBML Model object)
+/** @brief Get the id of the network (i.e. the SBML model)
  *  @note Memory must be freed by caller
  *  @param[in] n The network object
  *  \ingroup C_API
  */
-_GraphfabExport char* gf_nw_getID(gf_network* n);
+_GraphfabExport char* gf_nw_getId(gf_network* n);
+
+/** @brief Set the id of the network (via the SBML model)
+ *  @note Memory must be freed by caller
+ *  @param[in,out] n The network object
+ *  @param[in] id The id to use
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_nw_setId(gf_network* n, const char* id);
 
 /** @brief Get the number of nodes
  *  @param[in] n The network object

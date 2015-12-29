@@ -44,7 +44,7 @@
 #include <math.h>
 #include <stdlib.h> //rand
 
-static std::string default_comp_ = "";
+static std::string default_comp_id_ = "";
 
 namespace Graphfab {
     
@@ -63,6 +63,18 @@ namespace Graphfab {
     
     void dumpEltType(std::ostream& os, const NetworkEltType t, uint32 ind) {
         os << eltTypeToStr(t);
+    }
+
+    bool haveDefaultCompartmentId() {
+      return default_comp_id_.size();
+    }
+
+    void setDefaultCompartmentId(const std::string& id) {
+      default_comp_id_ = id;
+    }
+
+    std::string getDefaultCompartmentId() {
+      return default_comp_id_;
     }
 
     RxnRoleType SBMLRole2GraphfabRole(::SpeciesReferenceRole_t role) {
@@ -1914,7 +1926,7 @@ namespace Graphfab {
             
             // assume a compartment with the id "default" or "compartment" represents
             // a default, non-visual compartment, so discard it from the model
-            if(comp->getId() != "default" && comp->getId() != "compartment" && comp->getId() != "graphfab_default_compartment" && (!default_comp_.size() || default_comp_ !=  comp->getId())) {
+            if(comp->getId() != "default" && comp->getId() != "compartment" && comp->getId() != "graphfab_default_compartment" && (!haveDefaultCompartmentId() || getDefaultCompartmentId() !=  comp->getId())) {
                 Graphfab::Compartment* c = new Compartment();
                 
                 // set id

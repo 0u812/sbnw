@@ -441,6 +441,10 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
     }
     
     if(net) {
+        // If the network has an id, it becomes the id of the SBML model
+        if(net->isSetId())
+            model->setId(net->getId());
+
         // rebuild the curves as we will need them shortly
         net->rebuildCurves();
         
@@ -841,6 +845,14 @@ void gf_setModelNamespace(gf_layoutInfo* l, unsigned long level, unsigned long v
   l->version = version;
 }
 
+const char* gf_getDefaultCompartmentId() {
+  return getDefaultCompartmentId().c_str();
+}
+
+void gf_setDefaultCompartmentId(const char* id) {
+  setDefaultCompartmentId(id);
+}
+
 void gf_layout_fit_to_window(gf_layoutInfo* l, double left, double top, double right, double bottom) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
@@ -872,11 +884,18 @@ void gf_releaseNetwork(gf_network* n) {
     delete net;
 }
 
-char* gf_nw_getID(gf_network* n) {
+char* gf_nw_getId(gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     
     return gf_strclone(net->getId().c_str());
+}
+
+void gf_nw_setId(gf_network* n, const char* id) {
+    Network* net = CastToNetwork(n->n);
+    AN(net, "No network");
+
+    net->setId(id);
 }
 
 size_t gf_nw_getNumNodes(const gf_network* n) {

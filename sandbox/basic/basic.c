@@ -233,7 +233,7 @@ int main(int argc, char* argv[]) {
           gf_network* nw = gf_getNetworkp(l);
 
           // may leak
-          printf("Network ID: %s\n", gf_nw_getID(nw));
+          printf("Network ID: %s\n", gf_nw_getId(nw));
           printf("Network # nodes: %zu\n", gf_nw_getNumNodes(nw));
 
           gf_node* n = gf_nw_getNodep(nw, 0);

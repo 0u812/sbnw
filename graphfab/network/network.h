@@ -80,6 +80,12 @@ namespace Graphfab {
     
     class Compartment;
 
+    bool haveDefaultCompartmentId();
+
+    void setDefaultCompartmentId(const std::string& id);
+
+    std::string getDefaultCompartmentId();
+
     /** @brief Curve for a substrate
      */
     class SubCurve : public RxnBezier {
@@ -1060,6 +1066,10 @@ namespace Graphfab {
             
             /// Get the network's id
             const std::string& getId() const { return _id; }
+
+            void setId(const std::string& id) { _id = id; }
+
+            bool isSetId() const { return _id.size(); }
             
             bool isLayoutSpecified() const { return layoutspecified_; }
             
