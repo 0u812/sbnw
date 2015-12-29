@@ -329,6 +329,7 @@ _GraphfabExport void gf_clearNetwork(gf_network* n);
 _GraphfabExport void gf_releaseNetwork(gf_network* n);
 
 /** @brief Get the id of the network (i.e. the SBML model)
+ *  @details The id of the network is determined by the SBML model object
  *  @note Memory must be freed by caller
  *  @param[in] n The network object
  *  \ingroup C_API
@@ -336,6 +337,7 @@ _GraphfabExport void gf_releaseNetwork(gf_network* n);
 _GraphfabExport char* gf_nw_getId(gf_network* n);
 
 /** @brief Set the id of the network (via the SBML model)
+ *  @details This will be used as the ID of the model object in the serialized SBML
  *  @note Memory must be freed by caller
  *  @param[in,out] n The network object
  *  @param[in] id The id to use
