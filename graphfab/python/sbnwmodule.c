@@ -2065,7 +2065,6 @@ PyObject* gfp_Layout_TF_FitToWindow(gfp_Layout *self, PyObject *args, PyObject *
 PyObject* gfp_Layout_FirstQuad(gfp_Layout *self, PyObject *args, PyObject *kwds) {
     static char *kwlist[] = {"x_disp", "y_disp", NULL};
     double x_disp, y_disp;
-    gf_transform* tf;
     gfp_Transform* t;
 
     // unnecessary?
