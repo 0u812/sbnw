@@ -1117,6 +1117,26 @@ int gf_nw_isLayoutSpecified(gf_network* nw) {
         return 0;
 }
 
+gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, size_t i) {
+    Network* net = CastToNetwork(nw->n);
+    AN(net && net->doByteCheck(), "Not a network");
+    Node* node = CastToNode(n->n);
+    AN(node && node->doByteCheck(), "Not a node");
+    gf_node result;
+    if (!node->isAlias()) {
+        gf_emitError("gf_node_getInstance: Not an alias node");
+        return result;
+    }
+    result.n = net->getInstance(node, i);
+    return result;
+}
+
+gf_node* gf_node_getInstancep(gf_network* nw, gf_node* n, size_t i) {
+    gf_node* z = (gf_node*)malloc(sizeof(gf_node));
+    *z = gf_nw_getInstance(nw, n, i);
+    return z;
+}
+
 // Node
 
 void gf_node_setCompartment(gf_node* n, gf_compartment* c) {

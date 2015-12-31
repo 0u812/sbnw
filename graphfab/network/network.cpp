@@ -318,11 +318,12 @@ namespace Graphfab {
             n->setWidth(getWidth());
             n->setHeight(getHeight());
 
-            {
-              std::stringstream ss;
-              ss << getId() << "_alias" << k;
-              n->setId(ss.str());
-            }
+//             {
+//               std::stringstream ss;
+//               ss << getId() << "_alias" << k;
+//               n->setId(ss.str());
+//             }
+            n->setId(getId());
             n->numUses() = 1;
             n->setAlias(true);
 
@@ -356,6 +357,10 @@ namespace Graphfab {
         }
 
         return 0;
+    }
+
+    bool Node::isCommonInstance(const Node* other) const {
+        return getId() == other->getId();
     }
     
     Point Node::getUpperLeftCorner() const {
@@ -1305,6 +1310,24 @@ namespace Graphfab {
             std::stringstream ss;
             ss << "No unique node with given index " << n << " where number of unique nodes is " << getNumUniqueNodes();
             SBNW_THROW(InvalidParameterException, ss.str(), "Network::getUniqueNodeAt");
+        }
+    }
+
+    Node* Network::getInstance(const Node* u, const size_t n) {
+        size_t k = 0;
+        for(NodeVec::iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {
+            Node* v = *i;
+            if (u->isCommonInstance(v)) {
+                if (k == n)
+                    return v;
+                else
+                    ++k;
+            }
+        }
+        {
+            std::stringstream ss;
+            ss << "No instance with given index " << n << " where number of unique nodes is " << getNumUniqueNodes();
+            SBNW_THROW(InvalidParameterException, ss.str(), "Network::getInstance");
         }
     }
     

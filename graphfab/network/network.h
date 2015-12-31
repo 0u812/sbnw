@@ -480,7 +480,7 @@ namespace Graphfab {
             bool isAlias() const { return _isAlias; }
 
             /// Return true if both nodes are instances of the same species
-//             bool isCommonInstance(const Node& other) const;
+            bool isCommonInstance(const Node* other) const;
             
             /// Specify if this node is an alias or not
             void setAlias(bool b) { _isAlias = b; }
@@ -1038,6 +1038,9 @@ namespace Graphfab {
             Node* getNodeAt(const size_t i) { return _nodes.at(i); }
 
             Node* getUniqueNodeAt(const size_t n);
+
+            /// Get a node in an alias group by instance index
+            Node* getInstance(const Node* u, const size_t n);
             
             bool containsNode(const Node* n) const;
 
