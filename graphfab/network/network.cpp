@@ -1286,6 +1286,27 @@ namespace Graphfab {
         //not found
         return NULL;
     }
+
+    Node* Network::getUniqueNodeAt(const size_t n) {
+        size_t k = 0, a = 1;
+        for(NodeVec::iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {
+            Node* x = *i;
+            if (k == n)
+                return x;
+            if (!x->isAlias()) {
+                ++k;
+                a = 1;
+            } else {
+                k += a;
+                a = 0;
+            }
+        }
+        {
+            std::stringstream ss;
+            ss << "No unique node with given index " << n << " where number of unique nodes is " << getNumUniqueNodes();
+            SBNW_THROW(InvalidParameterException, ss.str(), "Network::getUniqueNodeAt");
+        }
+    }
     
     bool Network::containsNode(const Node* n) const {
         for(NodeVec::const_iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {
@@ -1456,6 +1477,21 @@ namespace Graphfab {
                 return c;
         }
         return NULL;
+    }
+
+    uint64 Network::getNumUniqueNodes() const {
+        uint64 k = 0, a = 1;
+        for(NodeVec::const_iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {
+            const Node* x = *i;
+            if (!x->isAlias()) {
+                ++k;
+                a = 1;
+            } else {
+                k += a;
+                a = 0;
+            }
+        }
+        return k;
     }
     
     Box Network::getBoundingBox() const {

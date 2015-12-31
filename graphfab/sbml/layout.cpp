@@ -905,6 +905,13 @@ size_t gf_nw_getNumNodes(const gf_network* n) {
     return net->getTotalNumNodes();
 }
 
+size_t gf_nw_getNumUniqueNodes(const gf_network* n) {
+    Network* net = CastToNetwork(n->n);
+    AN(net, "No network");
+
+    return net->getNumUniqueNodes();
+}
+
 size_t gf_nw_getNumRxns(const gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
@@ -927,11 +934,27 @@ gf_node gf_nw_getNode(gf_network* n, size_t i) {
     return node;
 }
 
+gf_node gf_nw_getUniqueNode(gf_network* n, size_t i) {
+    Network* net = CastToNetwork(n->n);
+    AN(net, "No network");
+    gf_node node;
+    node.n = net->getUniqueNodeAt(i);
+    return node;
+}
+
 gf_node* gf_nw_getNodep(gf_network* n, size_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_node* node = (gf_node*)malloc(sizeof(gf_node));
     node->n = net->getNodeAt(i);
+    return node;
+}
+
+gf_node* gf_nw_getUniqueNodep(gf_network* n, size_t i) {
+    Network* net = CastToNetwork(n->n);
+    AN(net, "No network");
+    gf_node* node = (gf_node*)malloc(sizeof(gf_node));
+    node->n = net->getUniqueNodeAt(i);
     return node;
 }
 

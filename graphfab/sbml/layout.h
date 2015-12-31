@@ -351,6 +351,15 @@ _GraphfabExport void gf_nw_setId(gf_network* n, const char* id);
  */
 _GraphfabExport size_t gf_nw_getNumNodes(const gf_network* n);
 
+/** @brief Get the number of unique nodes
+ *  @details This method only counts the unique nodes in a
+ *  network, i.e. if a node is aliased, all instances count
+ *  as a single node.
+ *  @param[in] n The network object
+ *  \ingroup C_API
+ */
+_GraphfabExport size_t gf_nw_getNumUniqueNodes(const gf_network* n);
+
 /** @brief Get the number of reactions
  *  @param[in] n The network object
  *  \ingroup C_API
@@ -370,6 +379,13 @@ _GraphfabExport size_t gf_nw_getNumComps(const gf_network* n);
  */
 _GraphfabExport gf_node gf_nw_getNode(gf_network* n, size_t i);
 
+/** @brief Get the unique node at index i
+ *  @param[in] n The network object
+ *  @param[in] i Node index
+ *  \ingroup C_Internal
+ */
+_GraphfabExport gf_node gf_nw_getUniqueNode(gf_network* n, size_t i);
+
 /** @brief Get the node at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
@@ -377,6 +393,14 @@ _GraphfabExport gf_node gf_nw_getNode(gf_network* n, size_t i);
  *  \ingroup C_API
  */
 _GraphfabExport gf_node* gf_nw_getNodep(gf_network* n, size_t i);
+
+/** @brief Get the node at index i
+ *  @param[in] n The network object
+ *  @param[in] i Node index
+ *  @return A pointer to the node
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_node* gf_nw_getUniqueNodep(gf_network* n, size_t i);
 
 /** @brief Get the node with the given id
  *  @param[in] nw The network object

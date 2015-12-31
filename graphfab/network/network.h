@@ -457,10 +457,10 @@ namespace Graphfab {
             /// Get the species' name
             const std::string& getName() const;
             
-            /// Get the species' id
+            /// Get the node id
             const std::string& getId() const;
             
-            /// Set the species' id
+            /// Set the node id
             void setId(const std::string& id);
             
             /// Get the species' reaction glyph (layout element)
@@ -478,6 +478,9 @@ namespace Graphfab {
             /// Is this node an alias node?
             //TODO: change to isAliased. There is no such thing as an "alias node"
             bool isAlias() const { return _isAlias; }
+
+            /// Return true if both nodes are instances of the same species
+//             bool isCommonInstance(const Node& other) const;
             
             /// Specify if this node is an alias or not
             void setAlias(bool b) { _isAlias = b; }
@@ -1033,6 +1036,8 @@ namespace Graphfab {
             Node* findNodeByGlyph(const std::string& gly);
             
             Node* getNodeAt(const size_t i) { return _nodes.at(i); }
+
+            Node* getUniqueNodeAt(const size_t n);
             
             bool containsNode(const Node* n) const;
 
@@ -1116,6 +1121,8 @@ namespace Graphfab {
 
             /// Returns # of species
             uint64 getTotalNumNodes() const { return _nodes.size(); }
+
+            uint64 getNumUniqueNodes() const;
 
             Box getBoundingBox() const;
             
