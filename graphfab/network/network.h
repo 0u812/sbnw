@@ -1039,6 +1039,8 @@ namespace Graphfab {
 
             Node* getUniqueNodeAt(const size_t n);
 
+            size_t getNumInstances(const Node* u);
+
             /// Get a node in an alias group by instance index
             Node* getInstance(const Node* u, const size_t n);
             

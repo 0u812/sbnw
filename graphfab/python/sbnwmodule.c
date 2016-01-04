@@ -1731,6 +1731,23 @@ PyObject* gfp_Network_getInstance(gfp_Network *self, PyObject *args, PyObject *k
     return NULL;
 }
 
+PyObject* gfp_Network_getNumInstances(gfp_Network *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"node", NULL};
+    gfp_Node* node=NULL;
+
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist, &gfp_NodeType, &node)) {
+        PyErr_SetString(SBNWError, "Argument parsing failed");
+        return NULL;
+    }
+
+    if (!gf_node_isAliased(&node->n)) {
+      PyErr_SetString(SBNWError, "Node is not aliased");
+      return NULL;
+    }
+
+    return PyLong_FromLong(gf_nw_getNumInstances(&self->n, &node->n));
+}
+
 static PyMethodDef Network_methods[] = {
     {"randomize", (PyCFunction)gfp_NetworkRandomizeLayout, METH_VARARGS | METH_KEYWORDS,
      "Randomize the layout\n\n"
@@ -1781,6 +1798,9 @@ static PyMethodDef Network_methods[] = {
      ":param float ymin: The start of the window in Y\n"
      ":param float xmax: The end of the window in X\n"
      ":param float ymax: The end of the window in Y\n"
+    },
+    {"getnuminstances", (PyCFunction)gfp_Network_getNumInstances, METH_VARARGS | METH_KEYWORDS,
+     "Internal: Get the number of instances of the node"
     },
     {"getinstance", (PyCFunction)gfp_Network_getInstance, METH_VARARGS | METH_KEYWORDS,
      "Internal: Get the kth instance of the node"

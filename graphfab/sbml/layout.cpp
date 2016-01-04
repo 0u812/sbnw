@@ -1117,6 +1117,15 @@ int gf_nw_isLayoutSpecified(gf_network* nw) {
         return 0;
 }
 
+int gf_nw_getNumInstances(gf_network* nw, gf_node* n) {
+    Network* net = CastToNetwork(nw->n);
+    AN(net && net->doByteCheck(), "Not a network");
+    Node* node = CastToNode(n->n);
+    AN(node && node->doByteCheck(), "Not a node");
+
+    return net->getNumInstances(node);
+}
+
 gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, size_t i) {
     Network* net = CastToNetwork(nw->n);
     AN(net && net->doByteCheck(), "Not a network");

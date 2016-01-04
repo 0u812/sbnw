@@ -1313,6 +1313,16 @@ namespace Graphfab {
         }
     }
 
+    size_t Network::getNumInstances(const Node* u) {
+        size_t k = 0;
+        for(NodeVec::iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {
+            Node* v = *i;
+            if (u->isCommonInstance(v))
+                ++k;
+        }
+        return k;
+    }
+
     Node* Network::getInstance(const Node* u, const size_t n) {
         size_t k = 0;
         for(NodeVec::iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {
