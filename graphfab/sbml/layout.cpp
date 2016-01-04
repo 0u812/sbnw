@@ -1131,7 +1131,7 @@ gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, size_t i) {
     return result;
 }
 
-gf_node* gf_node_getInstancep(gf_network* nw, gf_node* n, size_t i) {
+gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, size_t i) {
     gf_node* z = (gf_node*)malloc(sizeof(gf_node));
     *z = gf_nw_getInstance(nw, n, i);
     return z;
