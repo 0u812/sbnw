@@ -1339,7 +1339,7 @@ static int gfp_Network_rawinit(gfp_Network *self, gf_network n, gf_layoutInfo* l
     numrxns  = gf_nw_getNumRxns (&self->n);
     numcomps = gf_nw_getNumComps(&self->n);
     numuniquenodes = gf_nw_getNumUniqueNodes(&self->n);
-    printf("gf_nw_getNumUniqueNodes: %zu\n", numuniquenodes);
+//     printf("gf_nw_getNumUniqueNodes: %zu\n", numuniquenodes);
     
     if(self->nodes)
       Py_XDECREF(self->nodes);
@@ -1695,6 +1695,42 @@ PyObject* gfp_Network_FitToWindow(gfp_Network *self, PyObject *args, PyObject *k
     Py_RETURN_NONE;
 }
 
+PyObject* gfp_Network_getInstance(gfp_Network *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"node", "k", NULL};
+    gfp_Node* node=NULL;
+    gf_node instance;
+    int k = 0, l = 0;
+
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!i", kwlist, &gfp_NodeType, &node, &k)) {
+        PyErr_SetString(SBNWError, "Argument parsing failed");
+        return NULL;
+    }
+
+    if (!gf_node_isAliased(&node->n)) {
+      PyErr_SetString(SBNWError, "Node is not aliased");
+      return NULL;
+    }
+
+    instance = gf_nw_getInstance(&self->n, &node->n, k);
+
+    if (gf_haveError()) {
+      PyErr_SetString(SBNWError, "Unable to get instance");
+      return NULL;
+    }
+
+    for (l=0; l<gf_nw_getNumNodes(&self->n); ++l) {
+        gf_node z = gf_nw_getNode(&self->n, l);
+        if (gf_node_isIdentical(&instance, &z)) {
+            PyObject* r = PyTuple_GetItem((PyObject*)self->nodes, l);
+            Py_INCREF(r);
+            return r;
+        }
+    }
+
+    PyErr_SetString(SBNWError, "Instance not found");
+    return NULL;
+}
+
 static PyMethodDef Network_methods[] = {
     {"randomize", (PyCFunction)gfp_NetworkRandomizeLayout, METH_VARARGS | METH_KEYWORDS,
      "Randomize the layout\n\n"
@@ -1745,6 +1781,9 @@ static PyMethodDef Network_methods[] = {
      ":param float ymin: The start of the window in Y\n"
      ":param float xmax: The end of the window in X\n"
      ":param float ymax: The end of the window in Y\n"
+    },
+    {"getinstance", (PyCFunction)gfp_Network_getInstance, METH_VARARGS | METH_KEYWORDS,
+     "Internal: Get the kth instance of the node"
     },
     {NULL}  /* Sentinel */
 };
