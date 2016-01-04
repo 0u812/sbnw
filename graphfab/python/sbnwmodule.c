@@ -1351,7 +1351,7 @@ static int gfp_Network_rawinit(gfp_Network *self, gf_network n, gf_layoutInfo* l
     self->nodes = PyTuple_New(numnodes);
     self->rxns  = PyTuple_New(numrxns);
     self->comps = PyTuple_New(numcomps);
-    self->uniquenodes = PyTuple_New(numnodes);
+    self->uniquenodes = PyTuple_New(numuniquenodes);
     
 //     fprintf(stderr, "layout raw init nodes\n");
     for(i=0; i<numnodes; ++i) {
