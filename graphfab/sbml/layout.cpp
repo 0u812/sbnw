@@ -1323,6 +1323,16 @@ int gf_node_getAttachedCurves(gf_node* n, gf_network* m, unsigned int* num, gf_c
     return 0;
 }
 
+int gf_node_isIdentical(gf_node* xu, gf_node* xv) {
+    Node* u = CastToNode(xu->n);
+    AN(u && u->doByteCheck(), "Not a node");
+
+    Node* v = CastToNode(xv->n);
+    AN(v && v->doByteCheck(), "Not a node");
+
+    return u == v;
+}
+
 // Reaction
 
 void gf_releaseRxn(const gf_reaction* r) {

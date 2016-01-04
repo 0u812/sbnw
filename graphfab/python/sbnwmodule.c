@@ -1276,6 +1276,7 @@ typedef struct {
     PyObject* nodes;
     PyObject* rxns;
     PyObject* comps;
+    PyObject* uniquenodes;
 
     // added to condense object hierarchy
     gf_layoutInfo* l;
@@ -1292,6 +1293,7 @@ static void gfp_Network_dealloc(gfp_Network* self) {
     Py_XDECREF(self->nodes);
     Py_XDECREF(self->rxns);
     Py_XDECREF(self->comps);
+    Py_XDECREF(self->uniquenodes);
 
     Py_XDECREF(self->canv);
 
@@ -1310,6 +1312,7 @@ static PyObject* gfp_Network_new(PyTypeObject *type, PyObject *args, PyObject *k
         self->nodes = NULL;
         self->rxns  = NULL;
         self->comps = NULL;
+        self->uniquenodes = NULL;
 
         self->canv = NULL;
     }
@@ -1326,7 +1329,7 @@ static int gfp_Network_init(gfp_Network *self, PyObject *args, PyObject *kwds) {
 }
 
 static int gfp_Network_rawinit(gfp_Network *self, gf_network n, gf_layoutInfo* l) {
-    size_t i, numnodes, numrxns, numcomps;
+    size_t i, numnodes, numrxns, numcomps, k, numuniquenodes;
     
     self->n = n;
 
@@ -1335,6 +1338,8 @@ static int gfp_Network_rawinit(gfp_Network *self, gf_network n, gf_layoutInfo* l
     numnodes = gf_nw_getNumNodes(&self->n);
     numrxns  = gf_nw_getNumRxns (&self->n);
     numcomps = gf_nw_getNumComps(&self->n);
+    numuniquenodes = gf_nw_getNumUniqueNodes(&self->n);
+    printf("gf_nw_getNumUniqueNodes: %zu\n", numuniquenodes);
     
     if(self->nodes)
       Py_XDECREF(self->nodes);
@@ -1346,6 +1351,7 @@ static int gfp_Network_rawinit(gfp_Network *self, gf_network n, gf_layoutInfo* l
     self->nodes = PyTuple_New(numnodes);
     self->rxns  = PyTuple_New(numrxns);
     self->comps = PyTuple_New(numcomps);
+    self->uniquenodes = PyTuple_New(numnodes);
     
 //     fprintf(stderr, "layout raw init nodes\n");
     for(i=0; i<numnodes; ++i) {
@@ -1369,6 +1375,21 @@ static int gfp_Network_rawinit(gfp_Network *self, gf_network n, gf_layoutInfo* l
         PyTuple_SetItem(self->comps, i, (PyObject*)o);
         if(gfp_Compartment_rawinit(o, gf_nw_getCompartment(&self->n, i)))
             return 1;
+    }
+
+    for(i=0; i<numuniquenodes; ++i) {
+        for (k=0; k<numnodes; ++k) {
+          gf_node t1 = gf_nw_getNode(&self->n, k);
+          gf_node t2 = gf_nw_getUniqueNode(&self->n, i);
+          if (gf_node_isIdentical(&t1, &t2)) {
+            PyTuple_SetItem(self->uniquenodes, i, PyTuple_GetItem((PyObject*)self->nodes, k));
+            Py_INCREF(PyTuple_GetItem((PyObject*)self->nodes, k));
+            goto found_node;
+          }
+        }
+        PyErr_SetString(SBNWError, "Failed to find the node");
+        return 1;
+        found_node:;
     }
 
 //     fprintf(stderr, "layout raw init done\n");
@@ -1737,6 +1758,8 @@ static PyMemberDef gfp_Network_members[] = {
      "compartments"},
     {"canvas", T_OBJECT_EX, offsetof(gfp_Network, canv), 0,
      "canvas"},
+    {"uniquenodes", T_OBJECT_EX, offsetof(gfp_Network,uniquenodes), READONLY,
+     "uniquenodes"},
     {NULL}  /* Sentinel */
 };
 

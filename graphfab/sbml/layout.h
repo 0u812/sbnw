@@ -642,6 +642,13 @@ _GraphfabExport int gf_node_getConnectedReactions(gf_node* n, gf_network* m, uns
  */
 _GraphfabExport int gf_node_getAttachedCurves(gf_node* n, gf_network* m, unsigned int* num, gf_curve** curves);
 
+/** @brief Tests whether two nodes are identical
+ *  @param[in] u A node object
+ *  @param[in] v A node object
+ *  \ingroup C_Internal
+ */
+_GraphfabExport int gf_node_isIdentical(gf_node* u, gf_node* v);
+
 // Reaction
 
 /** @brief Release the reaction
