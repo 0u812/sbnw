@@ -42,6 +42,7 @@
 static std::string lastError_;
 
 void gf_emitError(const char* str) {
+    lastError_ = str;
     fprintf(stderr, "%s",  str);
 }
 
