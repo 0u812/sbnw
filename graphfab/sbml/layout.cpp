@@ -1599,13 +1599,24 @@ int gf_curve_getArrowheadVerts(const gf_curve* c, unsigned int* n, gf_point** v)
 void gf_releaseCompartment(const gf_compartment* c) {
     Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
     AN(comp, "No comp");
+    if(!comp->doByteCheck()) {
+      gf_emitError("Type verification failed");
+      return;
+    }
     
     delete comp;
 }
 
 char* gf_compartment_getID(gf_compartment* c) {
     Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
-    AN(comp, "No comp");
+    if(!comp) {
+      gf_emitError("Compartment is NULL");
+      return NULL;
+    }
+    if(!comp->doByteCheck()) {
+      gf_emitError("Type verification failed");
+      return NULL;
+    }
     
     return gf_strclone(comp->getId().c_str());
 }
