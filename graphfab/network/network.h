@@ -55,6 +55,7 @@
 #include <string>
 #include <iostream>
 #include <typeinfo>
+#include <stdint.h>
 
 namespace Graphfab {
     
@@ -863,7 +864,7 @@ namespace Graphfab {
             uint64 getNElts() const { return _elt.size(); }
             
             Compartment()
-                : /*_nu(0.3),*/ _ra(50.*50.), _E(10.), _res(0.25), NetworkElement() {
+                : /*_nu(0.3),*/ _ra(50.*50.), _E(10.), _res(0.25), bytepattern(0xffae11), NetworkElement() {
                     _shape = ELT_SHAPE_RECT;
                     _type = NET_ELT_TYPE_COMP;
                 }
@@ -958,6 +959,8 @@ namespace Graphfab {
             
             /// Dump info about forces
             void dumpForces(std::ostream& os, uint32 ind) const;
+
+            bool doByteCheck() { if(bytepattern == 0xffae11) return true; else return false; }
             
         protected:
             /// ID
@@ -976,6 +979,8 @@ namespace Graphfab {
             Real _fx1, _fy1, _fx2, _fy2;
             /// Restoring force multiplier
             Real _res;
+
+            uint64_t bytepattern;
     };
 
     /** @brief Network topology
