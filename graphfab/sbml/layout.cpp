@@ -898,35 +898,35 @@ void gf_nw_setId(gf_network* n, const char* id) {
     net->setId(id);
 }
 
-size_t gf_nw_getNumNodes(const gf_network* n) {
+uint64_t gf_nw_getNumNodes(const gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     
     return net->getTotalNumNodes();
 }
 
-size_t gf_nw_getNumUniqueNodes(const gf_network* n) {
+uint64_t gf_nw_getNumUniqueNodes(const gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
 
     return net->getNumUniqueNodes();
 }
 
-size_t gf_nw_getNumRxns(const gf_network* n) {
+uint64_t gf_nw_getNumRxns(const gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     
     return net->getTotalNumRxns();
 }
 
-size_t gf_nw_getNumComps(const gf_network* n) {
+uint64_t gf_nw_getNumComps(const gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     
     return net->getTotalNumComps();
 }
 
-gf_node gf_nw_getNode(gf_network* n, size_t i) {
+gf_node gf_nw_getNode(gf_network* n, uint64_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_node node;
@@ -934,7 +934,7 @@ gf_node gf_nw_getNode(gf_network* n, size_t i) {
     return node;
 }
 
-gf_node gf_nw_getUniqueNode(gf_network* n, size_t i) {
+gf_node gf_nw_getUniqueNode(gf_network* n, uint64_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_node node;
@@ -942,7 +942,7 @@ gf_node gf_nw_getUniqueNode(gf_network* n, size_t i) {
     return node;
 }
 
-gf_node* gf_nw_getNodep(gf_network* n, size_t i) {
+gf_node* gf_nw_getNodep(gf_network* n, uint64_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_node* node = (gf_node*)malloc(sizeof(gf_node));
@@ -950,7 +950,7 @@ gf_node* gf_nw_getNodep(gf_network* n, size_t i) {
     return node;
 }
 
-gf_node* gf_nw_getUniqueNodep(gf_network* n, size_t i) {
+gf_node* gf_nw_getUniqueNodep(gf_network* n, uint64_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_node* node = (gf_node*)malloc(sizeof(gf_node));
@@ -975,7 +975,7 @@ gf_node *gf_nw_getNodepFromId(gf_network *nw, const char* id) {
   return NULL;
 }
 
-gf_reaction gf_nw_getRxn(gf_network* n, size_t i) {
+gf_reaction gf_nw_getRxn(gf_network* n, uint64_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_reaction r;
@@ -987,7 +987,7 @@ gf_reaction gf_nw_getRxn(gf_network* n, size_t i) {
     return r;
 }
 
-gf_reaction* gf_nw_getRxnp(gf_network* n, size_t i) {
+gf_reaction* gf_nw_getRxnp(gf_network* n, uint64_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_reaction* r = (gf_reaction*)malloc(sizeof(gf_reaction));
@@ -1008,7 +1008,7 @@ void gf_nw_removeRxn(gf_network* nw, gf_reaction* r) {
     net->removeReaction(rx);
 }
 
-gf_compartment gf_nw_getCompartment(gf_network* n, size_t i) {
+gf_compartment gf_nw_getCompartment(gf_network* n, uint64_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_compartment c;
@@ -1016,7 +1016,7 @@ gf_compartment gf_nw_getCompartment(gf_network* n, size_t i) {
     return c;
 }
 
-gf_compartment* gf_nw_getCompartmentp(gf_network* n, size_t i) {
+gf_compartment* gf_nw_getCompartmentp(gf_network* n, uint64_t i) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
     gf_compartment* c = (gf_compartment*)malloc(sizeof(gf_compartment));
@@ -1126,7 +1126,7 @@ int gf_nw_getNumInstances(gf_network* nw, gf_node* n) {
     return net->getNumInstances(node);
 }
 
-gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, size_t i) {
+gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, uint64_t i) {
     Network* net = CastToNetwork(nw->n);
     AN(net && net->doByteCheck(), "Not a network");
     Node* node = CastToNode(n->n);
@@ -1140,7 +1140,7 @@ gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, size_t i) {
     return result;
 }
 
-gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, size_t i) {
+gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, uint64_t i) {
     gf_node* z = (gf_node*)malloc(sizeof(gf_node));
     *z = gf_nw_getInstance(nw, n, i);
     return z;
@@ -1378,7 +1378,7 @@ void gf_reaction_setCentroid(gf_reaction* r, gf_point p) {
     rxn->setGlobalCentroid(gf_point2Point(p));
 }
 
-size_t gf_reaction_getNumSpec(const gf_reaction* r) {
+uint64_t gf_reaction_getNumSpec(const gf_reaction* r) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
@@ -1411,7 +1411,7 @@ gf_specRole RxnRoleType2gf_specRole(RxnRoleType role) {
     }
 }
 
-gf_specRole gf_reaction_getSpecRole(const gf_reaction* r, size_t i) {
+gf_specRole gf_reaction_getSpecRole(const gf_reaction* r, uint64_t i) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
@@ -1455,7 +1455,7 @@ gf_specRole gf_strToRole(const char* str) {
   }
 }
 
-size_t gf_reaction_specGeti(const gf_reaction* r, size_t i) {
+uint64_t gf_reaction_specGeti(const gf_reaction* r, uint64_t i) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
@@ -1463,7 +1463,7 @@ size_t gf_reaction_specGeti(const gf_reaction* r, size_t i) {
     return rxn->getSpecies(i)->get_i();
 }
 
-size_t gf_reaction_getNumCurves(const gf_reaction* r) {
+uint64_t gf_reaction_getNumCurves(const gf_reaction* r) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
 //     std::cerr << "gf_reaction_getNumCurves type verify\n";
     
@@ -1475,7 +1475,7 @@ size_t gf_reaction_getNumCurves(const gf_reaction* r) {
     return rxn->getNumCurves();
 }
 
-gf_curve gf_reaction_getCurve(const gf_reaction* r, size_t i) {
+gf_curve gf_reaction_getCurve(const gf_reaction* r, uint64_t i) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
@@ -1485,7 +1485,7 @@ gf_curve gf_reaction_getCurve(const gf_reaction* r, size_t i) {
     return c;
 }
 
-gf_curve* gf_reaction_getCurvep(const gf_reaction* r, size_t i) {
+gf_curve* gf_reaction_getCurvep(const gf_reaction* r, uint64_t i) {
     gf_curve q = gf_reaction_getCurve(r, i);
     gf_curve* p = (gf_curve*)malloc(sizeof(gf_curve));
     p->c = q.c;
@@ -1652,7 +1652,7 @@ double gf_compartment_getHeight(gf_compartment* c) {
     return comp->getGlobalHeight();
 }
 
-size_t gf_compartment_getNumElt(gf_compartment* c) {
+uint64_t gf_compartment_getNumElt(gf_compartment* c) {
     Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
     AN(comp, "No comp");
     

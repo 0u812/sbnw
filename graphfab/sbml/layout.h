@@ -42,6 +42,8 @@
 #include "graphfab/sbml/autolayoutSBML.h"
 #include "graphfab/diag/error.h"
 
+#include <stdint.h>
+
 //-- C methods --
 
 #ifdef __cplusplus
@@ -349,7 +351,7 @@ _GraphfabExport void gf_nw_setId(gf_network* n, const char* id);
  *  @param[in] n The network object
  *  \ingroup C_API
  */
-_GraphfabExport size_t gf_nw_getNumNodes(const gf_network* n);
+_GraphfabExport uint64_t gf_nw_getNumNodes(const gf_network* n);
 
 /** @brief Get the number of unique nodes
  *  @details This method only counts the unique nodes in a
@@ -358,33 +360,33 @@ _GraphfabExport size_t gf_nw_getNumNodes(const gf_network* n);
  *  @param[in] n The network object
  *  \ingroup C_API
  */
-_GraphfabExport size_t gf_nw_getNumUniqueNodes(const gf_network* n);
+_GraphfabExport uint64_t gf_nw_getNumUniqueNodes(const gf_network* n);
 
 /** @brief Get the number of reactions
  *  @param[in] n The network object
  *  \ingroup C_API
  */
-_GraphfabExport size_t gf_nw_getNumRxns(const gf_network* n);
+_GraphfabExport uint64_t gf_nw_getNumRxns(const gf_network* n);
 
 /** @brief Get the number of compartments
  *  @param[in] n The network object
  *  \ingroup C_API
  */
-_GraphfabExport size_t gf_nw_getNumComps(const gf_network* n);
+_GraphfabExport uint64_t gf_nw_getNumComps(const gf_network* n);
 
 /** @brief Get the node at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_Internal
  */
-_GraphfabExport gf_node gf_nw_getNode(gf_network* n, size_t i);
+_GraphfabExport gf_node gf_nw_getNode(gf_network* n, uint64_t i);
 
 /** @brief Get the unique node at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_Internal
  */
-_GraphfabExport gf_node gf_nw_getUniqueNode(gf_network* n, size_t i);
+_GraphfabExport gf_node gf_nw_getUniqueNode(gf_network* n, uint64_t i);
 
 /** @brief Get the node at index i
  *  @param[in] n The network object
@@ -392,7 +394,7 @@ _GraphfabExport gf_node gf_nw_getUniqueNode(gf_network* n, size_t i);
  *  @return A pointer to the node
  *  \ingroup C_API
  */
-_GraphfabExport gf_node* gf_nw_getNodep(gf_network* n, size_t i);
+_GraphfabExport gf_node* gf_nw_getNodep(gf_network* n, uint64_t i);
 
 /** @brief Get the node at index i
  *  @param[in] n The network object
@@ -400,7 +402,7 @@ _GraphfabExport gf_node* gf_nw_getNodep(gf_network* n, size_t i);
  *  @return A pointer to the node
  *  \ingroup C_API
  */
-_GraphfabExport gf_node* gf_nw_getUniqueNodep(gf_network* n, size_t i);
+_GraphfabExport gf_node* gf_nw_getUniqueNodep(gf_network* n, uint64_t i);
 
 /** @brief Get the node with the given id
  *  @param[in] nw The network object
@@ -415,14 +417,14 @@ _GraphfabExport gf_node* gf_nw_getNodepFromId(gf_network* nw, const char* id);
  *  @param[in] i Node index
  *  \ingroup C_Internal
  */
-_GraphfabExport gf_reaction gf_nw_getRxn(gf_network* n, size_t i);
+_GraphfabExport gf_reaction gf_nw_getRxn(gf_network* n, uint64_t i);
 
 /** @brief Get the node at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_API
  */
-_GraphfabExport gf_reaction* gf_nw_getRxnp(gf_network* n, size_t i);
+_GraphfabExport gf_reaction* gf_nw_getRxnp(gf_network* n, uint64_t i);
 
 /** @brief Remove the given reaction
  *  @param[in] n The network object
@@ -436,14 +438,14 @@ _GraphfabExport void gf_nw_removeRxn(gf_network* n, gf_reaction* r);
  *  @param[in] i Node index
  *  \ingroup C_Internal
  */
-_GraphfabExport gf_compartment gf_nw_getCompartment(gf_network* n, size_t i);
+_GraphfabExport gf_compartment gf_nw_getCompartment(gf_network* n, uint64_t i);
 
 /** @brief Get the node at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_API
  */
-_GraphfabExport gf_compartment* gf_nw_getCompartmentp(gf_network* n, size_t i);
+_GraphfabExport gf_compartment* gf_nw_getCompartmentp(gf_network* n, uint64_t i);
 
 /** @brief Rebuild all curves in the network
  *  @details Rebuild all curves in each reaction, connecting substrates,
@@ -503,14 +505,14 @@ _GraphfabExport int gf_nw_getNumInstances(gf_network* nw, gf_node* n);
  *  @param[in] i The instance index
  *  \ingroup C_Internal
  */
-_GraphfabExport gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, size_t i);
+_GraphfabExport gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, uint64_t i);
 
 /** @brief Get the ith instance of an aliased node
  *  @param[in] n The node object
  *  @param[in] i The instance index
  *  \ingroup C_API
  */
-_GraphfabExport gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, size_t i);
+_GraphfabExport gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, uint64_t i);
 
 // Node
 
@@ -687,7 +689,7 @@ _GraphfabExport void gf_reaction_setCentroid(gf_reaction* r, gf_point p);
  *  @param[in] r The reaction object
  *  \ingroup C_API
  */
-_GraphfabExport size_t gf_reaction_getNumSpec(const gf_reaction* r);
+_GraphfabExport uint64_t gf_reaction_getNumSpec(const gf_reaction* r);
 
 /** @brief Return true if the reaction has the given species
  *  @param[in] r The reaction object
@@ -699,7 +701,7 @@ _GraphfabExport int gf_reaction_hasSpec(const gf_reaction* r, const gf_node* n);
  *  @param[in] r The reaction object
  *  \ingroup C_API
  */
-_GraphfabExport gf_specRole gf_reaction_getSpecRole(const gf_reaction* r, size_t i);
+_GraphfabExport gf_specRole gf_reaction_getSpecRole(const gf_reaction* r, uint64_t i);
 
 /**
  * @brief Convert role to string
@@ -721,25 +723,25 @@ _GraphfabExport gf_specRole gf_strToRole(const char* str);
  *  @param[in] r The reaction object
  *  \ingroup C_API
  */
-_GraphfabExport size_t gf_reaction_specGeti(const gf_reaction* r, size_t i);
+_GraphfabExport uint64_t gf_reaction_specGeti(const gf_reaction* r, uint64_t i);
 
 /** @brief Get the number of curves in the reaction
  *  @param[in] r The reaction object
  *  \ingroup C_API
  */
-_GraphfabExport size_t gf_reaction_getNumCurves(const gf_reaction* r);
+_GraphfabExport uint64_t gf_reaction_getNumCurves(const gf_reaction* r);
 
 /** @brief Get the curve i
  *  @param[in] r The reaction object
  *  \ingroup C_Internal
  */
-_GraphfabExport gf_curve gf_reaction_getCurve(const gf_reaction* r, size_t i);
+_GraphfabExport gf_curve gf_reaction_getCurve(const gf_reaction* r, uint64_t i);
 
 /** @brief Get the curve i
  *  @param[in] r The reaction object
  *  \ingroup C_API
  */
-_GraphfabExport gf_curve* gf_reaction_getCurvep(const gf_reaction* r, size_t i);
+_GraphfabExport gf_curve* gf_reaction_getCurvep(const gf_reaction* r, uint64_t i);
 
 /** @brief Recenter reaction centroid
  *  @param[in] n The reaction object
@@ -852,7 +854,7 @@ _GraphfabExport double gf_compartment_getHeight(gf_compartment* c);
  *  @param[in] c The compartment object
  *  \ingroup C_API
  */
-_GraphfabExport size_t gf_compartment_getNumElt(gf_compartment* c);
+_GraphfabExport uint64_t gf_compartment_getNumElt(gf_compartment* c);
 
 // Transform
 
