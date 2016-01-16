@@ -1126,6 +1126,10 @@ int gf_nw_getNumInstances(gf_network* nw, gf_node* n) {
     return net->getNumInstances(node);
 }
 
+int gf_nw_getNumAliasInstances(gf_network* nw, gf_node* n) {
+    return gf_nw_getNumInstances(nw, n);
+}
+
 gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, uint64_t i) {
     Network* net = CastToNetwork(nw->n);
     AN(net && net->doByteCheck(), "Not a network");
@@ -1144,6 +1148,10 @@ gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, uint64_t i) {
     gf_node* z = (gf_node*)malloc(sizeof(gf_node));
     *z = gf_nw_getInstance(nw, n, i);
     return z;
+}
+
+gf_node* gf_nw_getAliasInstancep(gf_network* nw, gf_node* n, uint64_t i) {
+    return gf_nw_getInstancep(nw, n, i);
 }
 
 // Node

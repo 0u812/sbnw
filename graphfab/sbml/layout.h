@@ -495,9 +495,16 @@ _GraphfabExport int gf_nw_isLayoutSpecified(gf_network* nw);
 /** @brief Get the number of instances of the node
  *  @param[in] nw The network object
  *  @param[in] n The node object
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport int gf_nw_getNumInstances(gf_network* nw, gf_node* n);
+
+/** @brief Get the number of instances of the node
+ *  @param[in] nw The network object
+ *  @param[in] n The node object
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_nw_getNumAliasInstances(gf_network* nw, gf_node* n);
 
 /** @brief Get the ith instance of an aliased node
  *  @param[in] nw The network object
@@ -510,9 +517,16 @@ _GraphfabExport gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, uint64_t i
 /** @brief Get the ith instance of an aliased node
  *  @param[in] n The node object
  *  @param[in] i The instance index
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, uint64_t i);
+
+/** @brief Get the ith instance of an aliased node
+ *  @param[in] n The node object
+ *  @param[in] i The instance index
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_node* gf_nw_getAliasInstancep(gf_network* nw, gf_node* n, uint64_t i);
 
 // Node
 
