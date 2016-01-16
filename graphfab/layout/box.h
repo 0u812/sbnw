@@ -158,6 +158,11 @@ namespace Graphfab {
                 _max.x -= v;
                 _max.y -= v;
             }
+
+            /// Pad all sides by specified amount (safe)
+            Box padded(const Real v) const {
+                return Box(_min-Point(v,v), _max+Point(v,v));
+            }
             
             // expand! to contain the other box and this box
             void expandx(const Box& other) {

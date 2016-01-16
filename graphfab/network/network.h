@@ -905,7 +905,7 @@ namespace Graphfab {
             void setRestExtents(const Box& ext);
             
             /// Permanently resize extents based on distribution contained elements
-            void resizeEnclose();
+            void resizeEnclose(double padding = 0);
             
             /// Used when no layout information is available; sizes to square with area based on number of elts
             void autoSize();
@@ -1186,7 +1186,7 @@ namespace Graphfab {
             void updateExtents();
             
             /// Resize compartments to enclose contents
-            void resizeCompsEnclose();
+            void resizeCompsEnclose(double padding = 0);
             
             /// Autosize compartments when layout info is not available
             void autosizeComps();

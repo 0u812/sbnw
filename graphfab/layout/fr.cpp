@@ -60,6 +60,7 @@ void gf_getLayoutOptDefaults(fr_options* opt) {
     opt->autobary = 1;
     opt->enable_comps = 0;
     opt->prerandomize = 0;
+    opt->padding = 15;
 }
 
 void gf_layout_setStiffness(fr_options* opt, double k) {
@@ -365,7 +366,7 @@ namespace Graphfab {
         }
         
         if(!opt.enable_comps)
-            net.resizeCompsEnclose();
+            net.resizeCompsEnclose(opt.padding);
         
         net.rebuildCurves();
     }

@@ -1041,7 +1041,7 @@ namespace Graphfab {
         _ra = _ext.area();
     }
     
-    void Compartment::resizeEnclose() {
+    void Compartment::resizeEnclose(double padding) {
         Real minx, miny, maxx, maxy;
         EltIt i=EltsBegin();
         if(i != EltsEnd()) {
@@ -1060,6 +1060,7 @@ namespace Graphfab {
             maxy = max(maxy, e->getMaxY());
         }
         _ext = Box(Point(minx,miny), Point(maxx,maxy));
+        _ext = _ext.padded(padding);
         _ra = _ext.area();
     }
     
@@ -1596,10 +1597,10 @@ namespace Graphfab {
         }
     }
     
-    void Network::resizeCompsEnclose() {
+    void Network::resizeCompsEnclose(double padding) {
         for(CompIt i=CompsBegin(); i!= CompsEnd(); ++i) {
             Compartment* c = *i;
-            c->resizeEnclose();
+            c->resizeEnclose(padding);
         }
     }
     

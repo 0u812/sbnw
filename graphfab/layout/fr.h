@@ -80,6 +80,8 @@ typedef struct __fr_options {
     int enable_comps;
     /// Randomize node positions before doing layout algo (library code DOES NOT call srand for reproducibility reasons)
     int prerandomize;
+    /// Padding on compartments
+    Real padding;
 } fr_options;
 
 /**
