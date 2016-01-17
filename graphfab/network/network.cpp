@@ -318,11 +318,11 @@ namespace Graphfab {
             n->setWidth(getWidth());
             n->setHeight(getHeight());
 
-//             {
-//               std::stringstream ss;
-//               ss << getId() << "_alias" << k;
-//               n->setId(ss.str());
-//             }
+            {
+              std::stringstream ss;
+              ss << getId() << "_alias" << k;
+              n->setGlyph(ss.str());
+            }
             n->setId(getId());
             n->numUses() = 1;
             n->setAlias(true);

@@ -439,6 +439,8 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
         net = (Network*)l->net;
         AT(net->doByteCheck(), "Network has wrong type");
     }
+
+    std::map<std::string, int> species_map;
     
     if(net) {
         // If the network has an id, it becomes the id of the SBML model
@@ -521,20 +523,24 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             
             delete sg;
             
-            // add species
-            ::Species* species = model->createSpecies();
-            species->setId(n->getId());
-            Graphfab::Compartment* com = net->findContainingCompartment(n);
-            if(com)
-                species->setCompartment(com->getId());
-            else {
-                species->setCompartment("graphfab_default_compartment");
-                create_default_compartment = true;
+            // add species if it doesn't already exist
+            if (!species_map.count(n->getId())) {
+                ::Species* species = model->createSpecies();
+                species->setId(n->getId());
+                Graphfab::Compartment* com = net->findContainingCompartment(n);
+                if(com)
+                    species->setCompartment(com->getId());
+                else {
+                    species->setCompartment("graphfab_default_compartment");
+                    create_default_compartment = true;
+                }
+                species->setInitialConcentration(0.);
+                species->setBoundaryCondition(0.);
+                species->setHasOnlySubstanceUnits(false);
+                species->setConstant(false);
+
+                species_map[n->getId()] = 1;
             }
-            species->setInitialConcentration(0.);
-            species->setBoundaryCondition(0.);
-            species->setHasOnlySubstanceUnits(false);
-            species->setConstant(false);
         }
 
         if (create_default_compartment) {
