@@ -910,6 +910,24 @@ class LayoutFrame(FrameBaseClass):
                 return r
         raise RuntimeError('No node with id {}'.format(rxnid))
 
+    def pickNode(self, screenx, screeny):
+        '''Pick a node on the canvas via e.g. a mouse click.
+
+        Keyword arguments:
+        screenx -- the screen space x coordinate
+        screeny -- the screen space y coordinate
+        '''
+
+        for node in reversed(self.network.nodes):
+            x, y = self.getNodeScreenSpaceCentroid(node)
+            hemiwidth = node.width/2
+            hemiheight = node.height/2
+
+            if intervalContains(x - hemiwidth, x + hemiwidth, screenx) and intervalContains(y - hemiheight, y + hemiheight, screeny):
+                return node
+
+        return None
+
     # Mouse wheel
     def wheelEvent(self, event):
         if is_pyqt5():
@@ -930,28 +948,23 @@ class LayoutFrame(FrameBaseClass):
             if self.parent().createNodeToolAct.isChecked():
                 self.addNode(mouse.x(), mouse.y())
             else:
-                for node in reversed(self.network.nodes):
-                    x, y = self.getNodeScreenSpaceCentroid(node)
-                    hemiwidth = node.width/2
-                    hemiheight = node.height/2
-
-                    if intervalContains(x - hemiwidth, x + hemiwidth, mouse.x()) and intervalContains(y - hemiheight, y + hemiheight, mouse.y()):
-                        if self.parent().selectToolAct.isChecked():
-                            node.custom.isBeingDragged = True
-                            node.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(node))
-                            self.dragging = True
-                            dragging_object = True
-                            self.dragSource = mouse
-                            break
-                        elif self.parent().lockToolAct.isChecked():
-                            if not node.islocked():
-                                node.lock()
-                            else:
-                                node.unlock()
-                        elif self.parent().eraseToolAct.isChecked():
-                            self.removeNode(node)
-                        elif self.parent().aliasToolAct.isChecked():
-                            self.aliasNode(node)
+                node = self.pickNode(mouse.x(), mouse.y())
+                if node is not None:
+                    if self.parent().selectToolAct.isChecked():
+                        node.custom.isBeingDragged = True
+                        node.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(node))
+                        self.dragging = True
+                        dragging_object = True
+                        self.dragSource = mouse
+                    elif self.parent().lockToolAct.isChecked():
+                        if not node.islocked():
+                            node.lock()
+                        else:
+                            node.unlock()
+                    elif self.parent().eraseToolAct.isChecked():
+                        self.removeNode(node)
+                    elif self.parent().aliasToolAct.isChecked():
+                        self.aliasNode(node)
 
                 if not dragging_object: # don't double-drag
                   for rxn in reversed(self.network.rxns):
