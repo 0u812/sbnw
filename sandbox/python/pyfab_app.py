@@ -86,6 +86,7 @@ class NodeData:
         self.isBeingDragged = False
         self.customColor = None
         self.customWeight = None
+        self.beacon = False
 
 def QPoint(p):
     return QtCore.QPoint(int(p[0]), int(p[1]))
@@ -748,6 +749,11 @@ class LayoutFrame(FrameBaseClass):
             y = (y+offset[1])*factor
             hemiwidth = node.width/2
             hemiheight = node.height/2
+            # draw beacon if active
+            if hasattr(node, 'custom') and node.custom.beacon == True:
+                painter.setPen(Qt.NoPen)
+                painter.setBrush(QtGui.QBrush(tuple2QColor((0.25,0.25,0.7,0.5))))
+                painter.drawEllipse(QtCore.QRectF(x-hemiwidth-10, y-hemiwidth-10, node.width+20, node.width+20))
             self.qtrender.drawNode(node, x-hemiwidth, y-hemiheight, x+hemiwidth, y+hemiheight, config, painter, horizonEnabled=horizonEnabled)
             if enable_matplotlib2tikz:
               self.pypltrender.drawNode(node, x-hemiwidth, y-hemiheight, x+hemiwidth, y+hemiheight, screentx)
@@ -983,6 +989,8 @@ class LayoutFrame(FrameBaseClass):
                     self.removeNode(node)
                 elif self.parent().aliasToolAct.isChecked():
                     self.aliasNode(node)
+                elif self.parent().createNodeToolAct.isChecked():
+                    node.custom.beacon = True
             elif self.parent().createNodeToolAct.isChecked():
                 self.plantNode = True
             else:
@@ -1020,8 +1028,8 @@ class LayoutFrame(FrameBaseClass):
                 else:
                     self.dragging = False
                     for node in self.network.nodes:
-                        if node.custom.isBeingDragged:
-                            node.custom.isBeingDragged = False
+                        node.custom.isBeingDragged = False
+                        node.custom.beacon = False
                     for rxn in self.network.rxns:
                         if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
                             rxn.custom.isBeingDragged = False
