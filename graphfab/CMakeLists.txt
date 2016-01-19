@@ -75,8 +75,6 @@ endif()
 set(SBNW_SOURCES ${SOURCES} ${MAGICK_SOURCES})
 set(SBNW_HEADERS ${HEADERS} ${MAGICK_HEADERS})
 
-message("SBNW_SOURCES = ${SBNW_SOURCES}")
-
 # configure_file(math/transform.h math/transform.h COPYONLY)
 
 if(ENABLE_PYTHON_BINDINGS)
