@@ -7,6 +7,7 @@ set(SOURCES
     diag/error.cpp
     draw/tikz.cpp
     io/io.cpp
+    interface/layout.cpp
     layout/arrowhead.cpp
     layout/box.cpp
     layout/canvas.cpp
@@ -17,7 +18,6 @@ set(SOURCES
     math/transform.cpp
     network/network.cpp
     sbml/autolayoutSBML.cpp
-    sbml/layout.cpp
     util/string.c
     )
 
@@ -37,6 +37,7 @@ set(HEADERS
     diag/error.h
     draw/magick.h
     io/io.h
+    interface/layout.h
     layout/arrowhead.h
     layout/box.h
     layout/canvas.h
@@ -55,7 +56,6 @@ set(HEADERS
     math/transform.h
     network/network.h
     sbml/autolayoutSBML.h
-    sbml/layout.h
     util/string.h
     )
 
