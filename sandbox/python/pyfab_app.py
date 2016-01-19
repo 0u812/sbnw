@@ -928,6 +928,23 @@ class LayoutFrame(FrameBaseClass):
 
         return None
 
+    def pickReaction(self, screenx, screeny):
+        '''Pick a reaction on the canvas via e.g. a mouse click.
+
+        Keyword arguments:
+        screenx -- the screen space x coordinate
+        screeny -- the screen space y coordinate
+        '''
+        for rxn in reversed(self.network.rxns):
+            x, y = rxn.centroid
+            hemiwidth = 10
+            hemiheight = 10
+
+            if intervalContains(x - hemiwidth, x + hemiwidth, screenx) and intervalContains(y - hemiheight, y + hemiheight, screeny):
+                return rxn
+
+        return None
+
     # Mouse wheel
     def wheelEvent(self, event):
         if is_pyqt5():
@@ -943,18 +960,17 @@ class LayoutFrame(FrameBaseClass):
         if event.button() == 1:
             qtfi = self.qtf.inverted()[0]
             mouse = qtfi.map(QPoint((event.x(), event.y())))
-            dragging_object = False
 
             if self.parent().createNodeToolAct.isChecked():
                 self.addNode(mouse.x(), mouse.y())
             else:
+                # try to drag a node
                 node = self.pickNode(mouse.x(), mouse.y())
                 if node is not None:
                     if self.parent().selectToolAct.isChecked():
                         node.custom.isBeingDragged = True
                         node.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(node))
                         self.dragging = True
-                        dragging_object = True
                         self.dragSource = mouse
                     elif self.parent().lockToolAct.isChecked():
                         if not node.islocked():
@@ -965,28 +981,23 @@ class LayoutFrame(FrameBaseClass):
                         self.removeNode(node)
                     elif self.parent().aliasToolAct.isChecked():
                         self.aliasNode(node)
-
-                if not dragging_object: # don't double-drag
-                  for rxn in reversed(self.network.rxns):
-                      x, y = rxn.centroid
-                      hemiwidth = 10
-                      hemiheight = 10
-
-                      if intervalContains(x - hemiwidth, x + hemiwidth, mouse.x()) and intervalContains(y - hemiheight, y + hemiheight, mouse.y()):
-                          if self.parent().selectToolAct.isChecked():
-                              if not hasattr(rxn, 'custom'):
-                                  rxn.custom = NodeData()
-                              rxn.custom.isBeingDragged = True
-                              rxn.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(rxn))
-                              self.dragging = True
-                              dragging_object = True
-                              self.dragSource = mouse
-                              break
-
-                if not dragging_object:
-                  mouse = QPoint((event.x(), event.y()))
-                  self.panning = True
-                  self.panstart = mouse
+                else:
+                    # try to drag a reaction
+                    rxn = self.pickReaction(mouse.x(), mouse.y())
+                    if rxn is not None:
+                        if self.parent().selectToolAct.isChecked():
+                            if not hasattr(rxn, 'custom'):
+                                rxn.custom = NodeData()
+                            rxn.custom.isBeingDragged = True
+                            rxn.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(rxn))
+                            self.dragging = True
+                            dragging_object = True
+                            self.dragSource = mouse
+                    else:
+                        # pan view
+                        mouse = QPoint((event.x(), event.y()))
+                        self.panning = True
+                        self.panstart = mouse
         elif event.button() == 4:
             mouse = QPoint((event.x(), event.y()))
             self.panning = True
@@ -997,17 +1008,17 @@ class LayoutFrame(FrameBaseClass):
     def mouseReleaseEvent(self, event):
         if event.button() == 1:
             if self.panning:
-              self.panning = False
-              self.applyTranslation()
+                self.panning = False
+                self.applyTranslation()
             else:
-              self.dragging = False
-              for node in self.network.nodes:
-                  if node.custom.isBeingDragged:
-                      node.custom.isBeingDragged = False
-              for rxn in self.network.rxns:
-                  if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
-                      rxn.custom.isBeingDragged = False
-              self.update()
+                self.dragging = False
+                for node in self.network.nodes:
+                    if node.custom.isBeingDragged:
+                        node.custom.isBeingDragged = False
+                for rxn in self.network.rxns:
+                    if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
+                        rxn.custom.isBeingDragged = False
+                self.update()
         if(event.button() == 4):
             self.panning = False
             self.applyTranslation()
