@@ -679,6 +679,8 @@ class LayoutFrame(FrameBaseClass):
         if enable_matplotlib2tikz:
           self.pypltrender = pyfab_matplotlib_render.PyPlotRenderer()
 
+        self.plantNode = False
+
     def resetTransform(self):
       self.scale = 1.
       self.translate = self.translateBase = QPoint((wndwidth/2., wndheight/2.))
@@ -957,69 +959,74 @@ class LayoutFrame(FrameBaseClass):
 
     # Mouse press
     def mousePressEvent(self, event):
-        if event.button() == 1:
-            qtfi = self.qtf.inverted()[0]
-            mouse = qtfi.map(QPoint((event.x(), event.y())))
-
-            if self.parent().createNodeToolAct.isChecked():
-                self.addNode(mouse.x(), mouse.y())
-            else:
-                # try to drag a node
-                node = self.pickNode(mouse.x(), mouse.y())
-                if node is not None:
-                    if self.parent().selectToolAct.isChecked():
-                        node.custom.isBeingDragged = True
-                        node.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(node))
-                        self.dragging = True
-                        self.dragSource = mouse
-                    elif self.parent().lockToolAct.isChecked():
-                        if not node.islocked():
-                            node.lock()
-                        else:
-                            node.unlock()
-                    elif self.parent().eraseToolAct.isChecked():
-                        self.removeNode(node)
-                    elif self.parent().aliasToolAct.isChecked():
-                        self.aliasNode(node)
-                else:
-                    # try to drag a reaction
-                    rxn = self.pickReaction(mouse.x(), mouse.y())
-                    if rxn is not None:
-                        if self.parent().selectToolAct.isChecked():
-                            if not hasattr(rxn, 'custom'):
-                                rxn.custom = NodeData()
-                            rxn.custom.isBeingDragged = True
-                            rxn.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(rxn))
-                            self.dragging = True
-                            dragging_object = True
-                            self.dragSource = mouse
-                    else:
-                        # pan view
-                        mouse = QPoint((event.x(), event.y()))
-                        self.panning = True
-                        self.panstart = mouse
-        elif event.button() == 4:
+        if event.button() == 4:
             mouse = QPoint((event.x(), event.y()))
             self.panning = True
             self.panstart = mouse
+        elif event.button() == 1:
+            qtfi = self.qtf.inverted()[0]
+            mouse = qtfi.map(QPoint((event.x(), event.y())))
+            # try to drag a node
+            node = self.pickNode(mouse.x(), mouse.y())
+            if node is not None:
+                if self.parent().selectToolAct.isChecked():
+                    node.custom.isBeingDragged = True
+                    node.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(node))
+                    self.dragging = True
+                    self.dragSource = mouse
+                elif self.parent().lockToolAct.isChecked():
+                    if not node.islocked():
+                        node.lock()
+                    else:
+                        node.unlock()
+                elif self.parent().eraseToolAct.isChecked():
+                    self.removeNode(node)
+                elif self.parent().aliasToolAct.isChecked():
+                    self.aliasNode(node)
+            elif self.parent().createNodeToolAct.isChecked():
+                self.plantNode = True
+            else:
+                # try to drag a reaction
+                rxn = self.pickReaction(mouse.x(), mouse.y())
+                if rxn is not None:
+                    if self.parent().selectToolAct.isChecked():
+                        if not hasattr(rxn, 'custom'):
+                            rxn.custom = NodeData()
+                        rxn.custom.isBeingDragged = True
+                        rxn.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(rxn))
+                        self.dragging = True
+                        dragging_object = True
+                        self.dragSource = mouse
+                else:
+                    # pan view
+                    mouse = QPoint((event.x(), event.y()))
+                    self.panning = True
+                    self.panstart = mouse
         self.update()
 
     # Mouse release
     def mouseReleaseEvent(self, event):
         if event.button() == 1:
-            if self.panning:
-                self.panning = False
-                self.applyTranslation()
-            else:
-                self.dragging = False
-                for node in self.network.nodes:
-                    if node.custom.isBeingDragged:
-                        node.custom.isBeingDragged = False
-                for rxn in self.network.rxns:
-                    if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
-                        rxn.custom.isBeingDragged = False
+            if self.plantNode:
+                self.plantNode = False
+                qtfi = self.qtf.inverted()[0]
+                mouse = qtfi.map(QPoint((event.x(), event.y())))
+                self.addNode(mouse.x(), mouse.y())
                 self.update()
-        if(event.button() == 4):
+            else:
+                if self.panning:
+                    self.panning = False
+                    self.applyTranslation()
+                else:
+                    self.dragging = False
+                    for node in self.network.nodes:
+                        if node.custom.isBeingDragged:
+                            node.custom.isBeingDragged = False
+                    for rxn in self.network.rxns:
+                        if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
+                            rxn.custom.isBeingDragged = False
+                    self.update()
+        elif(event.button() == 4):
             self.panning = False
             self.applyTranslation()
 
