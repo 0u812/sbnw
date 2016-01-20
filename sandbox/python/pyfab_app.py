@@ -671,6 +671,7 @@ class LayoutFrame(FrameBaseClass):
         self.dragging = False
         self.connecting = False
 
+        self.connecting_node = None
         self.connecting_rxn = None
 
         self.recenterrxns = False
@@ -999,6 +1000,7 @@ class LayoutFrame(FrameBaseClass):
                 elif self.parent().createNodeToolAct.isChecked():
                     node.custom.beacon = True
                     self.connecting = True
+                    self.connecting_node = node
             elif self.parent().createNodeToolAct.isChecked():
                 self.plantNode = True
             else:
@@ -1030,6 +1032,7 @@ class LayoutFrame(FrameBaseClass):
                 for rxn in self.network.rxns:
                     if hasattr(rxn, 'custom'):
                         rxn.custom.beacon = False
+                self.network.connectnode(self.connecting_node, self.connecting_rxn, 'SUBSTRATE')
                 self.update()
             elif self.plantNode:
                 self.plantNode = False
