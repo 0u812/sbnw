@@ -1769,11 +1769,28 @@ static PyObject* gfp_NetworkConnectNode(gfp_Network *self, PyObject *args, PyObj
 
     role = gf_strToRole(rolestr);
     if(gf_nw_connectNode(&self->n, &node->n, &reaction->r, role)) {
-        PyErr_SetString(SBNWError, "Unable to remove node (may not be member of network)");
+        PyErr_SetString(SBNWError, "Unable to connect node");
         return NULL;
     }
 
     Py_RETURN_NONE;
+}
+
+static PyObject* gfp_NetworkIsNodeConnected(gfp_Network *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"node", "reaction", NULL};
+    gfp_Node* node=NULL;
+    gfp_Rxn* reaction=NULL;
+    #if SAGITTARIUS_DEBUG_LEVEL >= 2
+    printf("gfp_NetworkIsNodeConnected called\n");
+    #endif
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!O!", kwlist, &gfp_NodeType, &node, &gfp_RxnType, &reaction)) {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
+
+    return PyBool_FromLong(gf_nw_isNodeConnected(&self->n, &node->n, &reaction->r));
 }
 
 static PyMethodDef Network_methods[] = {
@@ -1838,6 +1855,11 @@ static PyMethodDef Network_methods[] = {
      ":param node: The node to connect\n"
      ":param reaction: The reaction\n"
      ":param role: The species role to use\n"
+    },
+    {"is_node_connected", (PyCFunction)gfp_NetworkIsNodeConnected, METH_VARARGS | METH_KEYWORDS,
+     "Return true if the node is connected to this reaction\n\n"
+     ":param node: The node to connect\n"
+     ":param reaction: The reaction\n"
     },
     {NULL}  /* Sentinel */
 };

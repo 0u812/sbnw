@@ -1154,6 +1154,19 @@ int gf_nw_connectNode(gf_network* nw, gf_node* n, gf_reaction* r, gf_specRole ro
     return 0;
 }
 
+int gf_nw_isNodeConnected(gf_network* nw, gf_node* n, gf_reaction* r) {
+    Network* net = CastToNetwork(nw->n);
+    Node* node = CastToNode(n->n);
+    Graphfab::Reaction* reaction = CastToReaction(r->r);
+
+    if(!net->containsNode(node)) {
+        gf_emitError("gf_nw_removeNode: no such node in network\n");
+        return -1;
+    }
+
+    return net->isNodeConnected(node, reaction);
+}
+
 int gf_nw_isLayoutSpecified(gf_network* nw) {
     Network* net = CastToNetwork(nw->n);
     
