@@ -30,7 +30,7 @@
 //== INCLUDES ========================================================================
 
 #include "graphfab/core/SagittariusCore.h"
-#include "graphfab/sbml/layout.h"
+#include "graphfab/interface/layout.h"
 #include "graphfab/diag/error.h"
 #include "graphfab/network/network.h"
 #include "graphfab/layout/canvas.h"
@@ -94,6 +94,21 @@ void gf_freeModelAndLayout(gf_SBMLModel* mod, gf_layoutInfo* l) {
 
 void gf_initLayoutInfo(gf_layoutInfo* l) {
     l->cont = NULL;
+}
+
+RxnRoleType gf_specRole2RxnRoleType(gf_specRole role) {
+    switch(role) {
+        case GF_ROLE_SUBSTRATE: return RXN_ROLE_SUBSTRATE;
+        case GF_ROLE_PRODUCT: return RXN_ROLE_PRODUCT;
+        case GF_ROLE_SIDESUBSTRATE: return RXN_ROLE_SIDESUBSTRATE;
+        case GF_ROLE_SIDEPRODUCT: return RXN_ROLE_SIDEPRODUCT;
+        case GF_ROLE_MODIFIER: return RXN_ROLE_MODIFIER;
+        case GF_ROLE_ACTIVATOR: return RXN_ROLE_ACTIVATOR;
+        case GF_ROLE_INHIBITOR: return RXN_ROLE_INHIBITOR;
+        default:
+            gf_emitError("Unknown role type");
+            return RXN_ROLE_SUBSTRATE;
+    }
 }
 
 gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
@@ -1114,6 +1129,26 @@ int gf_nw_removeNode(gf_network* nw, gf_node* n) {
     return 0;
 }
 
+int gf_nw_connectNode(gf_network* nw, gf_node* n, gf_reaction* r, gf_specRole role) {
+    Network* net = CastToNetwork(nw->n);
+    Node* node = CastToNode(n->n);
+    Graphfab::Reaction* reaction = CastToReaction(r->r);
+
+    if(!net->containsNode(node)) {
+        gf_emitError("gf_nw_removeNode: no such node in network\n");
+        return -1;
+    }
+
+    try {
+        net->connectNode(node, reaction, gf_specRole2RxnRoleType(role));
+    } catch(...) {
+        fprintf(stderr, "gf_nw_connectNode: unable to connect node\n");
+        return -1;
+    }
+
+    return 0;
+}
+
 int gf_nw_isLayoutSpecified(gf_network* nw) {
     Network* net = CastToNetwork(nw->n);
     
@@ -1420,7 +1455,7 @@ gf_specRole RxnRoleType2gf_specRole(RxnRoleType role) {
         case RXN_ROLE_ACTIVATOR: return GF_ROLE_ACTIVATOR;
         case RXN_ROLE_INHIBITOR: return GF_ROLE_INHIBITOR;
         default:
-            AN(0, "Unknown role type");
+            gf_emitError("Unknown role type");
             return GF_ROLE_SUBSTRATE;
     }
 }

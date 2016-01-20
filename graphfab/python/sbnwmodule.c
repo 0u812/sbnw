@@ -29,7 +29,7 @@
 #include "structmember.h"
 
 #include "graphfab/core/SagittariusCore.h"
-#include "graphfab/sbml/layout.h"
+#include "graphfab/interface/layout.h"
 #include "graphfab/layout/fr.h"
 #include "graphfab/util/string.h"
 #include "graphfab/draw/tikz.h"
@@ -704,6 +704,7 @@ static int gfp_Rxn_rawinit(gfp_Rxn *self, gf_reaction r, PyObject* speclist) {
 //     }
 //     fprintf(stderr, "  rxn raw init done\n");
 
+    Py_XDECREF(self->curv);
     self->curv = gfp_Rxn_getCurves(self, NULL);
 
     return 0;
@@ -1748,6 +1749,33 @@ PyObject* gfp_Network_getNumInstances(gfp_Network *self, PyObject *args, PyObjec
     return PyLong_FromLong(gf_nw_getNumInstances(&self->n, &node->n));
 }
 
+static PyObject* gfp_NetworkConnectNode(gfp_Network *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"node", "reaction", "role", NULL};
+    gfp_Node* node=NULL;
+    gfp_Rxn* reaction=NULL;
+    const char* rolestr;
+    gf_specRole role;
+    #if SAGITTARIUS_DEBUG_LEVEL >= 2
+    printf("gfp_NetworkConnectNode called\n");
+    #endif
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "O!O!s", kwlist, &gfp_NodeType, &node, &gfp_RxnType, &reaction, &rolestr)) {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
+
+    printf("Trying to connect node...\n");
+
+    role = gf_strToRole(rolestr);
+    if(gf_nw_connectNode(&self->n, &node->n, &reaction->r, role)) {
+        PyErr_SetString(SBNWError, "Unable to remove node (may not be member of network)");
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
+}
+
 static PyMethodDef Network_methods[] = {
     {"randomize", (PyCFunction)gfp_NetworkRandomizeLayout, METH_VARARGS | METH_KEYWORDS,
      "Randomize the layout\n\n"
@@ -1804,6 +1832,12 @@ static PyMethodDef Network_methods[] = {
     },
     {"getinstance", (PyCFunction)gfp_Network_getInstance, METH_VARARGS | METH_KEYWORDS,
      "Internal: Get the kth instance of the node"
+    },
+    {"connectnode", (PyCFunction)gfp_NetworkConnectNode, METH_VARARGS | METH_KEYWORDS,
+     "Connect a node to a reaction\n\n"
+     ":param node: The node to connect\n"
+     ":param reaction: The reaction\n"
+     ":param role: The species role to use\n"
     },
     {NULL}  /* Sentinel */
 };

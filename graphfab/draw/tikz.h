@@ -46,7 +46,7 @@
 #include "graphfab/layout/box.h"
 #include "graphfab/layout/canvas.h"
 #include "graphfab/network/network.h"
-#include "graphfab/sbml/layout.h"
+#include "graphfab/interface/layout.h"
 
 #ifdef __cplusplus
 extern "C" {

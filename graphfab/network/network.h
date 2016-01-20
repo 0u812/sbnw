@@ -1026,6 +1026,9 @@ namespace Graphfab {
             /** Remove a node and all reaction connections to/from 
                 the node from the network (does not free memory) */
             void removeNode(Node* n);
+
+            /** Connect a node to a reaction */
+            void connectNode(Node* n, Reaction* r, RxnRoleType role);
             
             /// Find the node by specified ID. Returns NULL if no such node exists
             Node* findNodeById(const std::string& id);
@@ -1050,6 +1053,8 @@ namespace Graphfab {
             Node* getInstance(const Node* u, const size_t n);
             
             bool containsNode(const Node* n) const;
+
+            bool containsReaction(const Reaction* r) const;
 
             typedef std::vector<Reaction*> AttachedRxnList;
 

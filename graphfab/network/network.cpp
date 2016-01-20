@@ -1228,6 +1228,18 @@ namespace Graphfab {
         }
         SBNW_THROW(InvalidParameterException, "No such node", "Network::removeNode");
     }
+
+    void Network::connectNode(Node* n, Reaction* r, RxnRoleType role) {
+        AN(n, "No node");
+        AN(r, "No reaction");
+        if(!containsNode(n))
+            SBNW_THROW(InvalidParameterException, "No such node in network", "Network::connectNode");
+        if(!containsReaction(r))
+            SBNW_THROW(InvalidParameterException, "No such reaction in network", "Network::connectNode");
+
+        r->addSpeciesRef(n, role);
+        r->rebuildCurves();
+    }
     
     Node* Network::findNodeById(const std::string& id) {
         for(NodeVec::iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {
@@ -1346,6 +1358,15 @@ namespace Graphfab {
         for(NodeVec::const_iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {
             const Node* x = *i;
             if(x == n)
+                return true;
+        }
+        return false;
+    }
+
+    bool Network::containsReaction(const Reaction* r) const {
+        for(ConstRxnIt i=RxnsBegin(); i!=RxnsEnd(); ++i) {
+            const Reaction* x = *i;
+            if(x == r)
                 return true;
         }
         return false;

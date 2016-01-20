@@ -33,7 +33,7 @@
 #include <string.h>
 
 #include "graphfab/sbml/autolayoutSBML.h"
-#include "graphfab/sbml/layout.h"
+#include "graphfab/interface/layout.h"
 #include "graphfab/layout/fr.h"
 #include "graphfab/draw/tikz.h"
 

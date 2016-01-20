@@ -30,7 +30,7 @@
 //== INCLUDES ========================================================================
 
 #include "graphfab/core/SagittariusCore.h"
-#include "graphfab/sbml/layout.h"
+#include "graphfab/interface/layout.h"
 #include "graphfab/diag/error.h"
 #include "graphfab/util/string.h"
 

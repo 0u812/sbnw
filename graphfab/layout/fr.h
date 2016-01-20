@@ -41,7 +41,7 @@
 #include "graphfab/core/SagittariusCore.h"
 #include "graphfab/layout/canvas.h"
 #include "graphfab/network/network.h"
-#include "graphfab/sbml/layout.h"
+#include "graphfab/interface/layout.h"
 
 //-- C code --
 

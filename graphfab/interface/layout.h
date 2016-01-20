@@ -485,6 +485,15 @@ _GraphfabExport gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const ch
  */
 _GraphfabExport int gf_nw_removeNode(gf_network* nw, gf_node* node);
 
+/** @brief Connect a node to a reaction
+ *  @param[in] nw The network object
+ *  @param[in] node The node to connect
+ *  @param[in] reaction The reaction to connect to
+ *  @param[in] role The species role to use
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_nw_connectNode(gf_network* nw, gf_node* node, gf_reaction* reaction, gf_specRole role);
+
 /** @brief Did the SBML model include layout?
  *  @return 1 for yes, 0 for no
  *  @param[in] n The network object
