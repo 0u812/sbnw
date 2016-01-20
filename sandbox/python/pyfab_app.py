@@ -669,6 +669,9 @@ class LayoutFrame(FrameBaseClass):
 
         self.panning = False
         self.dragging = False
+        self.connecting = False
+
+        self.connecting_rxn = None
 
         self.recenterrxns = False
 
@@ -991,6 +994,7 @@ class LayoutFrame(FrameBaseClass):
                     self.aliasNode(node)
                 elif self.parent().createNodeToolAct.isChecked():
                     node.custom.beacon = True
+                    self.connecting = True
             elif self.parent().createNodeToolAct.isChecked():
                 self.plantNode = True
             else:
@@ -1015,7 +1019,15 @@ class LayoutFrame(FrameBaseClass):
     # Mouse release
     def mouseReleaseEvent(self, event):
         if event.button() == 1:
-            if self.plantNode:
+            if self.connecting:
+                self.connecting = False
+                for node in self.network.nodes:
+                    node.custom.beacon = False
+                for rxn in self.network.rxns:
+                    if hasattr(rxn, 'custom'):
+                        rxn.custom.beacon = False
+                self.update()
+            elif self.plantNode:
                 self.plantNode = False
                 qtfi = self.qtf.inverted()[0]
                 mouse = qtfi.map(QPoint((event.x(), event.y())))
@@ -1070,6 +1082,16 @@ class LayoutFrame(FrameBaseClass):
         elif self.panning:
             mouse = QPoint((event.x(), event.y()))
             self.changeTranslate(mouse - self.panstart)
+        elif self.connecting:
+            mouse = QPoint((event.x(), event.y()))
+            rxn = self.pickReaction(mouse.x(), mouse.y())
+            if rxn is not None:
+                if self.connecting_rxn is not None:
+                    self.connecting_rxn.custom.beacon = False
+                if not hasattr(rxn, 'custom'):
+                    rxn.custom = NodeData()
+                rxn.custom.beacon = True
+                self.connecting_rxn = rxn
 
     def setScale(self, s):
         self.update()
