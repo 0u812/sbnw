@@ -1240,6 +1240,17 @@ namespace Graphfab {
         r->addSpeciesRef(n, role);
         r->rebuildCurves();
     }
+
+    bool Network::isNodeConnected(Node* n, Reaction* r) const {
+        AN(n, "No node");
+        AN(r, "No reaction");
+        if(!containsNode(n))
+            SBNW_THROW(InvalidParameterException, "No such node in network", "Network::connectNode");
+        if(!containsReaction(r))
+            SBNW_THROW(InvalidParameterException, "No such reaction in network", "Network::connectNode");
+
+        return r->hasSpecies(n);
+    }
     
     Node* Network::findNodeById(const std::string& id) {
         for(NodeVec::iterator i=_nodes.begin(); i!=_nodes.end(); ++i) {

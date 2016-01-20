@@ -1029,6 +1029,9 @@ namespace Graphfab {
 
             /** Connect a node to a reaction */
             void connectNode(Node* n, Reaction* r, RxnRoleType role);
+
+            /** Return true if the node is already connected */
+            bool isNodeConnected(Node* n, Reaction* r) const;
             
             /// Find the node by specified ID. Returns NULL if no such node exists
             Node* findNodeById(const std::string& id);
