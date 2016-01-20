@@ -735,6 +735,10 @@ class LayoutFrame(FrameBaseClass):
             self.drawComp(comp, painter, config)
 
         for reaction in self.network.rxns:
+            if hasattr(reaction, 'custom') and reaction.custom.beacon == True:
+                painter.setPen(Qt.NoPen)
+                painter.setBrush(QtGui.QBrush(tuple2QColor((0.35,0.25,0.8,0.5))))
+                painter.drawEllipse(QtCore.QRectF(reaction.centroid.x-20, reaction.centroid.y-20, 40, 40))
             for curve in reaction.curves:
                 self.drawCurve(path, painter, curve, config)
                 if enable_matplotlib2tikz:
@@ -1083,7 +1087,8 @@ class LayoutFrame(FrameBaseClass):
             mouse = QPoint((event.x(), event.y()))
             self.changeTranslate(mouse - self.panstart)
         elif self.connecting:
-            mouse = QPoint((event.x(), event.y()))
+            qtfi = self.qtf.inverted()[0]
+            mouse = qtfi.map(QPoint((event.x(), event.y())))
             rxn = self.pickReaction(mouse.x(), mouse.y())
             if rxn is not None:
                 if self.connecting_rxn is not None:
@@ -1092,6 +1097,7 @@ class LayoutFrame(FrameBaseClass):
                     rxn.custom = NodeData()
                 rxn.custom.beacon = True
                 self.connecting_rxn = rxn
+            self.update()
 
     def setScale(self, s):
         self.update()
