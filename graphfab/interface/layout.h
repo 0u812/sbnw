@@ -879,6 +879,31 @@ _GraphfabExport double gf_compartment_getHeight(gf_compartment* c);
  */
 _GraphfabExport uint64_t gf_compartment_getNumElt(gf_compartment* c);
 
+/** @brief Add a node to the compartment
+ *  @details The node must already exist in the network
+ *  @param[in] c The compartment object
+ *  @param[in] n The node to add
+ *  @return Zero for success
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_compartment_addNode(gf_compartment* c, gf_node* n);
+
+/** @brief Remove a node from the compartment
+ *  @param[in] c The compartment object
+ *  @param[in] n The node to remove
+ *  @return Zero for success
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_compartment_removeNode(gf_compartment* c, gf_node* n);
+
+/** @brief Return whether the compartment contains this node
+ *  @param[in] c The compartment object
+ *  @param[in] n The node
+ *  @return Nonzero if true
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_compartment_containsNode(gf_compartment* c, gf_node* n);
+
 // Transform
 
 /** @brief Fit to the specified window

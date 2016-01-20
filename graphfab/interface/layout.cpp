@@ -1719,6 +1719,51 @@ uint64_t gf_compartment_getNumElt(gf_compartment* c) {
     return comp->getNElts();
 }
 
+int gf_compartment_addNode(gf_compartment* c, gf_node* n) {
+    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    AN(comp, "No comp");
+    Node* node = CastToNode(n->n);
+    AN(node, "No node");
+
+    if(!comp || !node) {
+        gf_emitError("gf_compartment_addNode failed");
+        return -1;
+    }
+
+    comp->addElt(node);
+    return 0;
+}
+
+int gf_compartment_removeNode(gf_compartment* c, gf_node* n) {
+    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    AN(comp, "No comp");
+    Node* node = CastToNode(n->n);
+    AN(node, "No node");
+
+    if(!comp || !node) {
+        gf_emitError("gf_compartment_removeNode failed");
+        return -1;
+    }
+
+    comp->removeElt(node);
+    return 0;
+}
+
+int gf_compartment_containsNode(gf_compartment* c, gf_node* n) {
+    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    AN(comp, "No comp");
+    Node* node = CastToNode(n->n);
+    AN(node, "No node");
+
+    if(!comp || !node) {
+        gf_emitError("gf_compartment_containsNode failed");
+        return -1;
+    }
+
+    comp->contains(node);
+    return 0;
+}
+
 void gf_fit_to_window(gf_layoutInfo* l, double left, double top, double right, double bottom) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
