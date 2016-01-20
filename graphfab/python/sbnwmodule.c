@@ -546,6 +546,8 @@ static int gfp_Compartment_SetAttro(gfp_Compartment* self, PyObject* attr, PyObj
     return PyObject_GenericSetAttr((PyObject*)self, attr, v);;
 }
 
+static PyObject* gfp_Compartment_add(gfp_Compartment *self, PyObject *args, PyObject *kwds);
+
 static PyMemberDef gfp_Compartment_members[] = {
     {"min", T_OBJECT_EX, offsetof(gfp_Compartment,dead), READONLY,
      "min"},
@@ -557,6 +559,14 @@ static PyMemberDef gfp_Compartment_members[] = {
      "width"},
     {"height", T_OBJECT_EX, offsetof(gfp_Compartment,dead), READONLY,
      "height"},
+    {NULL}  /* Sentinel */
+};
+
+static PyMethodDef gfp_Compartment_methods[] = {
+    {"add", (PyCFunction)gfp_Compartment_add, METH_VARARGS | METH_KEYWORDS,
+     "Add a node to this compartment\n\n"
+     ":param node: A node\n"
+    },
     {NULL}  /* Sentinel */
 };
 
@@ -593,8 +603,8 @@ static PyTypeObject gfp_CompartmentType = {
     0,                         /* tp_weaklistoffset */
     0,                         /* tp_iter */
     0,                         /* tp_iternext */
-    0,//Noddy_methods,             /* tp_methods */
-    gfp_Compartment_members,         /* tp_members */
+    gfp_Compartment_methods,   /* tp_methods */
+    gfp_Compartment_members,   /* tp_members */
     0,                         /* tp_getset */
     0,                         /* tp_base */
     0,                         /* tp_dict */
@@ -1923,6 +1933,27 @@ static PyTypeObject gfp_NetworkType = {
     0,                         /* tp_alloc */
     gfp_Network_new,         /* tp_new */
 };
+
+// misc. methods
+
+static PyObject* gfp_Compartment_add(gfp_Compartment *self, PyObject *args, PyObject *kwds) {
+    gfp_Node* node=NULL;
+    static char *kwlist[] = {"node", NULL};
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "|O!", kwlist,
+        &gfp_NodeType, &node
+    )) {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
+
+    if(!gf_compartment_addNode(&self->c, &node->n)) {
+        PyErr_SetString(SBNWError, "Unable to add node");
+        return NULL;
+    }
+    Py_RETURN_NONE;
+}
 
 /// -- cubicintersec --
 
