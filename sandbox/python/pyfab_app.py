@@ -1020,8 +1020,8 @@ class LayoutFrame(FrameBaseClass):
                         self.connecting = True
                         self.connecting_rxn = rxn
                         self.connecting_src_node = False
-            elif self.parent().createNodeToolAct.isChecked():
-                self.plantNode = True
+                    else:
+                        self.plantNode = True
             else:
                 # try to drag a reaction
                 rxn = self.pickReaction(mouse.x(), mouse.y())
