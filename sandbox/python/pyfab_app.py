@@ -1022,6 +1022,7 @@ class LayoutFrame(FrameBaseClass):
                         self.connecting_src_node = False
                     else:
                         self.plantNode = True
+                        self.dragSource = mouse
             else:
                 # try to drag a reaction
                 rxn = self.pickReaction(mouse.x(), mouse.y())
@@ -1133,6 +1134,13 @@ class LayoutFrame(FrameBaseClass):
                     node.custom.beacon = True
                     self.connecting_node = node
             self.update()
+        elif self.plantNode:
+            qtfi = self.qtf.inverted()[0]
+            mouse = qtfi.map(QPoint((event.x(), event.y())))
+            delta = mouse - self.dragSource
+            if delta.x()*delta.x() + delta.y()*delta.y() > 500:
+                self.plantNode = False
+                print('not planting')
 
     def setScale(self, s):
         self.update()
