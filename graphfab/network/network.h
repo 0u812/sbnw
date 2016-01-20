@@ -874,6 +874,9 @@ namespace Graphfab {
             
             /// Set the compartment's id
             void setId(const std::string& id) { _id = id; }
+
+            /// Set the compartment's name
+            void setName(const std::string& name) { name_ = name; }
             
             /// Get the compartment's glyph (layout element)
             const std::string& getGlyph() const { return _gly; }
@@ -965,6 +968,8 @@ namespace Graphfab {
         protected:
             /// ID
             std::string _id;
+            /// name
+            std::string name_;
             /// glyph
             std::string _gly;
             /// Elements

@@ -1057,6 +1057,35 @@ void gf_nw_recenterJunctions(gf_network* n) {
     net->recenterJunctions();
 }
 
+gf_compartment gf_nw_newCompartment(gf_network* nw, const char* id, const char* name) {
+    Network* net = CastToNetwork(nw->n);
+    gf_compartment cd;
+    cd.c = NULL;
+    AN(net, "No network");
+
+    std::cout << "gf_nw_newCompartment started\n";
+    Graphfab::Compartment* c = new Graphfab::Compartment();
+
+    std::cout << "gf_nw_newCompartment setting id\n";
+    c->setName(name);
+    if(id) {
+        if(!net->findCompById(id))
+            c->setId(id);
+        else {
+            #if SAGITTARIUS_DEBUG_LEVEL >= 1
+            fprintf(stderr, "A node with the specified id already exists\n");
+            #endif
+            return cd;
+        }
+    } else
+        c->setId(net->getUniqueId());
+
+    net->addCompartment(c);
+
+    cd.c = c;
+    return cd;
+}
+
 gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compartment* compartment) {
     Network* net = CastToNetwork(nw->n);
     gf_node nd;

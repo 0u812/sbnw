@@ -1803,6 +1803,45 @@ static PyObject* gfp_NetworkIsNodeConnected(gfp_Network *self, PyObject *args, P
     return PyBool_FromLong(gf_nw_isNodeConnected(&self->n, &node->n, &reaction->r));
 }
 
+static PyObject* gfp_NetworkNewComp(gfp_Network *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"name", "id", "compartment", NULL};
+    const char* id=NULL;
+    const char* name=NULL;
+    gf_compartment comp;
+
+    #if SAGITTARIUS_DEBUG_LEVEL >= 2
+    printf("gfp_NetworkNewNode called\n");
+    #endif
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "s|s", kwlist,
+        &name, &id)) {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
+
+    comp = gf_nw_newCompartment(&self->n, id, name);
+    printf("gf_nw_newCompartment returned\n");
+    if(comp.c) {
+        gfp_Compartment* o = (gfp_Compartment*)PyObject_Call((PyObject*)&gfp_NodeType, PyTuple_New(0), NULL);
+        Py_INCREF(o); // because we are returning it
+        if(!gfp_Compartment_rawinit(o, comp)) {
+            PyObject* newcomps = gfp_ExtendPyTuple(self->comps, (PyObject*)o); // steals a reference to o
+            if(newcomps) {
+                Py_XDECREF(self->comps);
+                self->comps = newcomps;
+                printf("new comp refcnt: %lu\n", ((PyObject*)o)->ob_refcnt);
+                return (PyObject*)o;
+            }
+        }
+        // failed
+        Py_XDECREF(o);
+    }
+
+    PyErr_SetString(SBNWError, "Failed to create node");
+    return NULL;
+}
+
 static PyMethodDef Network_methods[] = {
     {"randomize", (PyCFunction)gfp_NetworkRandomizeLayout, METH_VARARGS | METH_KEYWORDS,
      "Randomize the layout\n\n"
@@ -1870,6 +1909,11 @@ static PyMethodDef Network_methods[] = {
      "Return true if the node is connected to this reaction\n\n"
      ":param node: The node to connect\n"
      ":param reaction: The reaction\n"
+    },
+    {"newcomp", (PyCFunction)gfp_NetworkNewComp, METH_VARARGS | METH_KEYWORDS,
+     "Add a compartment to the network\n\n"
+     ":param str id: The compartment name\n"
+     ":param str id: The compartment id\n"
     },
     {NULL}  /* Sentinel */
 };

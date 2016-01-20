@@ -461,6 +461,14 @@ _GraphfabExport void gf_nw_rebuildCurves(gf_network* n);
  */
 _GraphfabExport void gf_nw_recenterJunctions(gf_network* n);
 
+/** @brief Add a new compartment to the network
+ *  @param[in] nw The network object
+ *  @param[in] id The compartment's requested ID (or null to determine it automatically)
+ *  @param[in] name The compartment's name
+ *  \ingroup C_Internal
+ */
+_GraphfabExport gf_compartment gf_nw_newCompartment(gf_network* nw, const char* id, const char* name);
+
 /** @brief Add a new node to the network
  *  @param[in] nw The network object
  *  @param[in] id The node's requested ID (or null to determine it automatically)
