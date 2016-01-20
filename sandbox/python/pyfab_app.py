@@ -670,6 +670,7 @@ class LayoutFrame(FrameBaseClass):
         self.panning = False
         self.dragging = False
         self.connecting = False
+        self.connecting_src_node = False
 
         self.connecting_node = None
         self.connecting_rxn = None
@@ -980,27 +981,45 @@ class LayoutFrame(FrameBaseClass):
         elif event.button() == 1:
             qtfi = self.qtf.inverted()[0]
             mouse = qtfi.map(QPoint((event.x(), event.y())))
-            # try to drag a node
-            node = self.pickNode(mouse.x(), mouse.y())
-            if node is not None:
-                if self.parent().selectToolAct.isChecked():
+            if self.parent().selectToolAct.isChecked():
+                # try to drag a node
+                node = self.pickNode(mouse.x(), mouse.y())
+                if node is not None:
                     node.custom.isBeingDragged = True
                     node.custom.centroidSource = QPoint(self.getNodeScreenSpaceCentroid(node))
                     self.dragging = True
                     self.dragSource = mouse
-                elif self.parent().lockToolAct.isChecked():
+            elif self.parent().lockToolAct.isChecked():
+                node = self.pickNode(mouse.x(), mouse.y())
+                if node is not None:
                     if not node.islocked():
                         node.lock()
                     else:
                         node.unlock()
-                elif self.parent().eraseToolAct.isChecked():
+            elif self.parent().eraseToolAct.isChecked():
+                node = self.pickNode(mouse.x(), mouse.y())
+                if node is not None:
                     self.removeNode(node)
-                elif self.parent().aliasToolAct.isChecked():
+            elif self.parent().aliasToolAct.isChecked():
+                node = self.pickNode(mouse.x(), mouse.y())
+                if node is not None:
                     self.aliasNode(node)
-                elif self.parent().createNodeToolAct.isChecked():
+            elif self.parent().createNodeToolAct.isChecked():
+                node = self.pickNode(mouse.x(), mouse.y())
+                if node is not None:
                     node.custom.beacon = True
                     self.connecting = True
                     self.connecting_node = node
+                    self.connecting_src_node = True
+                else:
+                    rxn = self.pickReaction(mouse.x(), mouse.y())
+                    if rxn is not None:
+                        if not hasattr(rxn, 'custom'):
+                            rxn.custom = NodeData()
+                        rxn.custom.beacon = True
+                        self.connecting = True
+                        self.connecting_rxn = rxn
+                        self.connecting_src_node = False
             elif self.parent().createNodeToolAct.isChecked():
                 self.plantNode = True
             else:
@@ -1032,7 +1051,11 @@ class LayoutFrame(FrameBaseClass):
                 for rxn in self.network.rxns:
                     if hasattr(rxn, 'custom'):
                         rxn.custom.beacon = False
-                self.network.connectnode(self.connecting_node, self.connecting_rxn, 'SUBSTRATE')
+                if self.connecting_node is not None and self.connecting_rxn is not None:
+                    if self.connecting_src_node:
+                        self.network.connectnode(self.connecting_node, self.connecting_rxn, 'SUBSTRATE')
+                    else:
+                        self.network.connectnode(self.connecting_node, self.connecting_rxn, 'PRODUCT')
                 self.update()
             elif self.plantNode:
                 self.plantNode = False
@@ -1092,14 +1115,22 @@ class LayoutFrame(FrameBaseClass):
         elif self.connecting:
             qtfi = self.qtf.inverted()[0]
             mouse = qtfi.map(QPoint((event.x(), event.y())))
-            rxn = self.pickReaction(mouse.x(), mouse.y())
-            if rxn is not None:
-                if self.connecting_rxn is not None:
-                    self.connecting_rxn.custom.beacon = False
-                if not hasattr(rxn, 'custom'):
-                    rxn.custom = NodeData()
-                rxn.custom.beacon = True
-                self.connecting_rxn = rxn
+            if self.connecting_src_node:
+                rxn = self.pickReaction(mouse.x(), mouse.y())
+                if rxn is not None:
+                    if self.connecting_rxn is not None:
+                        self.connecting_rxn.custom.beacon = False
+                    if not hasattr(rxn, 'custom'):
+                        rxn.custom = NodeData()
+                    rxn.custom.beacon = True
+                    self.connecting_rxn = rxn
+            else:
+                node = self.pickNode(mouse.x(), mouse.y())
+                if node is not None:
+                    if self.connecting_node is not None:
+                        self.connecting_node.custom.beacon = False
+                    node.custom.beacon = True
+                    self.connecting_node = node
             self.update()
 
     def setScale(self, s):
