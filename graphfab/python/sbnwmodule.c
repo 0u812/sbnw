@@ -1891,7 +1891,7 @@ static PyObject* gfp_NetworkIsNodeConnected(gfp_Network *self, PyObject *args, P
 }
 
 static PyObject* gfp_NetworkNewComp(gfp_Network *self, PyObject *args, PyObject *kwds) {
-    static char *kwlist[] = {"name", "id", "compartment", NULL};
+    static char *kwlist[] = {"name", "id", NULL};
     const char* id=NULL;
     const char* name=NULL;
     gf_compartment comp;
@@ -1926,6 +1926,45 @@ static PyObject* gfp_NetworkNewComp(gfp_Network *self, PyObject *args, PyObject 
     }
 
     PyErr_SetString(SBNWError, "Failed to create comp");
+    return NULL;
+}
+
+static PyObject* gfp_NetworkNewReaction(gfp_Network *self, PyObject *args, PyObject *kwds) {
+    static char *kwlist[] = {"name", "id", NULL};
+    const char* id=NULL;
+    const char* name=NULL;
+    gf_reaction rxn;
+
+    #if SAGITTARIUS_DEBUG_LEVEL >= 2
+    printf("gfp_NetworkNewReaction called\n");
+    #endif
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "s|s", kwlist,
+        &name, &id)) {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
+
+    rxn = gf_nw_newReaction(&self->n, id, name);
+    printf("gf_nw_newCompartment returned\n");
+    if(rxn.r) {
+        gfp_Rxn* o = (gfp_Rxn*)PyObject_Call((PyObject*)&gfp_RxnType, PyTuple_New(0), NULL);
+        Py_INCREF(o); // because we are returning it
+        if(!gfp_Rxn_rawinit(o, rxn, self->nodes)) {
+            PyObject* newrxns = gfp_ExtendPyTuple(self->rxns, (PyObject*)o); // steals a reference to o
+            if(newrxns) {
+                Py_XDECREF(self->rxns);
+                self->rxns = newrxns;
+                printf("new reaction refcnt: %lu\n", ((PyObject*)o)->ob_refcnt);
+                return (PyObject*)o;
+            }
+        }
+        // failed
+        Py_XDECREF(o);
+    }
+
+    PyErr_SetString(SBNWError, "Failed to create reaction");
     return NULL;
 }
 
@@ -2001,6 +2040,11 @@ static PyMethodDef Network_methods[] = {
      "Add a compartment to the network\n\n"
      ":param str id: The compartment name\n"
      ":param str id: The compartment id\n"
+    },
+    {"newreaction", (PyCFunction)gfp_NetworkNewReaction, METH_VARARGS | METH_KEYWORDS,
+     "Add a reaction to the network\n\n"
+     ":param str id: The reaction's name\n"
+     ":param str id: The reaction's id\n"
     },
     {NULL}  /* Sentinel */
 };

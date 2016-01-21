@@ -689,6 +689,7 @@ class LayoutFrame(FrameBaseClass):
           self.pypltrender = pyfab_matplotlib_render.PyPlotRenderer()
 
         self.plantNode = False
+        self.plantRxn = False
         self.plantComp = False
 
     def resetTransform(self):
@@ -916,6 +917,11 @@ class LayoutFrame(FrameBaseClass):
         newcomp.min = (min(x1,x2),min(y1,y2))
         newcomp.max = (max(x1,x2),max(y1,y2))
 
+    # x & y are screen space
+    def addReaction(self, x, y):
+        newrxn = self.network.newreaction('NewRxn')
+        newrxn.centroid = x,y
+
     def removeNode(self, node):
         self.network.removenode(node)
 
@@ -1067,6 +1073,11 @@ class LayoutFrame(FrameBaseClass):
                     mouse = QPoint((event.x(), event.y()))
                     self.panning = True
                     self.panstart = mouse
+        elif event.button() == 2:
+            qtfi = self.qtf.inverted()[0]
+            mouse = qtfi.map(QPoint((event.x(), event.y())))
+            self.plantRxn = True
+            self.dragSource = mouse
         self.update()
 
     # Mouse release
@@ -1118,6 +1129,13 @@ class LayoutFrame(FrameBaseClass):
         elif(event.button() == 4):
             self.panning = False
             self.applyTranslation()
+        elif(event.button() == 2):
+            if self.plantRxn:
+                self.plantRxn = False
+                qtfi = self.qtf.inverted()[0]
+                mouse = qtfi.map(QPoint((event.x(), event.y())))
+                self.addReaction(mouse.x(), mouse.y())
+                self.update()
 
 
     def applyTranslation(self):

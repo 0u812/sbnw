@@ -1464,6 +1464,35 @@ void gf_releaseRxn(const gf_reaction* r) {
     delete rxn;
 }
 
+gf_reaction gf_nw_newReaction(gf_network* nw, const char* id, const char* name) {
+    Network* net = CastToNetwork(nw->n);
+    gf_reaction rxn;
+    rxn.r = NULL;
+    AN(net, "No network");
+
+    std::cout << "gf_nw_newReaction started\n";
+    Graphfab::Reaction* r = new Graphfab::Reaction();
+
+    std::cout << "gf_nw_newReaction setting id\n";
+    r->setName(name);
+    if(id) {
+        if(!net->findReactionById(id))
+            r->setId(id);
+        else {
+            #if SAGITTARIUS_DEBUG_LEVEL >= 1
+            fprintf(stderr, "A node with the specified id already exists\n");
+            #endif
+            return rxn;
+        }
+    } else
+        r->setId(net->getUniqueId());
+
+    net->addReaction(r);
+
+    rxn.r = r;
+    return rxn;
+}
+
 char* gf_reaction_getID(gf_reaction* r) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");

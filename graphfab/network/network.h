@@ -652,6 +652,8 @@ namespace Graphfab {
             
             /// Set ID
             void setId(const std::string& id) { _id = id; }
+
+            void setName(const std::string& name) { name_ = name; }
             
             // Species:
             
@@ -804,6 +806,7 @@ namespace Graphfab {
             // Variables:
             // model:
             std::string _id;
+            std::string name_;
             // dims:
             /// Force (translates to velocity, not accel, due to layout algo.)
             Point _v;

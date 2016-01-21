@@ -719,6 +719,14 @@ _GraphfabExport int gf_node_isIdentical(gf_node* u, gf_node* v);
  */
 _GraphfabExport void gf_releaseRxn(const gf_reaction* r);
 
+/** @brief Add a new reaction to the network
+ *  @param[in] nw The network object
+ *  @param[in] id The reaction's requested ID (or null to determine it automatically)
+ *  @param[in] name The reaction's name
+ *  \ingroup C_Internal
+ */
+_GraphfabExport gf_reaction gf_nw_newReaction(gf_network* nw, const char* id, const char* name);
+
 /** @brief Get the id, user frees memory
  *  @param[in] r The reaction object
  *  \ingroup C_API
