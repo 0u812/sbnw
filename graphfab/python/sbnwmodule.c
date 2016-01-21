@@ -2582,6 +2582,7 @@ static int gfp_SBMLModel_init(gfp_SBMLModel *self, PyObject *args, PyObject *kwd
             PyErr_SetString(SBNWError, "Invalid arguments to sbnw.sbmlmodel");
             return -1;
         }
+        printf("gfp_SBMLModel_init create new model\n");
         // create new model
         self->m = malloc(sizeof(gf_SBMLModel));
         *self->m = gf_SBMLModel_new();
@@ -2589,6 +2590,8 @@ static int gfp_SBMLModel_init(gfp_SBMLModel *self, PyObject *args, PyObject *kwd
         self->layout = (gfp_Layout*)PyObject_Call((PyObject*)&gfp_LayoutType, Py_BuildValue("iiii", level, version, width, height), NULL);
 
         self->network = self->layout->network;
+
+        return 0;
     }
     if(!sbml)
       return -1;
