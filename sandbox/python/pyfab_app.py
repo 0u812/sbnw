@@ -675,8 +675,6 @@ class LayoutFrame(FrameBaseClass):
         self.connecting_node = None
         self.connecting_rxn = None
 
-        self.recenterrxns = False
-
         self.timer = QtCore.QBasicTimer()
 
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -1111,7 +1109,7 @@ class LayoutFrame(FrameBaseClass):
                     self.setNodeScreenSpaceCentroid(node, (newcentroid.x(), newcentroid.y()))
                     for reaction in self.network.rxns:
                         if reaction.has(node):
-                            if self.recenterrxns:
+                            if self.parent().openconfig().state.auto_recenter_junctions:
                                 reaction.recenter()
                             else:
                                 reaction.recalccps()
@@ -1119,7 +1117,7 @@ class LayoutFrame(FrameBaseClass):
                 if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
                     newcentroid = rxn.custom.centroidSource + delta
                     self.setNodeScreenSpaceCentroid(rxn, (newcentroid.x(), newcentroid.y()))
-                    if self.recenterrxns:
+                    if self.parent().openconfig().state.auto_recenter_junctions:
                         rxn.recenter()
                     else:
                         rxn.recalccps()
