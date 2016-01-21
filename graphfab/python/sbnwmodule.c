@@ -2308,14 +2308,6 @@ static PyObject* gfp_Layout_new(PyTypeObject *type, PyObject *args, PyObject *kw
     return (PyObject*)self;
 }
 
-static int gfp_Layout_init(gfp_Layout *self, PyObject *args, PyObject *kwds) {
-    #if SAGITTARIUS_DEBUG_LEVEL >= 2
-//     printf("gfp_Layout_init called\n");
-    #endif
-    
-    return 0;
-}
-
 static int gfp_Layout_rawinit(gfp_Layout* self, gf_layoutInfo* l) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     printf("layout raw init\n");
@@ -2334,6 +2326,28 @@ static int gfp_Layout_rawinit(gfp_Layout* self, gf_layoutInfo* l) {
     // set canvas object
     Py_INCREF(self->canv);
     self->network->canv = self->canv;
+
+    return 0;
+}
+
+static int gfp_Layout_init(gfp_Layout *self, PyObject *args, PyObject *kwds) {
+    int level=-1, version;
+    int width, height;
+    static char *kwlist[] = {"level", "version", "width", "height", NULL};
+
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "|iiii", kwlist, &level, &version, &width, &height)) {
+        PyErr_SetString(SBNWError, "Invalid arguments");
+        return -1;
+    }
+
+    if(level != -1) {
+        gf_layoutInfo* l = malloc(sizeof(gf_layoutInfo));
+        *l = gf_layoutInfo_new(level, version, width, height);
+        gfp_Layout_rawinit(self, l);
+    }
+    #if SAGITTARIUS_DEBUG_LEVEL >= 2
+//     printf("gfp_Layout_init called\n");
+    #endif
     
     return 0;
 }
@@ -2537,7 +2551,7 @@ static PyObject* gfp_SBMLModel_new(PyTypeObject *type, PyObject *args, PyObject 
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
     printf("gfp_SBMLModel_new called\n");
     #endif
-    
+
     self = (gfp_SBMLModel*)type->tp_alloc(type, 0);
     if(self) {
         self->m = NULL;
@@ -2555,13 +2569,26 @@ static int gfp_SBMLModel_init(gfp_SBMLModel *self, PyObject *args, PyObject *kwd
     const char *sbml;
     // gf_SBMLModel* m = NULL;
     static char *kwlist[] = {"sbml", NULL};
+    int level, version;
+    int width, height;
+    static char *kwlist2[] = {"level", "version", "width", "height", NULL};
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     printf("gfp_SBMLModel_init called\n");
     #endif
     
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &sbml)) {
-        PyErr_SetString(SBNWError, "Invalid SBML");
-        return -1;
+//         PyErr_SetString(SBNWError, "Invalid SBML");
+        if(!PyArg_ParseTupleAndKeywords(args, kwds, "iiii", kwlist2, &level, &version, &width, &height)) {
+            PyErr_SetString(SBNWError, "Invalid arguments to sbnw.sbmlmodel");
+            return -1;
+        }
+        // create new model
+        self->m = malloc(sizeof(gf_SBMLModel));
+        *self->m = gf_SBMLModel_new();
+
+        self->layout = (gfp_Layout*)PyObject_Call((PyObject*)&gfp_LayoutType, Py_BuildValue("iiii", level, version, width, height), NULL);
+
+        self->network = self->layout->network;
     }
     if(!sbml)
       return -1;
