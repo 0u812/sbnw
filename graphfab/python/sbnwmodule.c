@@ -2079,7 +2079,7 @@ static PyObject* gfp_Compartment_add(gfp_Compartment *self, PyObject *args, PyOb
         return NULL;
     }
 
-    if(!gf_compartment_addNode(&self->c, &node->n)) {
+    if(gf_compartment_addNode(&self->c, &node->n)) {
         PyErr_SetString(SBNWError, "Unable to add node");
         return NULL;
     }

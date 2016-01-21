@@ -1102,10 +1102,11 @@ class LayoutFrame(FrameBaseClass):
                 else:
                     self.dragging = False
                     for node in self.network.nodes:
+                        # Python: ahead of the curve in uselessness
+                        if node.custom.isBeingDragged and self.droptarget is not None and not self.droptarget.__contains__(node):
+                            self.droptarget.add(node)
                         node.custom.isBeingDragged = False
                         node.custom.beacon = False
-                        #if self.droptarget is not None:
-                            #
                     for rxn in self.network.rxns:
                         if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
                             rxn.custom.isBeingDragged = False
