@@ -51,6 +51,10 @@ namespace Graphfab {
      */
     class Canvas {
         public:
+            Canvas() : _w(0), _h(0) {}
+
+            Canvas(Real width, Real height) : _w(width), _h(height) {}
+
             /// Get the canvas width
             Real getWidth() const;
             

@@ -111,6 +111,22 @@ RxnRoleType gf_specRole2RxnRoleType(gf_specRole role) {
     }
 }
 
+gf_SBMLModel gf_SBMLModel_new() {
+    gf_SBMLModel r;
+    r.pdoc = NULL;
+    return r;
+}
+
+gf_layoutInfo gf_layoutInfo_new(uint64_t level, uint64_t version, uint64_t width, uint64_t height) {
+    gf_layoutInfo l;
+    l.level = level;
+    l.version = version;
+    l.net = (void*)(new Network());
+    l.canv = (void*)(new Canvas(width, height));
+    l.cont = NULL;
+    return l;
+}
+
 gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
     gf_layoutInfo* l;
     SBMLDocument* doc = (SBMLDocument*)lo->pdoc;

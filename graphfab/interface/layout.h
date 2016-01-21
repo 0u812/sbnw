@@ -245,6 +245,18 @@ _GraphfabExport void gf_freeLayoutInfoHierarch(gf_layoutInfo* l);
  */
 _GraphfabExport void gf_freeModelAndLayout(gf_SBMLModel* mod, gf_layoutInfo* l);
 
+/** @brief Create a new SBML model
+ * @returns The new SBML model
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_SBMLModel gf_SBMLModel_new();
+
+/** @brief Create a new layout info object
+ * @returns The new layout info
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_layoutInfo gf_layoutInfo_new(uint64_t level, uint64_t version, uint64_t width, uint64_t height);
+
 // -- Input --
 
 /**
