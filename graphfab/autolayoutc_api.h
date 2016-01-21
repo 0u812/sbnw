@@ -133,7 +133,7 @@
 //
 // \section conventions_sec Conventions
 //
-// The library conforms to universial conventions such as return zero for success.
+// The library conforms to universial conventions for C such as return zero for success.
 
 
 // \defgroup C_API External C API
