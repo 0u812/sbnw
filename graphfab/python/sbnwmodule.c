@@ -526,13 +526,7 @@ static int gfp_Compartment_rawinit(gfp_Compartment *self, gf_compartment c) {
 }
 
 static PyObject* gfp_Compartment_getAttro(gfp_Compartment *self, PyObject *attr) {
-    if(PyCompareString(attr, "min")) {
-        gf_point p = gf_compartment_getMinCorner(&self->c);
-        return gfp_PointToPyPoint(p);
-    } else if(PyCompareString(attr, "max")) {
-        gf_point p = gf_compartment_getMaxCorner(&self->c);
-        return gfp_PointToPyPoint(p);
-    } else if(PyCompareString(attr, "width")) {
+    if(PyCompareString(attr, "width")) {
         return Py_BuildValue("d", gf_compartment_getWidth(&self->c));
     } else if(PyCompareString(attr, "height")) {
         return Py_BuildValue("d", gf_compartment_getHeight(&self->c));
@@ -548,17 +542,104 @@ static int gfp_Compartment_SetAttro(gfp_Compartment* self, PyObject* attr, PyObj
 
 static PyObject* gfp_Compartment_add(gfp_Compartment *self, PyObject *args, PyObject *kwds);
 
+static PyObject *
+gfp_Compartment_getMin(gfp_Compartment *self, void *closure) {
+    gf_point p = gf_compartment_getMinCorner(&self->c);
+    return gfp_PointToPyPoint(p);
+}
+
+static int
+gfp_Compartment_setMin(gfp_Compartment *self, PyObject *value, void *closure) {
+    gf_point p;
+    PyObject* o=NULL;
+
+    o = PySequence_GetItem(value, 0);
+    if(!o) {
+        PyErr_SetString(SBNWError, "Failed to set property");
+        return -1;
+    }
+    p.x = PyFloat_AsDouble(o);
+    if(PyErr_Occurred()) {
+        PyErr_SetString(SBNWError, "Failed to set property");
+        return -1;
+    }
+    Py_XDECREF(o);
+
+    o = PySequence_GetItem(value, 1);
+    if(!o) {
+        PyErr_SetString(SBNWError, "Failed to set property");
+        return -1;
+    }
+    p.y = PyFloat_AsDouble(o);
+    if(PyErr_Occurred()) {
+        PyErr_SetString(SBNWError, "Failed to set property");
+        return -1;
+    }
+    Py_XDECREF(o);
+
+    gf_compartment_setMinCorner(&self->c, p);
+    return 0;
+}
+
+static PyObject *
+gfp_Compartment_getMax(gfp_Compartment *self, void *closure) {
+    gf_point p = gf_compartment_getMaxCorner(&self->c);
+    return gfp_PointToPyPoint(p);
+}
+
+static int
+gfp_Compartment_setMax(gfp_Compartment *self, PyObject *value, void *closure) {
+    gf_point p;
+    PyObject* o=NULL;
+
+    o = PySequence_GetItem(value, 0);
+    if(!o) {
+        PyErr_SetString(SBNWError, "Failed to set property");
+        return -1;
+    }
+    p.x = PyFloat_AsDouble(o);
+    if(PyErr_Occurred()) {
+        PyErr_SetString(SBNWError, "Failed to set property");
+        return -1;
+    }
+    Py_XDECREF(o);
+
+    o = PySequence_GetItem(value, 1);
+    if(!o) {
+        PyErr_SetString(SBNWError, "Failed to set property");
+        return -1;
+    }
+    p.y = PyFloat_AsDouble(o);
+    if(PyErr_Occurred()) {
+        PyErr_SetString(SBNWError, "Failed to set property");
+        return -1;
+    }
+    Py_XDECREF(o);
+
+    gf_compartment_setMaxCorner(&self->c, p);
+
+    return 0;
+}
+
 static PyMemberDef gfp_Compartment_members[] = {
-    {"min", T_OBJECT_EX, offsetof(gfp_Compartment,dead), READONLY,
-     "min"},
-    {"max",  T_OBJECT_EX, offsetof(gfp_Compartment,dead) , READONLY,
-     "max"},
     {"numelt", T_OBJECT_EX, offsetof(gfp_Compartment,dead), READONLY,
      "numelt"},
     {"width", T_OBJECT_EX, offsetof(gfp_Compartment,dead), READONLY,
      "width"},
     {"height", T_OBJECT_EX, offsetof(gfp_Compartment,dead), READONLY,
      "height"},
+    {NULL}  /* Sentinel */
+};
+
+static PyGetSetDef gfp_Compartment_getsetters[] = {
+    {"min",
+     (getter)gfp_Compartment_getMin, (setter)gfp_Compartment_setMin,
+     "The compartment's minimum corner",
+     NULL},
+    {"max",
+     (getter)gfp_Compartment_getMax, (setter)gfp_Compartment_setMax,
+     "The compartment's maximum corner",
+     NULL},
     {NULL}  /* Sentinel */
 };
 
@@ -605,7 +686,7 @@ static PyTypeObject gfp_CompartmentType = {
     0,                         /* tp_iternext */
     gfp_Compartment_methods,   /* tp_methods */
     gfp_Compartment_members,   /* tp_members */
-    0,                         /* tp_getset */
+    gfp_Compartment_getsetters,/* tp_getset */
     0,                         /* tp_base */
     0,                         /* tp_dict */
     0,                         /* tp_descr_get */
@@ -1810,7 +1891,7 @@ static PyObject* gfp_NetworkNewComp(gfp_Network *self, PyObject *args, PyObject 
     gf_compartment comp;
 
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
-    printf("gfp_NetworkNewNode called\n");
+    printf("gfp_NetworkNewComp called\n");
     #endif
 
     // parse args
@@ -1823,7 +1904,7 @@ static PyObject* gfp_NetworkNewComp(gfp_Network *self, PyObject *args, PyObject 
     comp = gf_nw_newCompartment(&self->n, id, name);
     printf("gf_nw_newCompartment returned\n");
     if(comp.c) {
-        gfp_Compartment* o = (gfp_Compartment*)PyObject_Call((PyObject*)&gfp_NodeType, PyTuple_New(0), NULL);
+        gfp_Compartment* o = (gfp_Compartment*)PyObject_Call((PyObject*)&gfp_CompartmentType, PyTuple_New(0), NULL);
         Py_INCREF(o); // because we are returning it
         if(!gfp_Compartment_rawinit(o, comp)) {
             PyObject* newcomps = gfp_ExtendPyTuple(self->comps, (PyObject*)o); // steals a reference to o
@@ -1838,7 +1919,7 @@ static PyObject* gfp_NetworkNewComp(gfp_Network *self, PyObject *args, PyObject 
         Py_XDECREF(o);
     }
 
-    PyErr_SetString(SBNWError, "Failed to create node");
+    PyErr_SetString(SBNWError, "Failed to create comp");
     return NULL;
 }
 
@@ -2606,13 +2687,13 @@ gfp_SBMLModel_getLevel(gfp_SBMLModel *self, void *closure) {
     return PyLong_FromLong(self->layout->l->level);
 }
 
-static PyObject *
+static int
 gfp_SBMLModel_setLevel(gfp_SBMLModel *self, PyObject *value, void *closure) {
     self->layout->l->level = PyLong_AsLong(value);
     if(PyErr_Occurred) {
-      return NULL;
+      return -1;
     }
-    Py_RETURN_NONE;
+    return 0;
 }
 
 static PyObject *
@@ -2620,13 +2701,13 @@ gfp_SBMLModel_getVersion(gfp_SBMLModel *self, void *closure) {
     return PyLong_FromLong(self->layout->l->version);
 }
 
-static PyObject *
+static int
 gfp_SBMLModel_setVersion(gfp_SBMLModel *self, PyObject *value, void *closure) {
     self->layout->l->version = PyLong_AsLong(value);
     if(PyErr_Occurred) {
-      return NULL;
+      return -1;
     }
-    Py_RETURN_NONE;
+    return 0;
 }
 
 static PyGetSetDef gfp_SBMLModel_getseters[] = {

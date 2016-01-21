@@ -686,6 +686,7 @@ class LayoutFrame(FrameBaseClass):
           self.pypltrender = pyfab_matplotlib_render.PyPlotRenderer()
 
         self.plantNode = False
+        self.plantComp = False
 
     def resetTransform(self):
       self.scale = 1.
@@ -903,6 +904,18 @@ class LayoutFrame(FrameBaseClass):
         fixNode(newnode)
         newnode.centroid = x,y
 
+    # x & y are screen space
+    def addComp(self, x1, y1, x2, y2):
+        newcomp = self.network.newcomp('NewComp')
+        #m = (min(x1,x2),min(y1,y2))
+        #print('m = {}'.format(m))
+        #try:
+        newcomp.min = (min(x1,x2),min(y1,y2))
+        newcomp.max = (max(x1,x2),max(y1,y2))
+        #print('res = {}'.format(res))
+        #except:
+            #print('PROBLEM')
+
     def removeNode(self, node):
         self.network.removenode(node)
 
@@ -1065,6 +1078,12 @@ class LayoutFrame(FrameBaseClass):
                 mouse = qtfi.map(QPoint((event.x(), event.y())))
                 self.addNode(mouse.x(), mouse.y())
                 self.update()
+            elif self.plantComp:
+                self.plantComp = False
+                qtfi = self.qtf.inverted()[0]
+                mouse = qtfi.map(QPoint((event.x(), event.y())))
+                self.addComp(self.dragSource.x(), self.dragSource.y(), mouse.x(), mouse.y())
+                self.update()
             else:
                 if self.panning:
                     self.panning = False
@@ -1140,7 +1159,7 @@ class LayoutFrame(FrameBaseClass):
             delta = mouse - self.dragSource
             if delta.x()*delta.x() + delta.y()*delta.y() > 500:
                 self.plantNode = False
-                print('not planting')
+                self.plantComp = True
 
     def setScale(self, s):
         self.update()

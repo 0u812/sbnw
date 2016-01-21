@@ -130,6 +130,10 @@
 // \section install_sec Installation
 //
 // Installation documentation is provided at https://github.com/sys-bio/sbnw.
+//
+// \section conventions_sec Conventions
+//
+// The library conforms to universial conventions such as return zero for success.
 
 
 // \defgroup C_API External C API
