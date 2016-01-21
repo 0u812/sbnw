@@ -907,14 +907,8 @@ class LayoutFrame(FrameBaseClass):
     # x & y are screen space
     def addComp(self, x1, y1, x2, y2):
         newcomp = self.network.newcomp('NewComp')
-        #m = (min(x1,x2),min(y1,y2))
-        #print('m = {}'.format(m))
-        #try:
         newcomp.min = (min(x1,x2),min(y1,y2))
         newcomp.max = (max(x1,x2),max(y1,y2))
-        #print('res = {}'.format(res))
-        #except:
-            #print('PROBLEM')
 
     def removeNode(self, node):
         self.network.removenode(node)
