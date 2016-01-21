@@ -415,7 +415,10 @@ class Autolayout(MainWindowBaseClass):
         self.toolbar.addWidget(self.gravslider)
 
         self.model = sbnw.sbmlmodel(3,1,600,600)
-
+        self.layout = self.model.layout
+        self.network = self.layout.network
+        self.canvas = self.layout.canvas
+        self.mainframe.network = self.network
 
     def stiffness_changed_via_slider(self):
         with self.openconfig() as config:
