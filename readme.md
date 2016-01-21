@@ -107,7 +107,7 @@ The C API is exposed via graphfab/autolayoutc_api.h.  There is an example in san
 ## License
 
 This project is licensed under the BSD 3-clause license:
-### Copyright (c) 2012-2015, J. Kyle Medley and Herbert M. Sauro
+### Copyright (c) 2012-2016, J. Kyle Medley and Herbert M. Sauro
 ### All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
