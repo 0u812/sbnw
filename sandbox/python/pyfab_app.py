@@ -1162,6 +1162,41 @@ class LayoutFrame(FrameBaseClass):
         self.postTranslate = self.postTranslateBase + delta
         self.update()
 
+class OtherOptsCfgPage(QWidget):
+    def __init__(self, parent, config):
+      QWidget.__init__(self, parent)
+
+      self.config = config
+
+      self.mainlayout = QVBoxLayout()
+      self.setLayout(self.mainlayout)
+
+      # sbmlgroup
+      self.sbmlgroup = QFrame(self)
+      self.mainlayout.addWidget(self.sbmlgroup)
+
+      self.other_opts_layout = QVBoxLayout()
+      self.sbmlgroup.setLayout(self.other_opts_layout)
+
+      self.auto_recenter_junctions = QCheckBox('Auto recenter junctions')
+      self.auto_recenter_junctions.stateChanged.connect(self.set_auto_recenter_junctions)
+      self.other_opts_layout.addWidget(self.auto_recenter_junctions)
+
+      self.sync_widgets()
+
+    def sync_widgets(self):
+      if not self.config.state.auto_recenter_junctions:
+        self.auto_recenter_junctions.setCheckState(Qt.Unchecked)
+      else:
+        self.auto_recenter_junctions.setCheckState(Qt.Checked)
+
+    def set_auto_recenter_junctions(self, state):
+      if self.auto_recenter_junctions.checkState() == Qt.Unchecked:
+        self.config.state.auto_recenter_junctions = False
+      else:
+        self.config.state.auto_recenter_junctions = True
+      self.sync_widgets()
+
 class SBMLOptsCfgPage(QWidget):
     def __init__(self, parent, config):
       QWidget.__init__(self, parent)
@@ -2106,6 +2141,9 @@ class PrefDialog(QDialog):
       self.sbml_page_item = QListWidgetItem(self.cfgbrowser)
       self.sbml_page_item.setText('SBML')
 
+      self.other_page_item = QListWidgetItem(self.cfgbrowser)
+      self.other_page_item.setText('Other')
+
       self.cfgbrowser.setMaximumWidth(self.cfgbrowser.sizeHintForColumn(0)*2)
 
       self.cfgbrowser.currentItemChanged.connect(self.page_changed)
@@ -2136,6 +2174,11 @@ class PrefDialog(QDialog):
       self.sbml_page = SBMLOptsCfgPage(self, self.config)
       self.pages.addWidget(self.sbml_page)
 
+      # Other options config page
+
+      self.other_page = OtherOptsCfgPage(self, self.config)
+      self.pages.addWidget(self.other_page)
+
       # active page
       if self.config.state.active_config_section == 'render_effect':
         self.cfgbrowser.setCurrentRow(0)
@@ -2146,6 +2189,9 @@ class PrefDialog(QDialog):
       elif self.config.state.active_config_section == 'sbml_options':
         self.cfgbrowser.setCurrentRow(2)
         self.pages.setCurrentIndex(2)
+      elif self.config.state.active_config_section == 'other_options':
+        self.cfgbrowser.setCurrentRow(3)
+        self.pages.setCurrentIndex(3)
 
       # buttons
 
@@ -2180,6 +2226,8 @@ class PrefDialog(QDialog):
         self.config.state.active_config_section = 'draw_style'
       elif current is self.sbml_page_item:
         self.config.state.active_config_section = 'sbml_options'
+      elif current is self.other_page_item:
+        self.config.state.active_config_section = 'other_options'
 
     def reset(self):
       self.config.reset_defaults()
