@@ -1811,6 +1811,21 @@ int gf_compartment_containsNode(gf_compartment* c, gf_node* n) {
     return 0;
 }
 
+int gf_compartment_containsReaction(gf_compartment* c, gf_reaction* r) {
+    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    AN(comp, "No comp");
+    Graphfab::Reaction* rxn = CastToReaction(r->r);
+    AN(rxn, "No reaction");
+
+    if(!comp || !rxn) {
+        gf_emitError("gf_compartment_containsReaction failed");
+        return -1;
+    }
+
+    comp->contains(rxn);
+    return 0;
+}
+
 void gf_fit_to_window(gf_layoutInfo* l, double left, double top, double right, double bottom) {
     Network* net = (Network*)l->net;
     AN(net, "No network");

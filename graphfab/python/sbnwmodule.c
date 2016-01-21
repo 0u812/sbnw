@@ -542,6 +542,8 @@ static int gfp_Compartment_SetAttro(gfp_Compartment* self, PyObject* attr, PyObj
 
 static PyObject* gfp_Compartment_add(gfp_Compartment *self, PyObject *args, PyObject *kwds);
 
+static PyObject* gfp_Compartment___contains__(gfp_Compartment *self, PyObject *args, PyObject *kwds);
+
 static PyObject *
 gfp_Compartment_getMin(gfp_Compartment *self, void *closure) {
     gf_point p = gf_compartment_getMinCorner(&self->c);
@@ -647,6 +649,10 @@ static PyMethodDef gfp_Compartment_methods[] = {
     {"add", (PyCFunction)gfp_Compartment_add, METH_VARARGS | METH_KEYWORDS,
      "Add a node to this compartment\n\n"
      ":param node: A node\n"
+    },
+    {"__contains__", (PyCFunction)gfp_Compartment___contains__, METH_VARARGS | METH_KEYWORDS,
+     "Return whether this compartment contains a node or reaction\n\n"
+     ":param x: A node or reaction\n"
     },
     {NULL}  /* Sentinel */
 };
@@ -2078,6 +2084,33 @@ static PyObject* gfp_Compartment_add(gfp_Compartment *self, PyObject *args, PyOb
         return NULL;
     }
     Py_RETURN_NONE;
+}
+
+static PyObject* gfp_Compartment___contains__(gfp_Compartment *self, PyObject *args, PyObject *kwds) {
+    gfp_Node* node=NULL;
+    gfp_Rxn*  rxn =NULL;
+    static char *kwlist[] = {"x", NULL};
+
+    // parse args
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "|O!", kwlist,
+        &gfp_NodeType, &node
+    )) {
+        if(!PyArg_ParseTupleAndKeywords(args, kwds, "|O!", kwlist,
+            &gfp_RxnType, &rxn
+        )) {
+            PyErr_SetString(SBNWError, "Invalid argument(s)");
+            return NULL;
+        }
+    }
+
+    if(node)
+        return PyBool_FromLong(gf_compartment_containsNode(&self->c, &node->n));
+    else if(rxn)
+        return PyBool_FromLong(gf_compartment_containsReaction(&self->c, &rxn->r));
+    else {
+        PyErr_SetString(SBNWError, "Invalid argument(s)");
+        return NULL;
+    }
 }
 
 /// -- cubicintersec --

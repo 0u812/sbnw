@@ -675,6 +675,8 @@ class LayoutFrame(FrameBaseClass):
         self.connecting_node = None
         self.connecting_rxn = None
 
+        self.droptarget = None
+
         self.timer = QtCore.QBasicTimer()
 
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -877,6 +879,9 @@ class LayoutFrame(FrameBaseClass):
         cornerrad = 10.
 
         compcolor = tuple2QColor(config.state.compartment_color)
+        if self.droptarget is not None and self.droptarget is comp:
+            compcolor = compcolor.darker()
+
         brush = QtGui.QBrush(compcolor)
         painter.setBrush(brush)
 
@@ -932,12 +937,12 @@ class LayoutFrame(FrameBaseClass):
                 return r
         raise RuntimeError('No node with id {}'.format(rxnid))
 
-    def pickNode(self, screenx, screeny):
+    def pickNode(self, pickx, picky):
         '''Pick a node on the canvas via e.g. a mouse click.
 
         Keyword arguments:
-        screenx -- the screen space x coordinate
-        screeny -- the screen space y coordinate
+        pickx -- the global x coordinate
+        picky -- the global y coordinate
         '''
 
         for node in reversed(self.network.nodes):
@@ -945,24 +950,38 @@ class LayoutFrame(FrameBaseClass):
             hemiwidth = node.width/2
             hemiheight = node.height/2
 
-            if intervalContains(x - hemiwidth, x + hemiwidth, screenx) and intervalContains(y - hemiheight, y + hemiheight, screeny):
+            if intervalContains(x - hemiwidth, x + hemiwidth, pickx) and intervalContains(y - hemiheight, y + hemiheight, picky):
                 return node
 
         return None
 
-    def pickReaction(self, screenx, screeny):
+    def pickComp(self, pickx, picky):
+        '''Pick a node on the canvas via e.g. a mouse click.
+
+        Keyword arguments:
+        pickx -- the global x coordinate
+        picky -- the global y coordinate
+        '''
+
+        for comp in reversed(self.network.compartments):
+            if intervalContains(comp.min.x, comp.max.x, pickx) and intervalContains(comp.min.y, comp.max.y, picky):
+                return comp
+
+        return None
+
+    def pickReaction(self, pickx, picky):
         '''Pick a reaction on the canvas via e.g. a mouse click.
 
         Keyword arguments:
-        screenx -- the screen space x coordinate
-        screeny -- the screen space y coordinate
+        pickx -- the global x coordinate
+        picky -- the global y coordinate
         '''
         for rxn in reversed(self.network.rxns):
             x, y = rxn.centroid
             hemiwidth = 10
             hemiheight = 10
 
-            if intervalContains(x - hemiwidth, x + hemiwidth, screenx) and intervalContains(y - hemiheight, y + hemiheight, screeny):
+            if intervalContains(x - hemiwidth, x + hemiwidth, pickx) and intervalContains(y - hemiheight, y + hemiheight, picky):
                 return rxn
 
         return None
@@ -1085,9 +1104,12 @@ class LayoutFrame(FrameBaseClass):
                     for node in self.network.nodes:
                         node.custom.isBeingDragged = False
                         node.custom.beacon = False
+                        #if self.droptarget is not None:
+                            #
                     for rxn in self.network.rxns:
                         if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
                             rxn.custom.isBeingDragged = False
+                    self.droptarget = None
                     self.update()
         elif(event.button() == 4):
             self.panning = False
@@ -1099,6 +1121,7 @@ class LayoutFrame(FrameBaseClass):
 
     def mouseMoveEvent(self, event):
         if self.dragging:
+            self.droptarget = None
             qtfi = self.qtf.inverted()[0]
             mouse = qtfi.map(QPoint((event.x(), event.y())))
 
@@ -1113,6 +1136,9 @@ class LayoutFrame(FrameBaseClass):
                                 reaction.recenter()
                             else:
                                 reaction.recalccps()
+                    comp = self.pickComp(mouse.x(), mouse.y())
+                    if comp is not None:
+                        self.droptarget = comp
             for rxn in self.network.rxns:
                 if hasattr(rxn, 'custom') and rxn.custom.isBeingDragged:
                     newcentroid = rxn.custom.centroidSource + delta

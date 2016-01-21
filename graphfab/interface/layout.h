@@ -921,6 +921,14 @@ _GraphfabExport int gf_compartment_removeNode(gf_compartment* c, gf_node* n);
  */
 _GraphfabExport int gf_compartment_containsNode(gf_compartment* c, gf_node* n);
 
+/** @brief Return whether the compartment contains this node
+ *  @param[in] c The compartment object
+ *  @param[in] r The reaction
+ *  @return Nonzero if true
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_compartment_containsReaction(gf_compartment* c, gf_reaction* r);
+
 // Transform
 
 /** @brief Fit to the specified window
