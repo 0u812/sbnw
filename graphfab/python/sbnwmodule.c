@@ -2586,6 +2586,7 @@ gfp_SBMLModel_dealloc(gfp_SBMLModel* self) {
 
     if(self->m)
         gf_freeSBMLModel(self->m);
+    self->m = NULL;
 
     Py_TYPE(self)->tp_free((PyObject*)self);
 }
@@ -2634,6 +2635,7 @@ static int gfp_SBMLModel_init(gfp_SBMLModel *self, PyObject *args, PyObject *kwd
         self->layout = (gfp_Layout*)PyObject_Call((PyObject*)&gfp_LayoutType, Py_BuildValue("iiii", level, version, width, height), NULL);
 
         self->network = self->layout->network;
+        Py_INCREF(self->network);
 
         return 0;
     }
