@@ -490,6 +490,13 @@ _GraphfabExport gf_compartment gf_nw_newCompartment(gf_network* nw, const char* 
  */
 _GraphfabExport gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compartment* compartment);
 
+/** @brief Creates a new node that is the alias of a given node
+ *  @param[in] nw The network object
+ *  @param[in] n The source node
+ *  \ingroup C_Internal
+ */
+_GraphfabExport gf_node gf_nw_aliasOf(gf_network* nw, gf_node* n);
+
 /** @brief Add a new node to the network
  *  @param[in] nw The network object
  *  @param[in] id The node's requested ID (or null to determine it automatically)

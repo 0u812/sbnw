@@ -1289,6 +1289,17 @@ namespace Graphfab {
         
         return id;
     }
+
+    std::string Network::getUniqueGlyphId(const Node& src) const {
+        static std::size_t k=0;
+        const Node* n=NULL;
+
+        ++k;
+        std::stringstream ss;
+        ss << src.getGlyph() << "_" << k;
+
+        return ss.str();
+    }
     
     std::size_t Network::getUniqueIndex() const {
         std::cout << "getUniqueIndex started\n";

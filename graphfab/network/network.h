@@ -1047,6 +1047,8 @@ namespace Graphfab {
             
             /// Generated unique ID for creating new nodes
             std::string getUniqueId() const;
+
+            std::string getUniqueGlyphId(const Node& src) const;
             
             /// Generated unique index for creating new nodes
             std::size_t getUniqueIndex() const;

@@ -1144,6 +1144,35 @@ gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compa
     return nd;
 }
 
+gf_node gf_nw_aliasOf(gf_network* nw, gf_node* srcnode) {
+    Network* net = CastToNetwork(nw->n);
+    Node* src = CastToNode(srcnode->n);
+    gf_node nd;
+    nd.n = NULL;
+    AN(net, "No network");
+
+    std::cout << "gf_nw_newNode started\n";
+    Node* n = new Node();
+
+    std::cout << "gf_nw_newNode setting id\n";
+    n->setName(src->getName());
+    n->setId(src->getId());
+    n->setGlyph(net->getUniqueGlyphId(*src));
+    n->numUses() = 1;
+    n->setAlias(true);
+    src->setAlias(true);
+
+    // TODO: reuse compartment
+
+    // set index
+    n->set_i(net->getUniqueIndex());
+
+    net->addNode(n);
+
+    nd.n = n;
+    return nd;
+}
+
 gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_compartment* compartment) {
   gf_node* r = (gf_node*)malloc(sizeof(gf_node));
   gf_node q = gf_nw_newNode(nw,  id,  name, compartment);
