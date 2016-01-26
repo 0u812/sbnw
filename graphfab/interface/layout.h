@@ -17,7 +17,7 @@
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -125,7 +125,7 @@ typedef struct {
     /// @private
     void* canv;
 } gf_canvas;
-    
+
 /**
  *  @author JKM
  *  @brief Type which holds layout info
@@ -247,9 +247,15 @@ _GraphfabExport void gf_freeModelAndLayout(gf_SBMLModel* mod, gf_layoutInfo* l);
 
 /** @brief Create a new SBML model
  * @returns The new SBML model
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport gf_SBMLModel gf_SBMLModel_new();
+
+/** @brief Create a new SBML model
+ * @returns The new SBML model
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_SBMLModel* gf_SBMLModel_newp();
 
 /** @brief Create a new layout info object
  * @returns The new layout info
@@ -281,7 +287,7 @@ _GraphfabExport gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo);
  *  @brief [DEPRECATED] Load SBML document from memory buffer and process
  *  @param[in] buf The buffer containing the SBML file; used to create the SBML model
  *  @param[in] r A pointer to an empty SBML model; the model will be created from the buffer and used to build the layout
- *  @param[out] l The layout info; pointer to the layout info generated from SBML is returned 
+ *  @param[out] l The layout info; pointer to the layout info generated from SBML is returned
  *  \ingroup C_Internal
  */
 _GraphfabExport gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r);

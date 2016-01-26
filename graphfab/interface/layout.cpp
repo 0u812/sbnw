@@ -17,7 +17,7 @@
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -53,7 +53,7 @@ using namespace Graphfab;
 
 void gf_freeLayoutInfo(gf_layoutInfo* l) {
     AN(l, "gf_freeLayoutInfo: unexpected null ptr");
-    
+
     if(l->cont)
         free(l->cont);
     free(l);
@@ -61,7 +61,7 @@ void gf_freeLayoutInfo(gf_layoutInfo* l) {
 
 void gf_freeLayoutInfoHierarch(gf_layoutInfo* l) {
     AN(l, "gf_freeLayoutInfo: unexpected null ptr");
-    
+
     Network* net = (Network*)l->net;
     net->hierarchRelease();
     delete net;
@@ -117,6 +117,12 @@ gf_SBMLModel gf_SBMLModel_new() {
     return r;
 }
 
+gf_SBMLModel* gf_SBMLModel_newp() {
+    gf_SBMLModel* r = (gf_SBMLModel*)malloc(sizeof(gf_SBMLModel));
+    *r = gf_SBMLModel_new();
+    return r;
+}
+
 gf_layoutInfo gf_layoutInfo_new(uint64_t level, uint64_t version, uint64_t width, uint64_t height) {
     gf_layoutInfo l;
     l.level = level;
@@ -142,15 +148,15 @@ gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
 
     // ensure layout package is enabled
     AT(doc->isPkgEnabled("layout"), "Layout package not enabled");
-    
+
     // get the model
     Model* mod = doc->getModel();
     AN(mod, "Failed to load model");
-    
+
     // layout plugin ptr
     SBasePlugin* layoutBase = mod->getPlugin("layout");
     AN(layoutBase, "No plugin named \"layout\"");
-    
+
     // cast to derived
     LayoutModelPlugin* layoutPlugin=NULL;
     try {
@@ -159,7 +165,7 @@ gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
         gf_emitError("Unable to get layout information");
         AN(0);
     }
-    
+
     //determine if there is layout information present
     int have_layout;
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
@@ -172,7 +178,7 @@ gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
     if(layoutPlugin->getNumLayouts() > 1)
         gf_emitWarn("Warning: multiple layouts. Using first");
     const Layout* layout = layoutPlugin->getLayout(0);
-    
+
     //construct the network
     Network* net=NULL;
     if(have_layout)
@@ -180,7 +186,7 @@ gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
     else
         net = networkFromModel(*mod);
     AN(net, "Failed to construct network");
-    
+
     //get the canvas
     Canvas* canv;
     if(have_layout) {
@@ -200,23 +206,23 @@ gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
         //print
         net->dump(std::cout,0);
     #endif
-    
+
     l = (gf_layoutInfo*)malloc(sizeof(gf_layoutInfo));
     gf_initLayoutInfo(l);
     l->level = doc->getLevel();
     l->version = doc->getVersion();
-    
+
     l->net = net;
-    
+
     l->canv = canv;
-    
+
     return l;
 }
 
 void gf_getNodeCentroid(gf_layoutInfo* l, const char* id, CPoint* p) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
-    
+
     Graphfab::Point pp(0,0);
     Node* n = net->findNodeById(id);
     if(!n) {
@@ -224,7 +230,7 @@ void gf_getNodeCentroid(gf_layoutInfo* l, const char* id, CPoint* p) {
         return;
     }
     pp = n->getCentroid(NetworkElement::COORD_SYSTEM_GLOBAL);
-    
+
     p->x = pp.x;
     p->y = pp.y;
 }
@@ -232,7 +238,7 @@ void gf_getNodeCentroid(gf_layoutInfo* l, const char* id, CPoint* p) {
 int gf_lockNode(gf_layoutInfo* l, const char* id) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
-    
+
     Node* n = net->findNodeById(id);
     if(!n)
         return 1;
@@ -243,7 +249,7 @@ int gf_lockNode(gf_layoutInfo* l, const char* id) {
 int gf_unlockNode(gf_layoutInfo* l, const char* id) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
-    
+
     Node* n = net->findNodeById(id);
     if(!n)
         return 1;
@@ -254,7 +260,7 @@ int gf_unlockNode(gf_layoutInfo* l, const char* id) {
 int gf_aliasNode(gf_layoutInfo* l, const char* id) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
-    
+
     Node* n = net->findNodeById(id);
     if(!n)
         return 1;
@@ -275,33 +281,33 @@ int gf_aliasNode(gf_layoutInfo* l, const char* id) {
 void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
-    
+
     int a, b, nodecount1, nodecount2, size = net->getTotalNumNodes(), i = 0, aliasCount = 0;
     char aliasCountString[33];
     sprintf(aliasCountString, "%d", aliasCount);
     std::vector<Node *> foundNodes;
     std::vector<Graphfab::Reaction *> Rxns;
-    
+
     //Iterator does not work because nodes are added to the list, had to use while loop instead
     //for(Network::NodeIt i = net->NodesBegin(); i < net->NodesEnd(); ++i) {
     while(i < size) {
         Graphfab::Node* n = net->getNodeAtIndex(i);
-        
+
         //If the node is the required minimum degree or greater and is not an alias
         if(n->degree() >= minDegree && !n->isCentroidSet() && !n->isAlias()) {
-            
+
             for(Network::RxnIt c=net->RxnsBegin(); c!=net->RxnsEnd(); ++c) {
                 Graphfab::Reaction* r = *c;
 
                 if(r->hasSpecies(n)) {
                     if(n->degree() > 1) {
-                        
+
                         //Create a temp copy of all reactions
                         for(Network::RxnIt d=net->RxnsBegin(); d!=net->RxnsEnd(); ++d) {
                             Graphfab::Reaction* react = *d;
                             Rxns.push_back(react);
                         }
-                        
+
                         foundNodes.push_back(n);
 
                         //Find all nodes that are in the subgraph with node n
@@ -337,7 +343,7 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
                         //Substitute the alias into the current reaction, but don't add to the network
                         r->substituteSpecies(n, w);
                         n->set_degree(n->degree() - 1);
-                        
+
                         Rxns.clear();
                         foundNodes.clear();
 
@@ -346,9 +352,9 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
                             Graphfab::Reaction* react = *d;
                             Rxns.push_back(react);
                         }
-                        
+
                         foundNodes.push_back(w);
-                        
+
                         //Find all nodes that are in the subgraph with the alias node
                         a = 0;
                         while(a < foundNodes.size()) {
@@ -370,32 +376,32 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
                             }
                             a++;
                         }
-                        
+
                         nodecount2 = foundNodes.size();
 
-                        
+
                         if(nodecount1 > nodecount2) {
 
                             //If we lost a node(s), reset the connection to the original
-                            
+
                             r->substituteSpecies(w, n);
                             n->set_degree(n->degree() + 1);
                             delete(w);
 
                         } else {
                             //The node counts are equal. The alias can be kept
-                            net->addNode(w); 
+                            net->addNode(w);
                             aliasCount++;
                             sprintf(aliasCountString, "%d", aliasCount);
                         }
                     }
-                    
+
                 }
             }
         }
         i++;
     }
-    //printf("Aliases created: %d\n", aliasCount);  
+    //printf("Aliases created: %d\n", aliasCount);
 }
 
 
@@ -409,17 +415,17 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     std::cout << "doc->isPkgEnabled(\"layout\") = " << doc->isPkgEnabled("layout") << std::endl;
     #endif
-    
+
     // get the model
 //     Model* mod = doc->getModel();
 //     AN(mod, "Failed to load model");
-    
+
     bool create_default_compartment = false;
 
     Model* model = doc->createModel();
     doc->setPkgRequired("layout", false); // libSBML will refuse to open the file if required=true
     doc->setModel(model);
-    
+
     // layout plugin
     LayoutPkgNamespaces layoutns(l->level ? l->level : 3, l->version ? l->version : 1, 1);
 //     if (doc->getLevel() == 2)
@@ -428,7 +434,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 //       doc->enablePackage(LayoutExtension::getXmlnsL3V1V1(),"layout", true);
     SBasePlugin* layoutBase = model->getPlugin("layout");
     AN(layoutBase, "No plugin named \"layout\"");
-    
+
     // cast to derived
     LayoutModelPlugin* layoutPlugin=NULL;
     try {
@@ -437,17 +443,17 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
         gf_emitError("Unable to get layout information");
         AN(0);
     }
-    
+
     // clear all previous annotations
     while(layoutPlugin->getNumLayouts())
         layoutPlugin->removeLayout(0);
     // clear non-standard annotations
 //     if(mod->getAnnotation())
 //         mod->getAnnotation()->removeChildren();
-    
+
     // add one layout element
     Layout* lay(layoutPlugin->createLayout());
-    
+
     Canvas* can = NULL;
     if(l)
         can = (Canvas*)l->canv;
@@ -460,10 +466,10 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
         dims.setHeight(1024.);
     }
     lay->setDimensions(&dims);
-    
+
     // set id
     lay->setId("Graphfab_Layout");
-    
+
     // get the network model
     Network* net = NULL;
     if(l) {
@@ -472,7 +478,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
     }
 
     std::map<std::string, int> species_map;
-    
+
     if(net) {
         // If the network has an id, it becomes the id of the SBML model
         if(net->isSetId())
@@ -480,23 +486,23 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
         // rebuild the curves as we will need them shortly
         net->rebuildCurves();
-        
+
         // add compartments
         for(Network::ConstCompIt i=net->CompsBegin(); i!=net->CompsEnd(); ++i) {
             const Graphfab::Compartment* c = *i;
-            
+
             // create glyph
             CompartmentGlyph* cg = new CompartmentGlyph();
-            
+
             // id
             if(c->getGlyph() != "")
                 cg->setId(c->getGlyph());
             else
                 cg->setId(c->getId() + "_Glyph");
-            
+
             // set model reference
             cg->setCompartmentId(c->getId());
-            
+
             // do bounding box
             BoundingBox bb;
             bb.setX(sround(c->getMinX()));
@@ -505,26 +511,26 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             bb.setHeight(sround(c->getHeight()));
             // apply bb to glyph
             cg->setBoundingBox(&bb);
-            
+
             lay->addCompartmentGlyph(cg);
-            
+
             delete cg;
-            
+
             // add compartment
             ::Compartment* compartment = model->createCompartment();
             compartment->setId(c->getId());
             compartment->setSize(1.);
             compartment->setConstant(false);
         }
-        
+
         // add species
         uint64 calias=0;
         for(Network::NodeIt i=net->NodesBegin(); i!=net->NodesEnd(); ++i) {
             Node* n = *i;
             AN(n, "Empty node");
-            
+
             SpeciesGlyph* sg = new SpeciesGlyph();
-            
+
             // id
             if(n->getGlyph() == "") {
                 // empty glyph: populate it
@@ -537,10 +543,10 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
                 }
             }
             sg->setId(n->getGlyph());
-            
+
             // set model reference
             sg->setSpeciesId(n->getId());
-            
+
             // do bounding box
             BoundingBox bb;
             bb.setX(sround(n->getMinX()));
@@ -549,11 +555,11 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             bb.setHeight(sround(n->getHeight()));
             // apply bb to glyph
             sg->setBoundingBox(&bb);
-            
+
             lay->addSpeciesGlyph(sg);
-            
+
             delete sg;
-            
+
             // add species if it doesn't already exist
             if (!species_map.count(n->getId())) {
                 ::Species* species = model->createSpecies();
@@ -604,14 +610,14 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             }
         }
         skip_default_comp:;
-        
+
             // add species' text glyphs
         for(Network::NodeIt i=net->NodesBegin(); i!=net->NodesEnd(); ++i) {
             Node* n = *i;
             AN(n, "Empty node");
-            
+
             TextGlyph* tg = new TextGlyph();
-            
+
             //// id
             tg->setId("t" + n->getGlyph());
 
@@ -621,11 +627,11 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             // set text to be displayed
             if(n->getName() != "")
                 tg->setText(n->getName());
-            
+
             // if no name use id
             else
                 tg->setText(n->getId());
-            
+
             // do bounding box
             BoundingBox bb;
             bb.setX(sround(n->getMinX()));
@@ -634,25 +640,25 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             bb.setHeight(sround(n->getHeight()));
             // apply bb to glyph
             tg->setBoundingBox(&bb);
-            
+
             lay->addTextGlyph(tg);
-            
+
             delete tg;
         }
-        
+
         // add reactions
         for(Network::ConstRxnIt i=net->RxnsBegin(); i!=net->RxnsEnd(); ++i) {
             const Graphfab::Reaction* r = *i;
             AN(r, "Empty reaction");
-            
+
             ReactionGlyph* rg = new ReactionGlyph();
-            
+
             // id
             rg->setId(r->getId() + "_Glyph");
-            
+
             // model reference
             rg->setReactionId(r->getId());
-            
+
             // do species
             uint64 sref=0;
             Graphfab::Reaction::ConstNodeIt in=r->NodesBegin();
@@ -662,20 +668,20 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
                 AN(n, "Empty species reference");
                 const RxnBezier* c = *ic;
                 AN(n, "Empty curve reference");
-                
+
                 SpeciesReferenceGlyph* srg = rg->createSpeciesReferenceGlyph();
-                
+
                 // set id
                 {
                     std::stringstream ss;
                     ss << r->getId() << "_SpeciesRef" << ++sref;
                     srg->setId(ss.rdbuf()->str());
                 }
-                
+
                 // set reference & glyph
                 srg->setSpeciesReferenceId(n->getId());
                 srg->setSpeciesGlyphId(n->getGlyph());
-                
+
                 // set role
                 switch(in->second) {
                     case RXN_ROLE_SUBSTRATE:
@@ -702,14 +708,14 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
                     default:
                         AN(0, "Unrecognized role");
                 }
-                
+
                 // setup the SBML curve
                 ::Curve curv;
                 // cubic Bezier
                 CubicBezier* cb = curv.createCubicBezier();
-                
+
                 ::Point p;
-                
+
                 // end-points
                 p.setX(c->s.x);
                 p.setY(c->s.y);
@@ -717,7 +723,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
                 p.setX(c->e.x);
                 p.setY(c->e.y);
                 cb->setEnd(&p);
-                
+
                 // control points
                 p.setX(c->c1.x);
                 p.setY(c->c1.y);
@@ -725,15 +731,15 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
                 p.setX(c->c2.x);
                 p.setY(c->c2.y);
                 cb->setBasePoint2(&p);
-                
+
                 // set curve
                 srg->setCurve(&curv);
             }
-            
+
             lay->addReactionGlyph(rg);
-            
+
             delete rg;
-            
+
             ::Reaction* reaction = model->createReaction();
             reaction->setId(r->getId());
             reaction->setReversible(false);
@@ -784,7 +790,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             }
         }
     }
-    
+
     return doc;
 }
 
@@ -793,28 +799,28 @@ gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r) {
 	r=(gf_SBMLModel*)malloc(sizeof(gf_SBMLModel));
     SBMLReader reader;
     SBMLDocument* document = reader.readSBMLFromString(buf);
-    
+
     AN(document, "Failed to parse SBML"); //not libSBML's documented way of failing, but just in case...
-    
+
     if(document->getNumErrors()) {
         fprintf(stderr, "Failed to parse SBML\n");
         return NULL;
     }
-    
+
     r->pdoc = document;
 
 	gf_layoutInfo* l;
     SBMLDocument* doc = (SBMLDocument*)r->pdoc;
     AT(doc->isPkgEnabled("layout"), "Layout package not enabled");
-    
+
     // get the model
     Model* mod = doc->getModel();
     AN(mod, "Failed to load model");
-    
+
     // layout plugin ptr
     SBasePlugin* layoutBase = mod->getPlugin("layout");
     AN(layoutBase, "No plugin named \"layout\"");
-    
+
     // cast to derived
     LayoutModelPlugin* layoutPlugin=NULL;
     try {
@@ -823,7 +829,7 @@ gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r) {
         gf_emitError("Unable to get layout information");
         AN(0);
     }
-    
+
     //determine if there is layout information present
     int have_layout;
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
@@ -836,7 +842,7 @@ gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r) {
     if(layoutPlugin->getNumLayouts() > 1)
         gf_emitWarn("Warning: multiple layouts. Using first");
     const Layout* layout = layoutPlugin->getLayout(0);
-    
+
     //construct the network
     Network* net=NULL;
     if(have_layout)
@@ -844,7 +850,7 @@ gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r) {
     else
         net = networkFromModel(*mod);
     AN(net, "Failed to construct network");
-    
+
     //get the canvas
     Canvas* canv;
     if(have_layout) {
@@ -866,14 +872,14 @@ gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r) {
     //print
     net->dump(std::cout,0);
     #endif
-    
+
     l = (gf_layoutInfo*)malloc(sizeof(gf_layoutInfo));
     gf_initLayoutInfo(l);
-    
+
     l->net = net;
-    
+
     l->canv = canv;
-    
+
     return l;
 }
 
@@ -917,14 +923,14 @@ void gf_clearNetwork(gf_network* n) {
 void gf_releaseNetwork(gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
-    
+
     delete net;
 }
 
 char* gf_nw_getId(gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
-    
+
     return gf_strclone(net->getId().c_str());
 }
 
@@ -938,7 +944,7 @@ void gf_nw_setId(gf_network* n, const char* id) {
 uint64_t gf_nw_getNumNodes(const gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
-    
+
     return net->getTotalNumNodes();
 }
 
@@ -952,14 +958,14 @@ uint64_t gf_nw_getNumUniqueNodes(const gf_network* n) {
 uint64_t gf_nw_getNumRxns(const gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
-    
+
     return net->getTotalNumRxns();
 }
 
 uint64_t gf_nw_getNumComps(const gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
-    
+
     return net->getTotalNumComps();
 }
 
@@ -1020,7 +1026,7 @@ gf_reaction gf_nw_getRxn(gf_network* n, uint64_t i) {
     // optional
     Graphfab::Reaction* rxn = (Graphfab::Reaction*)r.r;
     AT(rxn->doByteCheck(), "Type verification failed");
-    
+
     return r;
 }
 
@@ -1041,7 +1047,7 @@ void gf_nw_removeRxn(gf_network* nw, gf_reaction* r) {
     Graphfab::Reaction* rx = CastToReaction(r->r);
     AN(net, "No network");
     AN(rx, "No reaction");
-    
+
     net->removeReaction(rx);
 }
 
@@ -1107,10 +1113,10 @@ gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compa
     gf_node nd;
     nd.n = NULL;
     AN(net, "No network");
-    
+
     std::cout << "gf_nw_newNode started\n";
     Node* n = new Node();
-    
+
     std::cout << "gf_nw_newNode setting id\n";
     n->setName(name);
     if(id) {
@@ -1126,20 +1132,20 @@ gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compa
         n->setId(net->getUniqueId());
     n->numUses() = 1;
     n->setAlias(false);
-    
+
     if(compartment) {
         Graphfab::Compartment* c = (Graphfab::Compartment*)compartment->c;
         c->addElt(n);
         n->_comp = c;
     }
-    
+
     // set index
     n->set_i(net->getUniqueIndex());
-    
+
     net->addNode(n);
-    
+
 //     std::cout << "gf_nw_newNode: node = " << n << ", index " << n->get_i() << "\n";
-    
+
     nd.n = n;
     return nd;
 }
@@ -1183,14 +1189,14 @@ gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_com
 int gf_nw_removeNode(gf_network* nw, gf_node* n) {
     Network* net = CastToNetwork(nw->n);
     Node* node = CastToNode(n->n);
-    
+
     if(!net->containsNode(node)) {
         #if SAGITTARIUS_DEBUG_LEVEL >= 1
         fprintf(stderr, "gf_nw_removeNode: no such node in network\n");
         #endif
         return -1;
     }
-    
+
     try {
         net->removeNode(node);
     } catch(...) {
@@ -1199,7 +1205,7 @@ int gf_nw_removeNode(gf_network* nw, gf_node* n) {
         #endif
         return -1;
     }
-    
+
     return 0;
 }
 
@@ -1243,7 +1249,7 @@ int gf_nw_isNodeConnected(gf_network* nw, gf_node* n, gf_reaction* r) {
 
 int gf_nw_isLayoutSpecified(gf_network* nw) {
     Network* net = CastToNetwork(nw->n);
-    
+
     if(net->isLayoutSpecified())
         return 1;
     else
@@ -1304,7 +1310,7 @@ void gf_clearNode(gf_node* n) {
 void gf_releaseNode(const gf_node* n) {
     Node* node = CastToNode(n->n);
     AN(node, "No node");
-    
+
     delete node;
 }
 
@@ -1380,14 +1386,14 @@ gf_point gf_node_getCentroid(gf_node* n) {
     Node* node = CastToNode(n->n);
     AN(node && node->doByteCheck(), "Not a node");
     gf_point p = Point2gf_point(node->getCentroid(NetworkElement::COORD_SYSTEM_GLOBAL));
-    
+
     return p;
 }
 
 void gf_node_setCentroid(gf_node* n, gf_point p) {
     Node* node = CastToNode(n->n);
     AN(node && node->doByteCheck(), "Not a node");
-    
+
     node->setGlobalCentroid(gf_point2Point(p));
 }
 
@@ -1420,14 +1426,14 @@ void gf_node_setHeight(gf_node* n, double height) {
 char* gf_node_getID(gf_node* n) {
     Node* node = CastToNode(n->n);
     AN(node && node->doByteCheck(), "Not a node");
-    
+
     return gf_strclone(node->getId().c_str());
 }
 
 const char* gf_node_getName(gf_node* n) {
     Node* node = CastToNode(n->n);
     AN(node && node->doByteCheck(), "Not a node");
-    
+
     return node->getId().c_str();
 }
 
@@ -1489,7 +1495,7 @@ void gf_releaseRxn(const gf_reaction* r) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
-    
+
     delete rxn;
 }
 
@@ -1526,7 +1532,7 @@ char* gf_reaction_getID(gf_reaction* r) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
-    
+
     return gf_strclone(rxn->getId().c_str());
 }
 
@@ -1552,7 +1558,7 @@ uint64_t gf_reaction_getNumSpec(const gf_reaction* r) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
-    
+
     return rxn->numSpecies();
 }
 
@@ -1585,7 +1591,7 @@ gf_specRole gf_reaction_getSpecRole(const gf_reaction* r, uint64_t i) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
-    
+
     return RxnRoleType2gf_specRole(rxn->getSpeciesRole(i));
 }
 
@@ -1629,14 +1635,14 @@ uint64_t gf_reaction_specGeti(const gf_reaction* r, uint64_t i) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
-    
+
     return rxn->getSpecies(i)->get_i();
 }
 
 uint64_t gf_reaction_getNumCurves(const gf_reaction* r) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
 //     std::cerr << "gf_reaction_getNumCurves type verify\n";
-    
+
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
 
@@ -1651,7 +1657,7 @@ gf_curve gf_reaction_getCurve(const gf_reaction* r, uint64_t i) {
     AT(rxn->doByteCheck(), "Type verification failed");
     gf_curve c;
     c.c = rxn->getCurve(i);
-    
+
     return c;
 }
 
@@ -1679,7 +1685,7 @@ void gf_reaction_recalcCurveCPs(gf_reaction* r) {
 void gf_releaseCurve(const gf_curve* c) {
     RxnBezier* curve = (RxnBezier*)c->c;
     AN(curve, "No curve");
-    
+
     delete curve;
 }
 
@@ -1687,12 +1693,12 @@ gf_curveCP gf_getLocalCurveCPs(const gf_curve* c) {
     RxnBezier* curve = (RxnBezier*)c->c;
     AN(curve, "No curve");
     gf_curveCP cp;
-    
+
     cp.s = Point2gf_point(curve->s);
     cp.e = Point2gf_point(curve->e);
     cp.c1 = Point2gf_point(curve->c1);
     cp.c2 = Point2gf_point(curve->c2);
-    
+
     return cp;
 }
 
@@ -1700,14 +1706,14 @@ gf_curveCP gf_getGlobalCurveCPs(const gf_curve* c) {
     RxnBezier* curve = (RxnBezier*)c->c;
     AN(curve, "No curve");
     gf_curveCP cp;
-    
+
     cp.s = Point2gf_point(curve->getTransformedS());
     cp.e = Point2gf_point(curve->getTransformedE());
     cp.c1 = Point2gf_point(curve->getTransformedC1());
     cp.c2 = Point2gf_point(curve->getTransformedC2());
 
 //     std::cerr << "  cps:  " << curve->getTransformedS() << "-" << curve->getTransformedC1() << "-" << curve->getTransformedC2() << "-" << curve->getTransformedE() << "\n";
-    
+
     return cp;
 }
 
@@ -1773,7 +1779,7 @@ void gf_releaseCompartment(const gf_compartment* c) {
       gf_emitError("Type verification failed");
       return;
     }
-    
+
     delete comp;
 }
 
@@ -1787,35 +1793,35 @@ char* gf_compartment_getID(gf_compartment* c) {
       gf_emitError("Type verification failed");
       return NULL;
     }
-    
+
     return gf_strclone(comp->getId().c_str());
 }
 
 gf_point gf_compartment_getMinCorner(gf_compartment* c) {
     Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
     AN(comp, "No comp");
-    
+
     return Point2gf_point(comp->getMin(NetworkElement::COORD_SYSTEM_GLOBAL));
 }
 
 void gf_compartment_setMinCorner(gf_compartment* c, gf_point p) {
     Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
     AN(comp, "No comp");
-    
+
     comp->setMin(gf_point2Point(p));
 }
 
 gf_point gf_compartment_getMaxCorner(gf_compartment* c) {
     Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
     AN(comp, "No comp");
-    
+
     return Point2gf_point(comp->getMax(NetworkElement::COORD_SYSTEM_GLOBAL));
 }
 
 void gf_compartment_setMaxCorner(gf_compartment* c, gf_point p) {
     Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
     AN(comp, "No comp");
-    
+
     comp->setMax(gf_point2Point(p));
 }
 
@@ -1836,7 +1842,7 @@ double gf_compartment_getHeight(gf_compartment* c) {
 uint64_t gf_compartment_getNumElt(gf_compartment* c) {
     Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
     AN(comp, "No comp");
-    
+
     return comp->getNElts();
 }
 
@@ -1903,23 +1909,23 @@ int gf_compartment_containsReaction(gf_compartment* c, gf_reaction* r) {
 void gf_fit_to_window(gf_layoutInfo* l, double left, double top, double right, double bottom) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
-    
+
     Graphfab::Box bbox = net->getBoundingBox();
-    
+
 //     std::cerr << "Net bounding box: " << bbox << "\n";
-    
+
     Graphfab::Box window(left, top, right, bottom);
-    
+
 //     std::cout << "Window: " << window << "\n";
-    
-    Graphfab::Affine2d tf = Graphfab::Affine2d::FitToWindow(bbox, 
+
+    Graphfab::Affine2d tf = Graphfab::Affine2d::FitToWindow(bbox,
                                                    window);
-    
+
 //     std::cout << "Transform is\n" << tf;
-    
+
     net->setTransform(tf);
     net->setInverseTransform(tf.inv());
-    
+
 //     std::cerr << "New bounding box: " << net->getBoundingBox() << "\n";
 }
 
@@ -2017,35 +2023,35 @@ void gf_clearCanvas(gf_canvas* c) {
 void gf_releaseCanvas(gf_canvas* c) {
     Canvas *canv = (Canvas*)c->canv;
     AN(canv, "No canvas");
-    
+
     delete canv;
 }
 
 unsigned int gf_canvGetWidth(gf_canvas* c) {
     Canvas *canv = (Canvas*)c->canv;
     AN(canv, "No canvas");
-    
+
     return canv->getWidth();
 }
 
 void gf_canvSetWidth(gf_canvas* c, unsigned long width) {
     Canvas *canv = (Canvas*)c->canv;
     AN(canv, "No canvas");
-    
+
     canv->setWidth(width);
 }
 
 unsigned int gf_canvGetHeight(gf_canvas* c) {
     Canvas *canv = (Canvas*)c->canv;
     AN(canv, "No canvas");
-    
+
     return canv->getHeight();
 }
 
 void gf_canvSetHeight(gf_canvas* c, unsigned long height) {
     Canvas *canv = (Canvas*)c->canv;
     AN(canv, "No canvas");
-    
+
     canv->setHeight(height);
 }
 
@@ -2063,7 +2069,7 @@ int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo*
         return 0;
     else
         return -1;
-    
+
     // appropriate?
     //delete lay;
 }
@@ -2082,11 +2088,11 @@ const char* gf_getSBMLwithLayoutStr(gf_SBMLModel* m, gf_layoutInfo* l) {
     SBMLDocument* doc = populateSBMLdoc(m,l);
     SBMLWriter writer;
     writer.setProgramName("Graphfab");
-    
+
     if(l->cont)
         free(l->cont);
     l->cont = writer.writeSBMLToString(doc);
-    
+
     return gf_strclone(l->cont);
 }
 
@@ -2095,7 +2101,7 @@ void gf_randomizeLayout(gf_layoutInfo* m) {
     AN(net, "No network");
     Canvas* can = (Canvas*)m->canv;
     AN(can, "No canvas");
-    
+
     net->randomizePositions(Graphfab::Box(Graphfab::Point(0.,0.), Graphfab::Point(can->getWidth(), can->getHeight())));
 }
 
@@ -2104,7 +2110,7 @@ void gf_randomizeLayout2(gf_network* n, gf_canvas* c) {
     AN(net, "No network");
     Canvas* can = (Canvas*)c->canv;
     AN(can, "No canvas");
-    
+
     net->randomizePositions(Graphfab::Box(Graphfab::Point(0.,0.), Graphfab::Point(can->getWidth(), can->getHeight())));
 }
 
