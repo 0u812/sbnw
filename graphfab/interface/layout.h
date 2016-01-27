@@ -534,7 +534,7 @@ _GraphfabExport gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const ch
  *  @param[in] source The original source node
  *  \ingroup C_API
  */
-_GraphfabExport gf_node* gf_nw_newAliasNodep(gf_network* nw, const char* id, const char* name, gf_node* source);
+_GraphfabExport gf_node* gf_nw_newAliasNodep(gf_network* nw, gf_node* source);
 
 /** @brief Remove a node from the network
  *  @param[in] n The network object
