@@ -657,6 +657,12 @@ _GraphfabExport int gf_node_make_alias(gf_node* n, gf_network* m);
  */
 _GraphfabExport int gf_node_isAliased(gf_node* n);
 
+/** @brief Set whether the node is an alias node or not.
+ *  @param[in] n The node object
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_node_setIsAlias(gf_node* n, int isAlias);
+
 /** @brief Get the centroid of the node
  *  @param[in] n The node object
  *  \ingroup C_API

@@ -1372,6 +1372,13 @@ int gf_node_isAliased(gf_node* n) {
     return node->isAlias();
 }
 
+// is aliased?
+void gf_node_setIsAlias(gf_node* n, int isAlias) {
+    Node* node = CastToNode(n->n);
+    AN(node && node->doByteCheck(), "Not a node");
+    return node->setAlias(isAlias);
+}
+
 // is locked?
 int gf_node_isLocked(gf_node* n) {
     Node* node = CastToNode(n->n);
