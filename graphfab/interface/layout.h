@@ -259,9 +259,15 @@ _GraphfabExport gf_SBMLModel* gf_SBMLModel_newp();
 
 /** @brief Create a new layout info object
  * @returns The new layout info
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport gf_layoutInfo gf_layoutInfo_new(uint64_t level, uint64_t version, uint64_t width, uint64_t height);
+
+/** @brief Create a new layout info object
+ * @returns The new layout info
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_layoutInfo* gf_layoutInfo_newp(uint64_t level, uint64_t version, uint64_t width, uint64_t height);
 
 // -- Input --
 

@@ -133,6 +133,12 @@ gf_layoutInfo gf_layoutInfo_new(uint64_t level, uint64_t version, uint64_t width
     return l;
 }
 
+gf_layoutInfo* gf_layoutInfo_newp(uint64_t level, uint64_t version, uint64_t width, uint64_t height) {
+    gf_layoutInfo* l = (gf_layoutInfo*)malloc(sizeof(gf_layoutInfo));
+    *l = gf_layoutInfo_new(level, version, width, height);
+    return l;
+}
+
 gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
     gf_layoutInfo* l;
     SBMLDocument* doc = (SBMLDocument*)lo->pdoc;
