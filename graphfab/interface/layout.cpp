@@ -1108,6 +1108,12 @@ gf_compartment gf_nw_newCompartment(gf_network* nw, const char* id, const char* 
     return cd;
 }
 
+gf_compartment* gf_nw_newCompartmentp(gf_network* nw, const char* id, const char* name) {
+    gf_compartment* comp = (gf_compartment*)malloc(sizeof(gf_compartment));
+    *comp = gf_nw_newCompartment(nw, id, name);
+    return comp;
+}
+
 gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compartment* compartment) {
     Network* net = CastToNetwork(nw->n);
     gf_node nd;
