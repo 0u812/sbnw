@@ -1073,6 +1073,19 @@ gf_compartment* gf_nw_getCompartmentp(gf_network* n, uint64_t i) {
     return c;
 }
 
+gf_compartment* gf_nw_findCompartmentById(gf_network* n, const char* id) {
+    Network* net = CastToNetwork(n->n);
+    AN(net, "No network");
+    Graphfab::Comparment* comp = net->findCompById(id);
+    if (!comp) {
+        gf_emitError("gf_nw_findCompartmentById: no such compartment in network\n");
+        return NULL;
+    }
+    gf_compartment* c = (gf_compartment*)malloc(sizeof(gf_compartment));
+    c->c = comp;
+    return c;
+}
+
 void gf_nw_rebuildCurves(gf_network* n) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");

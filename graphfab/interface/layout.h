@@ -465,12 +465,20 @@ _GraphfabExport void gf_nw_removeRxn(gf_network* n, gf_reaction* r);
  */
 _GraphfabExport gf_compartment gf_nw_getCompartment(gf_network* n, uint64_t i);
 
-/** @brief Get the node at index i
+/** @brief Get the compartment at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
  *  \ingroup C_API
  */
 _GraphfabExport gf_compartment* gf_nw_getCompartmentp(gf_network* n, uint64_t i);
+
+/** @brief Find a compartment by id
+ *  @details Returns NULL if no such compartment exists
+ *  @param[in] n The network object
+ *  @param[in] id The compartment ID
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_compartment* gf_nw_findCompartmentById(gf_network* n, const char* id);
 
 /** @brief Rebuild all curves in the network
  *  @details Rebuild all curves in each reaction, connecting substrates,
