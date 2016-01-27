@@ -723,11 +723,23 @@ _GraphfabExport void gf_node_setHeight(gf_node* n, double height);
  */
 _GraphfabExport char* gf_node_getID(gf_node* n);
 
-/** @brief Get the name
+/** @brief Get the id, user frees memory
+ *  @param[in] n The node object
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_node_setID(gf_node* n, const char* id);
+
+/** @brief Get the name, client must free memory
  *  @param[in] n The node object
  *  \ingroup C_API
  */
 _GraphfabExport const char* gf_node_getName(gf_node* n);
+
+/** @brief Set the name of a node
+ *  @param[in] n The node object
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_node_setName(gf_node* n, const char* name);
 
 /** @brief Get a list of all reactions connected to the node
  *  @param[in] n The node object

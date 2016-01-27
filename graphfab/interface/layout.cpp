@@ -1198,10 +1198,10 @@ gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_com
   return r;
 }
 
-gf_node* gf_nw_newAliasNodep(gf_network* nw, const char* id, const char* name, gf_node* source) {
+gf_node* gf_nw_newAliasNodep(gf_network* nw, gf_node* source) {
   gf_node* r = (gf_node*)malloc(sizeof(gf_node));
   gf_compartment* compartment = gf_nw_nodeHasCompartment(nw, source) ? gf_nw_nodeGetCompartment(nw, source) : NULL;
-  gf_node q = gf_nw_newNode(nw,  id,  name, compartment);
+  gf_node q = gf_nw_newNode(nw,  gf_node_getID(source), gf_node_getName(source), compartment);
   r->n = q.n;
 
   //make sure both nodes are aliases
@@ -1462,11 +1462,37 @@ char* gf_node_getID(gf_node* n) {
     return gf_strclone(node->getId().c_str());
 }
 
+void gf_node_setID(gf_node* n, const char* id) {
+    Node* node = CastToNode(n->n);
+    AN(node && node->doByteCheck(), "Not a node");
+    if (!node || !node->doByteCheck()) {
+        gf_emitError("gf_node_setName: bad node ptr");
+        return;
+    }
+
+    node->setId(id);
+}
+
 const char* gf_node_getName(gf_node* n) {
     Node* node = CastToNode(n->n);
     AN(node && node->doByteCheck(), "Not a node");
 
-    return node->getId().c_str();
+    if (node->getName().size())
+        return gf_strclone(node->getName().c_str());
+    else
+        // missing name happens quite often: some researchers just want to watch the world burn...
+        return gf_strclone(node->getId().c_str());
+}
+
+void gf_node_setName(gf_node* n, const char* name) {
+    Node* node = CastToNode(n->n);
+    AN(node && node->doByteCheck(), "Not a node");
+    if (!node || !node->doByteCheck()) {
+        gf_emitError("gf_node_setName: bad node ptr");
+        return;
+    }
+
+    node->setName(name);
 }
 
 int gf_node_getConnectedReactions(gf_node* n, gf_network* m, unsigned int* num, gf_reaction** rxns) {
