@@ -1540,6 +1540,12 @@ gf_reaction gf_nw_newReaction(gf_network* nw, const char* id, const char* name) 
     return rxn;
 }
 
+gf_reaction* gf_nw_newReactionp(gf_network* nw, const char* id, const char* name) {
+    gf_reaction* r = (gf_reaction*)malloc(sizeof(gf_reaction));
+    *r = gf_nw_newReaction(nw, id, name);
+    return r;
+}
+
 char* gf_reaction_getID(gf_reaction* r) {
     Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
     AN(rxn, "No rxn");
