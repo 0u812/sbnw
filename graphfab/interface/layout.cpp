@@ -1203,6 +1203,11 @@ gf_node* gf_nw_newAliasNodep(gf_network* nw, const char* id, const char* name, g
   gf_compartment* compartment = gf_nw_nodeHasCompartment(nw, source) ? gf_nw_nodeGetCompartment(nw, source) : NULL;
   gf_node q = gf_nw_newNode(nw,  id,  name, compartment);
   r->n = q.n;
+
+  //make sure both nodes are aliases
+  gf_node_setIsAlias(r);
+  gf_node_setIsAlias(source);
+
   return r;
 }
 
