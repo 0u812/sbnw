@@ -74,22 +74,22 @@ void gf_freeLayoutInfoHierarch(gf_layoutInfo* l) {
 }
 
 void gf_freeModelAndLayout(gf_SBMLModel* mod, gf_layoutInfo* l) {
-    if(!mod)
-        AN(0, "Not a valid model pointer"); //null
-    SBMLDocument* doc = (SBMLDocument*)mod->pdoc;
-    delete doc;
-    free(mod);
+    if(mod) {
+        SBMLDocument* doc = (SBMLDocument*)mod->pdoc;
+        delete doc;
+        free(mod);
+    }
 
-    if(!l)
-        AN(0, "Not a valid layout pointer"); //null
-    Network* net = (Network*)l->net;
-    delete net;
-    Canvas *canv = (Canvas*)l->canv;
-    if(canv)
-        delete canv;
-    if(l->cont)
-        free(l->cont);
-    free(l);
+    if(l) {
+        Network* net = (Network*)l->net;
+        delete net;
+        Canvas *canv = (Canvas*)l->canv;
+        if(canv)
+            delete canv;
+        if(l->cont)
+            free(l->cont);
+        free(l);
+    }
 }
 
 void gf_initLayoutInfo(gf_layoutInfo* l) {
