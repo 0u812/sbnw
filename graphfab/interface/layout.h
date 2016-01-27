@@ -526,7 +526,7 @@ _GraphfabExport gf_node gf_nw_aliasOf(gf_network* nw, gf_node* n);
  */
 _GraphfabExport gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_compartment* compartment);
 
-/** @brief Add a new node to the network
+/** @brief Create and add an alias node from a given source node
  *  @param[in] nw The network object
  *  @param[in] id The node's requested ID (or null to determine it automatically)
  *  @param[in] name The node's name
