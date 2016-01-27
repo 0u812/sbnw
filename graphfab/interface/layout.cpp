@@ -1205,8 +1205,8 @@ gf_node* gf_nw_newAliasNodep(gf_network* nw, const char* id, const char* name, g
   r->n = q.n;
 
   //make sure both nodes are aliases
-  gf_node_setIsAlias(r);
-  gf_node_setIsAlias(source);
+  gf_node_setIsAlias(r, 1);
+  gf_node_setIsAlias(source, 1);
 
   return r;
 }
