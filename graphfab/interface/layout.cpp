@@ -1198,6 +1198,14 @@ gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_com
   return r;
 }
 
+gf_node* gf_nw_newAliasNodep(gf_network* nw, const char* id, const char* name, gf_node* source) {
+  gf_node* r = (gf_node*)malloc(sizeof(gf_node));
+  gf_compartment* compartment = gf_nw_nodeHasCompartment(nw, source) ? gf_nw_nodeGetCompartment(nw, source) : NULL;
+  gf_node q = gf_nw_newNode(nw,  id,  name, compartment);
+  r->n = q.n;
+  return r;
+}
+
 int gf_nw_removeNode(gf_network* nw, gf_node* n) {
     Network* net = CastToNetwork(nw->n);
     Node* node = CastToNode(n->n);
@@ -1508,6 +1516,32 @@ int gf_node_isIdentical(gf_node* xu, gf_node* xv) {
     return u == v;
 }
 
+int gf_nw_nodeHasCompartment(gf_network* nw, gf_node* x) {
+    Network* net = CastToNetwork(nw->n);
+    AN(net && net->doByteCheck(), "No network");
+
+    Node* v = CastToNode(x->n);
+    AN(v && v->doByteCheck(), "Not a node");
+
+    if(net->findContainingCompartment(v))
+        return true;
+    else
+        return false;
+}
+
+gf_compartment* gf_nw_nodeGetCompartment(gf_network* nw, gf_node* x) {
+    Network* net = CastToNetwork(nw->n);
+    AN(net && net->doByteCheck(), "No network");
+
+    Node* v = CastToNode(x->n);
+    AN(v && v->doByteCheck(), "Not a node");
+
+    Graphfab::Compartment* com = net->findContainingCompartment(v);
+    gf_compartment* c = (gf_compartment*)malloc(sizeof(gf_compartment));
+    c->c = com;
+    return c;
+}
+
 // Reaction
 
 void gf_releaseRxn(const gf_reaction* r) {
@@ -1652,7 +1686,9 @@ gf_specRole gf_strToRole(const char* str) {
     return GF_ROLE_MODIFIER;
   else {
     fprintf(stderr, "gf_strToRole unknown role type %s", str);
-    AN(0, "Unknown role type");
+    gf_emitError("gf_strToRole: Unknown role type");
+    AN(0, "gf_strToRole: Unknown role type");
+    return GF_ROLE_SUBSTRATE; // to silence warnings
   }
 }
 

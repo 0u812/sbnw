@@ -526,6 +526,15 @@ _GraphfabExport gf_node gf_nw_aliasOf(gf_network* nw, gf_node* n);
  */
 _GraphfabExport gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_compartment* compartment);
 
+/** @brief Add a new node to the network
+ *  @param[in] nw The network object
+ *  @param[in] id The node's requested ID (or null to determine it automatically)
+ *  @param[in] name The node's name
+ *  @param[in] source The original source node
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_node* gf_nw_newAliasNodep(gf_network* nw, const char* id, const char* name, gf_node* source);
+
 /** @brief Remove a node from the network
  *  @param[in] n The network object
  *  \ingroup C_API
@@ -659,7 +668,7 @@ _GraphfabExport int gf_node_isAliased(gf_node* n);
 
 /** @brief Set whether the node is an alias node or not.
  *  @param[in] n The node object
- *  \ingroup C_API
+ *  \ingroup C_Internal
  */
 _GraphfabExport void gf_node_setIsAlias(gf_node* n, int isAlias);
 
@@ -743,6 +752,20 @@ _GraphfabExport int gf_node_getAttachedCurves(gf_node* n, gf_network* m, unsigne
  *  \ingroup C_Internal
  */
 _GraphfabExport int gf_node_isIdentical(gf_node* u, gf_node* v);
+
+/** @brief Return true if the node has a compartment assigned
+ *  @param[in] nw The network object
+ *  @param[in] x A node object
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_nw_nodeHasCompartment(gf_network* nw, gf_node* x);
+
+/** @brief Return true if the node has a compartment assigned
+ *  @param[in] nw The network object
+ *  @param[in] x A node object
+ *  \ingroup C_API
+ */
+_GraphfabExport gf_compartment* gf_nw_nodeGetCompartment(gf_network* nw, gf_node* x);
 
 // Reaction
 
