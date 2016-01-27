@@ -238,7 +238,8 @@ _GraphfabExport void gf_freeLayoutInfo(gf_layoutInfo* l);
  */
 _GraphfabExport void gf_freeLayoutInfoHierarch(gf_layoutInfo* l);
 
-/** @brief Call to clean up an instance of @ref gf_layoutInfo and @ref gf_SBMLModel when they are no longer needed
+/** @brief Call to clean up an instance of @ref gf_layoutInfo and @ref gf_SBMLModel when they are no longer needed.
+ *  @details The network object (which can be obtained via @ref gf_getNetworkp is freed as well.
  *  @param[in] mod The SBML model
  *  @param[in] l The layout info; Entire layout is freed
  *  \ingroup C_API
