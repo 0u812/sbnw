@@ -559,6 +559,15 @@ _GraphfabExport int gf_nw_removeNode(gf_network* nw, gf_node* node);
  */
 _GraphfabExport int gf_nw_connectNode(gf_network* nw, gf_node* node, gf_reaction* reaction, gf_specRole role);
 
+/** @brief Connect a node to a reaction
+ *  @param[in] nw The network object
+ *  @param[in] node The node to connect
+ *  @param[in] reaction The reaction to connect to
+ *  @param[in] role The species role to use (must be one of SUBSTRATE,PRODUCT,MODIFIER,ACTIVATOR,INHIBITOR)
+ *  \ingroup C_API
+ */
+_GraphfabExport int gf_nw_connectNodeRoleStr(gf_network* nw, gf_node* n, gf_reaction* r, const char* role_str);
+
 /** @brief Return whether the given node is connected to the given reaction
  *  @param[in] nw The network object
  *  @param[in] node The node to connect
