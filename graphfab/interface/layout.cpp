@@ -1257,10 +1257,10 @@ int gf_nw_connectNode(gf_network* nw, gf_node* n, gf_reaction* r, gf_specRole ro
         return -1;
     }
 
-    if(net->isNodeConnected(node, reaction)) {
-        gf_emitError("gf_nw_connectNode: connection already exists\n");
-        return -2;
-    }
+//     if(net->isNodeConnected(node, reaction)) {
+//         gf_emitError("gf_nw_connectNode: connection already exists\n");
+//         return -2;
+//     }
 
     try {
         net->connectNode(node, reaction, gf_specRole2RxnRoleType(role));

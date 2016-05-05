@@ -1091,7 +1091,7 @@ class LayoutFrame(FrameBaseClass):
                     if hasattr(rxn, 'custom'):
                         rxn.custom.beacon = False
                 if self.connecting_node is not None and self.connecting_rxn is not None:
-                    if not self.network.is_node_connected(self.connecting_node, self.connecting_rxn):
+                    #if not self.network.is_node_connected(self.connecting_node, self.connecting_rxn):
                         if self.connecting_src_node:
                             self.network.connectnode(self.connecting_node, self.connecting_rxn, 'SUBSTRATE')
                         else:
