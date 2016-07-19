@@ -1151,7 +1151,8 @@ gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compa
             #if SAGITTARIUS_DEBUG_LEVEL >= 1
             fprintf(stderr, "A node with the specified id already exists\n");
             #endif
-            return nd;
+            // used to be an error; do it anyway because id's are now shared across alias nodes
+            n->setId(id);
         }
     } else
         n->setId(net->getUniqueId());
