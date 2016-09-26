@@ -1139,10 +1139,10 @@ gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compa
     nd.n = NULL;
     AN(net, "No network");
 
-    std::cout << "gf_nw_newNode started\n";
+//     std::cout << "gf_nw_newNode started\n";
     Node* n = new Node();
 
-    std::cout << "gf_nw_newNode setting id\n";
+//     std::cout << "gf_nw_newNode setting id\n";
     n->setName(name);
     if(id) {
         if(!net->findNodeById(id))
