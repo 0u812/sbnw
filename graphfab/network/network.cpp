@@ -1302,7 +1302,7 @@ namespace Graphfab {
     }
     
     std::size_t Network::getUniqueIndex() const {
-        std::cout << "getUniqueIndex started\n";
+//         std::cout << "getUniqueIndex started\n";
         std::size_t k=0;
         
         repeat:

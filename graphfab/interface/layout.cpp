@@ -1183,10 +1183,10 @@ gf_node gf_nw_aliasOf(gf_network* nw, gf_node* srcnode) {
     nd.n = NULL;
     AN(net, "No network");
 
-    std::cout << "gf_nw_newNode started\n";
+//     std::cout << "gf_nw_newNode started\n";
     Node* n = new Node();
 
-    std::cout << "gf_nw_newNode setting id\n";
+//     std::cout << "gf_nw_newNode setting id\n";
     n->setName(src->getName());
     n->setId(src->getId());
     n->setGlyph(net->getUniqueGlyphId(*src));
