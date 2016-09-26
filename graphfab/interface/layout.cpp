@@ -1275,7 +1275,7 @@ int gf_nw_connectNode(gf_network* nw, gf_node* n, gf_reaction* r, gf_specRole ro
 
 int gf_nw_connectNodeRoleStr(gf_network* nw, gf_node* n, gf_reaction* r, const char* role_str) {
     gf_specRole role = gf_strToRole(role_str);
-    if (gf_haveError)
+    if (gf_haveError())
         return -1;
     return gf_nw_connectNode(nw, n, r, role);
 }
