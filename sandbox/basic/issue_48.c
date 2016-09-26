@@ -27,16 +27,11 @@
 
 //== BEGINNING OF CODE ===============================================================
 
-#include "graphfab/core/SagittariusCore.h"
-
-#include <stdio.h>
-#include <string.h>
-
-#include "graphfab/sbml/autolayoutSBML.h"
 #include "graphfab/interface/layout.h"
 #include "graphfab/layout/fr.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 int main(int argc, char* argv[]) {
     gf_layoutInfo *layout = gf_layoutInfo_newp (2, 4, 1000, 1000);  // success
