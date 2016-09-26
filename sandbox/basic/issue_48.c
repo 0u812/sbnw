@@ -39,16 +39,40 @@
 #include <stdlib.h>
 
 int main(int argc, char* argv[]) {
-    gf_SBMLModel *model = gf_SBMLModel_newp();  // is this call required?
     gf_layoutInfo *layout = gf_layoutInfo_newp (2, 4, 1000, 1000);  // success
     gf_network *network = gf_getNetworkp (layout);  // success
     gf_setDefaultCompartmentId ("compartment");  // returns true
-    // Create a master (unique) node
-    gf_node *node = gf_nw_newNodep (network, "Node0", "myNode0", NULL); // success
 
-    // next create an alias associated with the node we just created
-    gf_node *mynode = gf_nw_getUniqueNodep (network, 0); // success, 0 is the node index
-    gf_node *myalias = gf_nw_newAliasNodep (network, node); // ACCESS VIOLATION HERE
-    
+    // Create three nodes
+    gf_node *n1 = gf_nw_newNodep (network, "n1", "n1", NULL);
+    gf_point p1 = {0.,0.};
+    gf_node_setCentroid(n1,p1);
+    gf_node *n2 = gf_nw_newNodep (network, "n2", "n2", NULL);
+    gf_point p2 = {50.,50.};
+    gf_node_setCentroid(n2,p2);
+    gf_node *n3 = gf_nw_newNodep (network, "n3", "n3", NULL);
+    gf_point p3 = {100.,0.};
+    gf_node_setCentroid(n3,p3);
+
+    printf("Initial coords:\n  (%.2f,%.2f)-(%.2f,%.2f)-(%.2f,%.2f)\n",
+           gf_node_getCentroid(n1).x, gf_node_getCentroid(n1).y,
+           gf_node_getCentroid(n2).x, gf_node_getCentroid(n2).y,
+           gf_node_getCentroid(n3).x, gf_node_getCentroid(n3).y);
+
+    // Lock the nodes
+    gf_node_lock(n1);
+    gf_node_lock(n2);
+    gf_node_lock(n3);
+
+    // Run layout algorithm
+    fr_options opt;
+    gf_getLayoutOptDefaults(&opt);
+    gf_doLayoutAlgorithm(opt,layout);
+
+    printf("Final coords:\n  (%.2f,%.2f)-(%.2f,%.2f)-(%.2f,%.2f)\n",
+           gf_node_getCentroid(n1).x, gf_node_getCentroid(n1).y,
+           gf_node_getCentroid(n2).x, gf_node_getCentroid(n2).y,
+           gf_node_getCentroid(n3).x, gf_node_getCentroid(n3).y);
+
     return 0;
 }
