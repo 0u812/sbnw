@@ -449,10 +449,10 @@ class Autolayout(MainWindowBaseClass):
     def launchOpenDialog(self):
         if is_pyqt5():
           # Qt5
-          return QFileDialog.getOpenFileName(self)[0]
+          return QFileDialog.getOpenFileName(self, filter='SBML files (*.xml *.sbml);;All files (*)')[0]
         else:
           # Qt4
-          return QFileDialog.getOpenFileName(self)
+          return QFileDialog.getOpenFileName(self, filter='SBML files (*.xml *.sbml);;All files (*)')
 
     def open(self, event):
         filename = self.launchOpenDialog()
