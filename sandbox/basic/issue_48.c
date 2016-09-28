@@ -49,6 +49,11 @@ int main(int argc, char* argv[]) {
     gf_point p3 = {100.,0.};
     gf_node_setCentroid(n3,p3);
 
+    // make sure functions to get node via index work
+    n1 = gf_nw_getUniqueNodep(network, 0);
+    n2 = gf_nw_getUniqueNodep(network, 1);
+    n3 = gf_nw_getUniqueNodep(network, 2);
+
     printf("Initial coords:\n  (%.2f,%.2f)-(%.2f,%.2f)-(%.2f,%.2f)\n",
            gf_node_getCentroid(n1).x, gf_node_getCentroid(n1).y,
            gf_node_getCentroid(n2).x, gf_node_getCentroid(n2).y,
