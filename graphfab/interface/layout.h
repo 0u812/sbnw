@@ -254,6 +254,7 @@ _GraphfabExport gf_SBMLModel gf_SBMLModel_new();
 
 /** @brief Create a new SBML model
  * @returns The new SBML model
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_SBMLModel* gf_SBMLModel_newp();
@@ -266,6 +267,7 @@ _GraphfabExport gf_layoutInfo gf_layoutInfo_new(uint64_t level, uint64_t version
 
 /** @brief Create a new layout info object
  * @returns The new layout info
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_layoutInfo* gf_layoutInfo_newp(uint64_t level, uint64_t version, uint64_t width, uint64_t height);
@@ -285,6 +287,7 @@ _GraphfabExport gf_layoutInfo* gf_layoutInfo_newp(uint64_t level, uint64_t versi
  *  effect). To manually re-run the Fruchterman-Reingold algorithm, call @ref gf_doLayoutAlgorithm.
  *  @param[in] lo The SBML model; the layout info is generated from the SBML model
  *  @param[out] l The layout info; pointer to the layout info generated from SBML model is returned
+ *  @warning Call @ref gf_freeLayoutInfo to free the returned pointer. Do not call @ref gf_free.
  *  \ingroup C_API
  */
 _GraphfabExport gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo);
@@ -295,6 +298,7 @@ _GraphfabExport gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo);
  *  @param[in] buf The buffer containing the SBML file; used to create the SBML model
  *  @param[in] r A pointer to an empty SBML model; the model will be created from the buffer and used to build the layout
  *  @param[out] l The layout info; pointer to the layout info generated from SBML is returned
+ *  @warning DO NOT USE!!!!!!!!
  *  \ingroup C_Internal
  */
 _GraphfabExport gf_layoutInfo* gf_loadSBMLIntoLayoutEngine(const char* buf, gf_SBMLModel* r);
