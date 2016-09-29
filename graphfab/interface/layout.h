@@ -339,6 +339,7 @@ _GraphfabExport gf_network gf_getNetwork(gf_layoutInfo* l);
 /** @brief Get the network associated with the model
  *  @param[in] l The layout info; contains the network
  *  @return A pointer to the network
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_network* gf_getNetworkp(gf_layoutInfo* l);
@@ -417,6 +418,7 @@ _GraphfabExport gf_node gf_nw_getUniqueNode(gf_network* n, uint64_t i);
  *  @param[in] n The network object
  *  @param[in] i Node index
  *  @return A pointer to the node
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_node* gf_nw_getNodep(gf_network* n, uint64_t i);
@@ -425,6 +427,7 @@ _GraphfabExport gf_node* gf_nw_getNodep(gf_network* n, uint64_t i);
  *  @param[in] n The network object
  *  @param[in] i Node index
  *  @return A pointer to the node
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_node* gf_nw_getUniqueNodep(gf_network* n, uint64_t i);
@@ -440,6 +443,7 @@ _GraphfabExport gf_node* gf_nw_getNodepFromId(gf_network* nw, const char* id);
 /** @brief Get the node at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_Internal
  */
 _GraphfabExport gf_reaction gf_nw_getRxn(gf_network* n, uint64_t i);
@@ -447,6 +451,7 @@ _GraphfabExport gf_reaction gf_nw_getRxn(gf_network* n, uint64_t i);
 /** @brief Get the node at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_reaction* gf_nw_getRxnp(gf_network* n, uint64_t i);
@@ -468,6 +473,7 @@ _GraphfabExport gf_compartment gf_nw_getCompartment(gf_network* n, uint64_t i);
 /** @brief Get the compartment at index i
  *  @param[in] n The network object
  *  @param[in] i Node index
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_compartment* gf_nw_getCompartmentp(gf_network* n, uint64_t i);
@@ -476,6 +482,7 @@ _GraphfabExport gf_compartment* gf_nw_getCompartmentp(gf_network* n, uint64_t i)
  *  @details Returns NULL if no such compartment exists
  *  @param[in] n The network object
  *  @param[in] id The compartment ID
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_compartment* gf_nw_findCompartmentById(gf_network* n, const char* id);
@@ -506,6 +513,7 @@ _GraphfabExport gf_compartment gf_nw_newCompartment(gf_network* nw, const char* 
  *  @param[in] nw The network object
  *  @param[in] id The compartment's requested ID (or null to determine it automatically)
  *  @param[in] name The compartment's name
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_compartment* gf_nw_newCompartmentp(gf_network* nw, const char* id, const char* name);
@@ -531,6 +539,7 @@ _GraphfabExport gf_node gf_nw_aliasOf(gf_network* nw, gf_node* n);
  *  @param[in] id The node's requested ID (or null to determine it automatically)
  *  @param[in] name The node's name
  *  @param[in] compartment The compartment to place the node in (may be NULL for no compartment or NULL for the "default" compartment in SBML parlance)
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_compartment* compartment);
@@ -540,6 +549,7 @@ _GraphfabExport gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const ch
  *  @param[in] id The node's requested ID (or null to determine it automatically)
  *  @param[in] name The node's name
  *  @param[in] source The original source node
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_node* gf_nw_newAliasNodep(gf_network* nw, gf_node* source);
@@ -609,6 +619,7 @@ _GraphfabExport gf_node gf_nw_getInstance(gf_network* nw, gf_node* n, uint64_t i
 /** @brief Get the ith instance of an aliased node
  *  @param[in] n The node object
  *  @param[in] i The instance index
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_Internal
  */
 _GraphfabExport gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, uint64_t i);
@@ -616,6 +627,7 @@ _GraphfabExport gf_node* gf_nw_getInstancep(gf_network* nw, gf_node* n, uint64_t
 /** @brief Get the ith instance of an aliased node
  *  @param[in] n The node object
  *  @param[in] i The instance index
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_node* gf_nw_getAliasInstancep(gf_network* nw, gf_node* n, uint64_t i);
@@ -793,6 +805,7 @@ _GraphfabExport int gf_nw_nodeHasCompartment(gf_network* nw, gf_node* x);
 /** @brief Get the compartment which contains node @ref x
  *  @param[in] nw The network object
  *  @param[in] x A node object
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_compartment* gf_nw_nodeGetCompartment(gf_network* nw, gf_node* x);
@@ -817,6 +830,7 @@ _GraphfabExport gf_reaction gf_nw_newReaction(gf_network* nw, const char* id, co
  *  @param[in] nw The network object
  *  @param[in] id The reaction's requested ID (or null to determine it automatically)
  *  @param[in] name The reaction's name
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_reaction* gf_nw_newReactionp(gf_network* nw, const char* id, const char* name);
@@ -893,6 +907,7 @@ _GraphfabExport gf_curve gf_reaction_getCurve(const gf_reaction* r, uint64_t i);
 
 /** @brief Get the curve i
  *  @param[in] r The reaction object
+ *  @note Caller must free returned pointer using @ref gf_free
  *  \ingroup C_API
  */
 _GraphfabExport gf_curve* gf_reaction_getCurvep(const gf_reaction* r, uint64_t i);
