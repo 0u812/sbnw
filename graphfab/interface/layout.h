@@ -790,7 +790,7 @@ _GraphfabExport int gf_node_isIdentical(gf_node* u, gf_node* v);
  */
 _GraphfabExport int gf_nw_nodeHasCompartment(gf_network* nw, gf_node* x);
 
-/** @brief Return true if the node has a compartment assigned
+/** @brief Get the compartment which contains node @ref x
  *  @param[in] nw The network object
  *  @param[in] x A node object
  *  \ingroup C_API
