@@ -530,7 +530,7 @@ _GraphfabExport gf_node gf_nw_aliasOf(gf_network* nw, gf_node* n);
  *  @param[in] nw The network object
  *  @param[in] id The node's requested ID (or null to determine it automatically)
  *  @param[in] name The node's name
- *  @param[in] compartment The compartment to place the node in (may be NULL for no compartment)
+ *  @param[in] compartment The compartment to place the node in (may be NULL for no compartment or NULL for the "default" compartment in SBML parlance)
  *  \ingroup C_API
  */
 _GraphfabExport gf_node* gf_nw_newNodep(gf_network* nw, const char* id, const char* name, gf_compartment* compartment);
@@ -873,7 +873,7 @@ _GraphfabExport const char* gf_roleToStr(gf_specRole role);
  */
 _GraphfabExport gf_specRole gf_strToRole(const char* str);
 
-/** @brief Get the index of the species in the network
+/** @brief Get the global index of a reactant/product/participant given its local index in a reaction
  *  @param[in] r The reaction object
  *  \ingroup C_API
  */
