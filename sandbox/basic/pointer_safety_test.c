@@ -36,12 +36,12 @@
 typedef struct {
   int x;
 } A;
-typedef A* Aptr;
+typedef void* Aptr;
 
 typedef struct {
   char y;
 } B;
-typedef B* Bptr;
+typedef void* Bptr;
 
 int Afunc(Aptr a) {
   if (a)
@@ -68,8 +68,8 @@ int main(int argc, char* argv[]) {
     Afunc(ap);
     Bfunc(bp);
 
-//     Afunc(bp); // Warning
-//     Bfunc(ap); // Warning
+    Afunc(bp); // No warning
+    Bfunc(ap); // No warning
 
 //     Afunc(vp); // No warning
 
