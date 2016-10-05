@@ -36,23 +36,29 @@
 typedef struct {
   int x;
 } A;
-typedef void* Aptr;
+typedef struct {
+  char dummy;
+} Awrap;
+typedef Awrap* Aref;
 
 typedef struct {
-  char y;
+  int y;
 } B;
-typedef void* Bptr;
+typedef struct {
+  char dummy;
+} Bwrap;
+typedef Bwrap* Bref;
 
-int Afunc(Aptr a) {
+int Afunc(Aref a) {
   if (a)
-    return 1;
+    return ((A*)a)->x;
   else
     return 0;
 }
 
-int Bfunc(Bptr b) {
+int Bfunc(Bref b) {
   if (b)
-    return 1;
+    return ((B*)b)->y;
   else
     return 0;
 }
@@ -61,14 +67,14 @@ int main(int argc, char* argv[]) {
     A a;
     B b;
 
-    Aptr ap = &a;
-    Bptr bp = &b;
+    Aref ap = (Aref)&a;
+    Bref bp = (Bref)&b;
 
     Afunc(ap);
     Bfunc(bp);
 
-    Afunc(bp); // No warning
-    Bfunc(ap); // No warning
+//     Afunc(bp); // Warning
+//     Bfunc(ap); // Warning
 
     return 0;
 }
