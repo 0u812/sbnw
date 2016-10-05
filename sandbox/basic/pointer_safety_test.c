@@ -63,24 +63,12 @@ int main(int argc, char* argv[]) {
 
     Aptr ap = &a;
     Bptr bp = &b;
-//     void *vp = 0;
 
     Afunc(ap);
     Bfunc(bp);
 
     Afunc(bp); // No warning
     Bfunc(ap); // No warning
-
-//     Afunc(vp); // No warning
-
-    gf_layoutInfo *layout = gf_layoutInfo_newp (2, 4, 1000, 1000);  // success
-    gf_network *network = gf_getNetworkp (layout);  // success
-
-    gf_node *n1 = gf_nw_newNodep (network, "n1", "n1", NULL);
-    gf_point p1 = {0.,0.};
-    gf_node_setCentroid(n1,p1);
-
-//     gf_node_setCentroid(network,p1); // Warning
 
     return 0;
 }
