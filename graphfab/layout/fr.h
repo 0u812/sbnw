@@ -84,7 +84,7 @@ _GraphfabExport void gf_doLayoutAlgorithm(fr_options opt, gf_layoutInfo* l);
  */
 _GraphfabExport void gf_doLayoutAlgorithm2(fr_options opt, gf_network* n, gf_canvas* c);
 
-/** @brief Returns the default values for the layout options
+/** @brief Generate default values for the layout options
  *  @param[out] l The layout info in which to store the options
  *  \ingroup C_API
  */
