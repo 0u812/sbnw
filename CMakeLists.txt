@@ -35,11 +35,14 @@ else()
   set(WITH_GTEST OFF CACHE BOOL "Use gtest framework")
 endif()
 
-find_package(PythonInterp)
-if(PYTHONINTERP_FOUND)
-  set(Python_ADDITIONAL_VERSIONS ${PYTHON_VERSION_STRING})
-else()
-  message(ERROR FATAL "Unable to find Python")
+set(ENABLE_PYTHON FALSE CACHE BOOL "Enable Python bindings")
+if(ENABLE_PYTHON)
+  find_package(PythonInterp)
+  if(PYTHONINTERP_FOUND)
+    set(Python_ADDITIONAL_VERSIONS ${PYTHON_VERSION_STRING})
+  else()
+    message(ERROR FATAL "Unable to find Python")
+  endif()
 endif()
 
 # Find Python libs
@@ -64,13 +67,13 @@ endif()
 
 if(ENABLE_FULL_RPATH) #http://www.cmake.org/Wiki/CMake_RPATH_handling
     SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
-    
-    SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE) 
-    
+
+    SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+
     SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-    
+
     SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-    
+
     LIST(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
     IF("${isSystemDir}" STREQUAL "-1")
         SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
